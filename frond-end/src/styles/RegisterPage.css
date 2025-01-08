@@ -1,0 +1,238 @@
+/* Register Page Styling */
+body {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  width: 100%;
+  background-color: black;
+}
+
+h2.custom-title.text-center.mb-4 {
+  margin-bottom: 45px !important;
+}
+
+.custom-register-page {
+  background-image: url(./../assets/images/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #ffffff;
+}
+
+/* Card Styling */
+div.custom-card {
+  border: none; 
+  border-radius: 15px; 
+  width: 100%;
+  max-width: 800px;
+}
+
+.custom-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title Styling */
+.custom-title {
+  font-size: 1.8rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Form Group Styling */
+.custom-form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  column-gap: 18px;
+}
+
+div.custom-form-group.mb-3 {
+  margin-bottom: 25px !important;
+}
+
+.custom-label {
+  color: #d3d3d3; 
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  min-width: 140px;
+  text-align: left;
+}
+
+.custom-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #415a77;
+  border-radius: 10px;
+  min-width: 400px;
+  padding: 0.5rem;
+}
+
+.custom-input:focus {
+  background-color: #1b263b;
+  color: #fff;
+  border-color: #38b000; 
+  outline: none;
+}
+
+/* Checkbox Styling */
+.custom-checkbox-input {
+  margin-right: 0.5rem;
+}
+
+.custom-checkbox-label {
+  color: #d3d3d3;
+  margin-bottom: 10px;
+}
+
+/* Button Styling */
+.custom-btn {
+  background-color: #0daf96;
+  border: none;
+  color: #ffffff;
+  padding: 0.7rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.custom-btn:hover {
+  background-color: #04695a;
+}
+
+/* Link Styling */
+.custom-link {
+  color: #1E90FF;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  text-decoration: underline;
+}
+
+.agreement-link a {
+  color: #1E90FF;
+  text-decoration: none;
+}
+
+
+/* Responsive Design */
+/* Tablet Screen size 768px */
+@media (max-width: 768px) {
+  
+  .custom-card {
+    padding: 20px;
+  }
+
+  .custom-label {
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+
+  .custom-input {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .custom-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .custom-checkbox-label {
+    font-size: 0.9rem;
+  }
+
+  .custom-link {
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Phone Screen size 576px */
+@media (max-width: 576px) {
+  .custom-card {
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .custom-form-group {
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+
+
+  .custom-label {
+    font-size: 0.8rem;
+    min-width: auto; 
+    width: 100%; 
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-input {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+    width: 100%;
+  }
+
+  .custom-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    width: 100%;
+  }
+
+  .custom-checkbox-label {
+    font-size: 0.8rem;
+  }
+
+  .agreement-link {
+    font-size: 0.8rem;
+  }
+
+  .custom-link {
+    font-size: 1.1rem;
+  }
+}
+
+
+/* Smaller Device Screen size 450px */
+@media (max-width: 450px) {
+  .custom-card {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .custom-form-group {
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 10px; 
+    width: 260px;
+  }
+
+  .custom-label {
+    font-size: 0.75rem; 
+    min-width: auto; 
+    width: 100%; 
+    margin-bottom: 0.4rem; 
+  }
+
+  .custom-input {
+    font-size: 0.8rem; 
+    padding: 0.4rem;
+    width: 100%; 
+    border-radius: 8px; 
+    min-width: 0;
+  }
+
+  .custom-btn {
+    font-size: 0.8rem; 
+    padding: 0.5rem; 
+    width: 100%; 
+    border-radius: 8px; 
+  }
+
+}
+

@@ -1,0 +1,52 @@
+/* Sidebar Container */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; /* Adjust width as needed */
+  background-color: #000E00; /* Match header background */
+  color: white;
+  z-index: 1500;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Open State */
+.mobile-sidebar.open {
+  transform: translateX(0);
+}
+
+/* Close Button */
+.close-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* Navigation Links */
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 130px; 
+}
+
+.mobile-sidebar-link {
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.mobile-sidebar-link:hover {
+  background-color: #1E90FF;
+}

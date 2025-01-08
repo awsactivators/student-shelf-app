@@ -1,0 +1,174 @@
+ /* Sidebar Styling */
+.sidebar {
+  width: 280px;
+  height: auto;
+  background: var(--color-blackish);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+  min-height: 80vh;
+  padding-top: 20px;
+}
+
+.sidebar.collapsed {
+  width: 30px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Menu Items */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow: hidden;
+
+}
+
+.menu-item {
+  margin-top: 30px;
+}
+
+.menu-item, .sub-menu-item {
+  cursor: pointer;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  transition: all 0.3s ease; 
+}
+
+li.menu-item a {
+  font-size: 1.9em;
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+li.menu-item.active a {
+  color: var(--color-blue);
+}
+
+
+/* Sub-Menu Items */
+.sub-menu {
+  list-style: none;
+  padding-left: 10px;
+}
+
+.sub-menu-item {
+  padding: 10px 20px;
+  font-size: 0.8em; 
+}
+
+li.sub-menu-item.active a {
+  color: var(--color-blue); 
+  font-weight: bold; 
+}
+
+/* Collapse Button */
+.collapse-btn {
+  background: var(--color-blackish);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 55px;
+  right: -20px;
+  z-index: 10;
+}
+
+/* Profile Image */
+.profile-image {
+  padding: 10px;
+  text-align: center;
+}
+
+.sidebar.collapsed .profile-image {
+  display: none;
+}
+
+.profile-image img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+
+
+/* Media Queries */
+  /* Reduce sidebar width for tablets 992px */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar.collapsed {
+    width: 30px;
+  }
+
+  li.menu-item a {
+    font-size: 1.5em;
+  }
+
+  .profile-image img {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+
+  /* Reduce sidebar width for tablets 768px */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .sidebar.collapsed {
+    width: 40px;
+  }
+
+  li.menu-item a {
+    font-size: 1.3em;
+  }
+
+  .profile-image img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .collapse-btn {
+    top: 45px;
+  }
+}
+
+
+  /* Reduce sidebar width for phones 576px */
+@media (max-width: 576px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .sidebar.collapsed {
+    width: 30px;
+  }
+
+  .sidebar.collapsed .profile-image img {
+    display: none;
+  }
+
+  .sub-menu-item, .sub-menu {
+   padding-left: 8px;
+  }
+
+  .menu-item a {
+    margin-left: 5px;
+  }
+}

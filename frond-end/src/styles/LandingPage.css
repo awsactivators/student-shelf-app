@@ -1,0 +1,86 @@
+/* General Layout */
+body {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  width: 100%;
+}
+
+/* Landing Page */
+.landing-page {
+  background-image: url(./../assets/images/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.main-container {
+  margin-bottom: 70px;
+  margin-top: 70px;
+}
+
+.feature-card {
+  width: 100%; 
+  background-color: #d9d9d9;
+  color: black;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.landing-footer {
+  color: #d2d5d8;
+  font-size: 0.9rem;
+}
+
+.slogan {
+  margin-top: 30px;
+  margin-bottom: 90px;
+  word-spacing: 3px;
+}
+
+.login-register-btn button {
+  border-radius: 15px;
+  background-color: #006b94;
+  color: white;
+  border: 0;
+  min-width: 200px;
+}
+
+.login-register-btn button:hover {
+  background-color: #052c3c;
+  color: white;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .main-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 20px;
+  }
+
+  .shopping-cart-img {
+    display: none;
+  }
+
+  .slogan {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-register-btn button {
+    width: 100%; 
+    margin-bottom: 15px;
+  }
+
+  .feature-card img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+}

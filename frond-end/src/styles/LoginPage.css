@@ -1,0 +1,146 @@
+/* Login Page Styling */
+body {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  width: 100%;
+  background-color: black;
+}
+
+h2.title, div .cus-input-field {
+  margin-bottom: 45px !important;
+}
+
+.login-page {
+  background-image: url(./../assets/images/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #ffffff;
+  height: 100vh;
+}
+
+.card-container {
+  border: none; 
+  border-radius: 15px; 
+  max-width: 450px;
+  width: 100%;
+}
+
+.cus-form-label {
+  color: #e2e1e1; 
+}
+
+
+.form-input-control {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #415a77;
+  border-radius: 10px;
+  height: 46px;
+}
+
+.form-input-control:focus {
+  background-color: #1b263b;
+  color: #fff; 
+  border-color: #02DCBB; 
+  box-shadow: none;
+}
+
+.login-submit-btn {
+  background-color: #0daf96;
+  border: none;
+
+}
+
+.login-submit-btn:hover {
+  background-color: #04695a;
+}
+
+span.reset-link, a.register-link {
+  color: #1E90FF !important;
+  text-decoration: none;
+}
+
+.forgot-password-content a {
+  text-decoration: none;
+}
+
+
+
+/* Media Queries */
+@media (max-width: 992px) {
+  .card-container {
+    padding: 20px;
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .card-container {
+    max-width: 70%;
+    margin: 20px;
+  }
+
+  .cus-form-label {
+    font-size: 0.9rem;
+  }
+
+  .form-input-control {
+    font-size: 0.9rem;
+    height: 40px;
+  }
+
+  .login-submit-btn {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  .forgot-password-content {
+    font-size: 0.8rem;
+  }
+
+  .register-link {
+    font-size: 0.8rem;
+  }
+}
+
+
+
+@media (max-width: 576px) {
+  .login-page {
+    padding: 10px;
+    background-size: cover;
+  }
+
+  .card-container {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .cus-form-label {
+    font-size: 0.8rem;
+  }
+
+  .form-input-control {
+    font-size: 0.8rem;
+    height: 35px;
+  }
+
+  .login-submit-btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .register-link, .account-register {
+    font-size: 0.9rem;
+  }
+
+  .forgot-password-content {
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,198 @@
+/* Home Page Styling */
+body {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  width: 100%;
+  background-color: whitesmoke;
+
+}
+
+.custom-home {
+  padding: 20px;
+}
+
+/* Welcome Section */
+.custom-home-header {
+  margin-bottom: 20px;
+}
+
+.custom-user-name {
+  font-weight: bold;
+  /* color: #0daf96; */
+  color: black;
+}
+
+.custom-user-profile-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #415a77;
+}
+
+/* Listings Section */
+.custom-listings {
+  margin-top: 40px;
+}
+
+.custom-listings h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.custom-empty-listing {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  color: #3f4448;
+  /* margin-top: 70px; */
+}
+
+.custom-add-listing {
+  background-color: #0daf96;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.custom-add-listing:hover {
+  background-color: #04695a;
+  color: white;
+}
+
+.add-listing-link-btn {
+  word-wrap: none;
+}
+
+/* Listings Grid */
+.custom-listings-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-filter {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.custom-filter svg.svg-inline--fa {
+  color: black;
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.custom-card {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.custom-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  object-fit: cover;
+  max-height: 200px;
+  max-width: 100%;
+}
+
+.custom-card-title {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+.custom-card-price {
+  color: #38b000;
+  font-size: 0.9rem;
+}
+
+.custom-view-all {
+  text-decoration: none;
+  /* color: #1E90FF; */
+  font-size: 0.9rem;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-view-all.active-link {
+  color: #1E90FF;
+  cursor: pointer;
+}
+
+.custom-view-all.active-link:hover {
+  text-decoration: underline;
+}
+
+.custom-view-all.inactive-link {
+  color: gray;
+  cursor: not-allowed;
+}
+
+
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .custom-user-profile-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .custom-home-header {
+    text-align: center;
+  }
+
+  .custom-add-listing {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+
+  .custom-card-img {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-home-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .custom-user-profile-img {
+    margin-top: 10px;
+  }
+
+  .custom-card {
+    padding: 8px;
+  }
+
+  .custom-card-img {
+    max-height: 120px;
+  }
+
+  .custom-view-all {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,178 @@
+.notifications-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.notifications-content {
+  flex-grow: 1;
+  padding: 20px;
+  max-width: 1200px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+
+.notifications-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.notifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  background: black;
+  color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 0 20px 20px 0;
+  transition: all 0.3s ease;
+}
+
+.notification-item:hover {
+  background: var(--color-blue);
+}
+
+.notification-icon {
+  font-size: 2em;
+  margin-right: 20px;
+}
+
+.notification-details {
+  flex-grow: 1;
+}
+
+.notification-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.notification-message {
+  font-size: 1em;
+  color: #ccc;
+}
+
+.notification-title,
+.notification-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.notification-time {
+  font-size: 0.8em;
+  color: #999;
+}
+
+.view-more-btn {
+  background: linear-gradient(to right, #202230, #717174);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 200px;
+  column-gap: 10px;
+}
+
+.view-more-btn:hover {
+  opacity: 0.9;
+}
+
+
+
+/* For tablet screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .notifications-content {
+    margin-left: 20px;
+    padding: 15px;
+    max-width: 100%; /* Utilize full width */
+  }
+
+  .notifications-title {
+    font-size: 1.8em;
+    text-align: center; /* Center-align title */
+    margin-bottom: 15px;
+  }
+
+  .notification-item {
+    flex-direction: column; /* Stack content vertically */
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .notification-icon {
+    font-size: 1.5em;
+    margin-bottom: 10px; /* Add spacing between icon and details */
+    margin-right: 0; /* Remove horizontal margin */
+  }
+
+  .notification-details {
+    width: 100%;
+  }
+
+  .notification-title {
+    font-size: 1.1em;
+  }
+
+  .notification-message {
+    font-size: 0.9em;
+  }
+
+  .notification-time {
+    font-size: 0.8em;
+    margin-top: 10px; /* Add spacing for clarity */
+  }
+
+  .view-more-btn {
+    width: 100%; /* Full width for smaller screens */
+    margin: 20px 0;
+  }
+}
+
+/* For mobile screens (max-width: 576px) */
+@media (max-width: 576px) {
+  .notifications-content {
+    margin-left: 0; /* Remove margin to fit small screens */
+    padding: 10px;
+  }
+
+  .notifications-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .notification-item {
+    padding: 8px;
+    border-radius: 5px; /* Smaller radius for compact design */
+  }
+
+  .notification-icon {
+    font-size: 1.2em;
+  }
+
+  .notification-title {
+    font-size: 1em;
+  }
+
+  .notification-message {
+    font-size: 0.85em;
+  }
+
+  .view-more-btn {
+    font-size: 0.9em;
+    padding: 8px;
+  }
+}

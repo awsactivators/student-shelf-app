@@ -1,0 +1,134 @@
+.contact-us-page {
+  display: flex;
+}
+
+.contact-main-content {
+  margin-left: 200px;
+  min-width: 600px;
+  margin-top: 60px;
+}
+
+.contact-us-title {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-us-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-us-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-us-form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contact-us-form-group input,
+.contact-us-form-group textarea {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.contact-us-form-group textarea {
+  resize: vertical;
+}
+
+.contact-us-submit-btn {
+  background-color: black;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.contact-us-submit-btn:hover {
+  opacity: 0.9;
+}
+
+
+
+/* For screens below 1230px */
+@media (max-width: 1230px) {
+  .contact-main-content {
+    margin-left: 60px; 
+    padding: 20px;
+    /* width: 100%; */
+  }
+
+  .contact-us-title {
+    font-size: 1.8em; 
+  }
+}
+
+@media (max-width: 860px) {
+  .contact-main-content {
+    margin-left: 30px;
+  }
+}
+
+/* For screens below 768px */
+@media (max-width: 768px) {
+
+  .contact-main-content {
+    margin: 20px auto; 
+    width: 90%; 
+    min-width: unset; 
+    padding: 15px;
+  }
+
+  .contact-us-title {
+    font-size: 1.5em;
+  }
+
+  .contact-us-form {
+    gap: 10px; 
+  }
+
+  .contact-us-form-group input,
+  .contact-us-form-group textarea {
+    padding: 8px;
+    font-size: 0.9em; 
+  }
+
+  .contact-us-submit-btn {
+    font-size: 1em; 
+    padding: 8px;
+  }
+}
+
+/* For screens below 480px */
+@media (max-width: 480px) {
+  .contact-us-title {
+    font-size: 1.2em; 
+  }
+
+  .contact-main-content {
+    width: 100%; 
+    padding: 10px; 
+  }
+
+  .contact-us-form {
+    margin-left: 20px;
+  }
+
+  .contact-us-form-group input,
+  .contact-us-form-group textarea {
+    font-size: 0.8em; 
+  }
+
+  .contact-us-submit-btn {
+    font-size: 0.9em;
+    padding: 6px;
+  }
+}

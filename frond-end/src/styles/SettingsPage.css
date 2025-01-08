@@ -1,0 +1,113 @@
+.settings-page {
+  display: flex;
+  height: 100vh;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 20px;
+  margin: 50px 0 0 40px;
+}
+
+.settings-title {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  /* margin-left: 370px; */
+}
+
+.settings-form, .settings-title {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.settings-form-group {
+  margin-bottom: 20px;
+}
+
+.settings-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.settings-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.settings-checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.settings-checkbox-label {
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.settings-save-btn {
+  background-color: var(--color-blue);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.settings-save-btn:hover {
+  background-color: #186bbe;
+  color: white;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .settings-content {
+    padding: 15px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .settings-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .settings-form {
+    padding: 10px;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .settings-select {
+    font-size: 0.9rem;
+  }
+
+  .settings-save-btn {
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .settings-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+
+  .settings-form {
+    width: 100%;
+  }
+
+  .settings-save-btn {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+}
