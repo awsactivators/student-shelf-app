@@ -56,15 +56,6 @@
   align-items: center;
 }
 
-/* .menu-icon {
-  display: none;
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 2rem;
-  cursor: pointer;
-} */
-
 
 
 /* Container for Bell and Search */
@@ -169,6 +160,31 @@
   margin-right: 10px;
 }
 
+/* Search Bar for Small Screens */
+.search-bar {
+  display: none; 
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.search-input {
+  display: none;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #8d8d8d;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  outline: none; 
+  border-color: #1E90FF; 
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); 
+}
+
 
 
 /********************************************************/
@@ -203,7 +219,7 @@
 
 
 
-/* Media Query for max-width: 720px */
+/* Media Query for max-width: 805px */
 @media (max-width: 805px) {
   /* Adjust Header */
   .custom-header {
@@ -267,16 +283,33 @@
 }
 
 
+/* Media Query for max-width: 768px */
+@media (max-width: 768px) {
+  .search-bar {
+    display: block; 
+    position: relative;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+
+  .search-input {
+    display: block;
+  }
+
+  .custom-search-icon {
+    display: none;
+  }
+
+}
+
+
 
 /* Media Query for max-width: 540px */
 @media (max-width: 540px) {
 
   .custom-search-container.expanded, .custom-search-container.active, .custom-search-box {
     margin: 0;
-  }
-
-  .notification-container svg.svg-inline--fa, .notification-dot{
-    margin-right: 10px;
   }
 
 }
@@ -307,9 +340,10 @@
     margin-right: 10px;
   }
 
-
 }
 
+
+/* Media Query for max-width: 430px */
 @media (max-width: 430px) {
   .custom-search-container.active {
     width: 240px;
@@ -325,6 +359,8 @@
 }
 
 
+
+/* Media Query for max-width: 414px */
 @media (max-width: 414px) {
   .custom-search-container.active {
     width: 230px;
@@ -357,6 +393,8 @@
 }
 
 
+
+/* Media Query for max-width: 360px */
 @media (max-width: 360px) {
   .custom-search-container.active {
     width: 210px;
