@@ -12,13 +12,13 @@ function LoginPage() {
             {/* Student Number Input */}
             <div className="mb-3 cus-input-field">
               <label htmlFor="studentNumber" className="form-label cus-form-label">
-                Student Number:
+                Student Email:
               </label>
               <input
                 type="text"
                 className="form-control form-input-control"
                 id="studentNumber"
-                placeholder="Enter your student number"
+                placeholder="Enter your student email"
               />
             </div>
 
