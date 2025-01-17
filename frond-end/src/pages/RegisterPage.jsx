@@ -1,11 +1,49 @@
-import React from "react";
+import React, {useState} from "react";
 import "./../styles/RegisterPage.css"; 
 
 function RegisterPage() {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordStrengthError, setPasswordStrengthError] = useState("");
+
+
   const handleRegister = (e) => {
-      e.preventDefault();
-      console.log("Account registered successfully!");
-      // logic to handle registration here
+    e.preventDefault();
+
+    // Validate the email format
+    const emailRegex = /^[nN]\d{8}@humber\.ca$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Input your Humber student email!");
+      return;
+    } else {
+      setEmailError("");
+    }
+
+    // Validate password strength
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-_])[A-Za-z\d@$!%*?&-_]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordStrengthError(
+        "Password must be at least 8 characters long and include a capital letter, a small letter, a number, and a special character."
+      );
+      return;
+    } else {
+      setPasswordStrengthError("");
+    }
+
+    // Validate password match
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    setEmailError("");
+    console.log("Account registered successfully!");
+    // Logic to handle registration here
   };
 
   return (
@@ -14,20 +52,6 @@ function RegisterPage() {
         <div class="custom-card-body">
           <h2 class="custom-title text-center mb-4">Create an Account</h2>
           <form onSubmit={handleRegister}>
-            {/* Student Number Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="studentNumber" class="custom-label">
-                Student Number:
-              </label>
-              <input
-                type="text"
-                class="custom-input"
-                id="studentNumber"
-                placeholder="Enter your student number"
-                required
-              />
-            </div>
-
             {/* Name Input */}
             <div class="custom-form-group mb-3">
               <label htmlFor="name" class="custom-label">
@@ -45,15 +69,18 @@ function RegisterPage() {
             {/* Email Input */}
             <div class="custom-form-group mb-3">
               <label htmlFor="email" class="custom-label">
-                Email:
+                Student Email:
               </label>
               <input
                 type="email"
                 class="custom-input"
                 id="email"
-                placeholder="Enter your email"
+                placeholder="Enter your student email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {emailError && <small className="text-danger">{emailError}</small>}
             </div>
 
             {/* Campus Input */}
@@ -80,8 +107,13 @@ function RegisterPage() {
                 class="custom-input"
                 id="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              {passwordStrengthError && (
+                <small className="text-danger">{passwordStrengthError}</small>
+              )}
             </div>
 
             {/* Confirm Password Input */}
@@ -94,8 +126,11 @@ function RegisterPage() {
                 class="custom-input"
                 id="confirmPassword"
                 placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
+              {passwordError && <small className="text-danger">{passwordError}</small>}
             </div>
 
             {/* Terms & Conditions */}
