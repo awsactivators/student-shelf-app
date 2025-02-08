@@ -16,6 +16,8 @@ function SettingsPage() {
         { label: "Listings", path: "/listings" },
         { label: "Settings", submenu: [], path: "/settings" },
         { label: "Notifications", path: "/notifications" },
+        { label: "Support", path: "/support/faqs" },
+        { label: "Terms Policy", path: "/agreement/terms" }
       ],
     },
   ];

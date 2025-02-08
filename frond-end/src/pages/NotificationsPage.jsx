@@ -30,6 +30,8 @@ function NotificationsPage() {
         { label: "Listings", path: "/listings" },
         { label: "Settings", submenu: [], path: "/settings" },
         { label: "Notifications", path: "/notifications", hasNew: true },
+        { label: "Support", path: "/support/faqs" },
+        { label: "Terms Policy", path: "/agreement/terms" }
       ],
     },
   ];

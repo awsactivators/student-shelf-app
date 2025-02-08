@@ -5,11 +5,11 @@ function Footer() {
   return (
     <footer className="custom-footer container-fluid d-flex flex-wrap align-items-center justify-content-between px-3 py-3">
       {/* Footer Links */}
-      <div className="custom-footer-links d-flex flex-wrap justify-content-center justify-content-md-start">
+      {/* <div className="custom-footer-links d-flex flex-wrap justify-content-center justify-content-md-start">
         <a href="/agreement/terms" className="custom-footer-link">Terms</a>
         <a href="/agreement/privacy" className="custom-footer-link">Privacy Policy</a>
         <a href="/support/faqs" className="custom-footer-link">Support</a>
-      </div>
+      </div> */}
 
       {/* Copyright Section */}
       <div className="custom-footer-left text-center text-md-start">
