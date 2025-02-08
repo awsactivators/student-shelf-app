@@ -166,6 +166,7 @@
   width: 100%;
   background-color: #ffffff;
   border-top: 1px solid #e0e0e0;
+  position: absolute;
 }
 
 .search-input {
@@ -287,10 +288,14 @@
 @media (max-width: 768px) {
   .search-bar {
     display: block; 
-    position: relative;
+    position: unset;
     z-index: 999;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 10px;
+  }
+
+  div.search-bar {
+    margin-bottom: 0px;
   }
 
   .search-input {

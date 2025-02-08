@@ -4,15 +4,16 @@ import "./../styles/UserInfoPage.css";
 import profileImage from "./../assets/images/avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { faEdit, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faStar, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const UserInfoPage = () => {
   const [userData] = useState({
     name: "Lucie Bernette",
     email: "lucie.bernette@gmail.com",
-    studentNumber: "N01234567",
     phoneNumber: "123-456-7890",
+    schoolCampus: "Humber/North",
     bio: "I am a professional hairstylist. I make and sell all kinds of hair and wigs.",
+    policy: "No exchange!",
     rating: 4.2, // Average rating out of 5
     activeListings: 8
   });
@@ -31,16 +32,29 @@ const UserInfoPage = () => {
   ];
 
   // Generate star ratings based on user rating
+  // const renderStars = (rating) => {
+  //   const stars = [];
+  //   for (let i = 1; i <= 5; i++) {
+  //     stars.push(
+  //       <FontAwesomeIcon
+  //         key={i}
+  //         icon={faStar}
+  //         className={i <= Math.round(rating) ? "filled-star" : "empty-star"}
+  //       />
+  //     );
+  //   }
+  //   return stars;
+  // };
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <FontAwesomeIcon
-          key={i}
-          icon={faStar}
-          className={i <= Math.round(rating) ? "filled-star" : "empty-star"}
-        />
-      );
+      if (i <= Math.floor(rating)) {
+        stars.push(<FontAwesomeIcon key={i} icon={faStar} className="filled-star" />);
+      } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+        stars.push(<FontAwesomeIcon key={i} icon={faStar} className="half-filled-star" />);
+      } else {
+        stars.push(<FontAwesomeIcon key={i} icon={faStar} className="empty-star" />);
+      }
     }
     return stars;
   };
@@ -71,13 +85,16 @@ const UserInfoPage = () => {
               <strong>Email:</strong> {userData.email}
             </p>
             <p>
-              <strong>Student Number:</strong> {userData.studentNumber}
-            </p>
-            <p>
               <strong>Phone Number:</strong> {userData.phoneNumber}
             </p>
             <p>
+                <strong>School/Campus:</strong> {userData.schoolCampus}
+            </p>
+            <p>
               <strong>Bio:</strong> {userData.bio}
+            </p>
+            <p>
+              <strong>Policy:</strong> {userData.policy}
             </p>
             <p>
               <strong>Rating:</strong>{" "}
@@ -87,6 +104,9 @@ const UserInfoPage = () => {
             <p>
               <strong>Active Listings:</strong> {userData.activeListings}
             </p>
+            <button className="btn btn-primary">
+              <FontAwesomeIcon icon={faEdit} /> Edit
+            </button>
           </div>
         </div>
       </main>
