@@ -9,6 +9,10 @@ const PORT = process.env.PORT || 5500;
 app.use(express.json());
 app.use(cors());
 
+// Import user routes
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
 // Default route
 app.get("/", (req, res) => {
   res.send("API is running...");

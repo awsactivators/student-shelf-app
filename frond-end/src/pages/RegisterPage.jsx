@@ -8,12 +8,12 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordStrengthError, setPasswordStrengthError] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
-
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-
-    // Validate the email format
+  
+    // Validate email format
     const emailRegex = /^[nN]\d{8}@humber\.ca$/;
     if (!emailRegex.test(email)) {
       setEmailError("Input your Humber student email!");
@@ -21,7 +21,7 @@ function RegisterPage() {
     } else {
       setEmailError("");
     }
-
+  
     // Validate password strength
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-_])[A-Za-z\d@$!%*?&-_]{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -32,7 +32,7 @@ function RegisterPage() {
     } else {
       setPasswordStrengthError("");
     }
-
+  
     // Validate password match
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
@@ -40,26 +40,50 @@ function RegisterPage() {
     } else {
       setPasswordError("");
     }
-
-    setEmailError("");
-    console.log("Account registered successfully!");
-    // Logic to handle registration here
+  
+    try {
+      const response = await fetch(`${API_URL}/api/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          campus,
+          password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert("Registration successful!");
+        console.log("User Data:", data.user);
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("Registration failed. Please try again.");
+    }
   };
+  
 
   return (
-    <div class="custom-register-page container-fluid vh-100 d-flex align-items-center justify-content-center">
-      <div class="custom-card card p-4 bg-dark">
-        <div class="custom-card-body">
-          <h2 class="custom-title text-center mb-4">Create an Account</h2>
+    <div className="custom-register-page container-fluid vh-100 d-flex align-items-center justify-content-center">
+      <div className="custom-card card p-4 bg-dark">
+        <div className="custom-card-body">
+          <h2 className="custom-title text-center mb-4">Create an Account</h2>
           <form onSubmit={handleRegister}>
             {/* Name Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="name" class="custom-label">
+            <div className="custom-form-group mb-3">
+              <label htmlFor="name" className="custom-label">
                 Name:
               </label>
               <input
                 type="text"
-                class="custom-input"
+                className="custom-input"
                 id="name"
                 placeholder="Enter your name"
                 required
@@ -67,30 +91,30 @@ function RegisterPage() {
             </div>
 
             {/* Email Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="email" class="custom-label">
+            <div className="custom-form-group mb-3">
+              <label htmlFor="email" className="custom-label">
                 Student Email:
               </label>
               <input
                 type="email"
-                class="custom-input"
+                className="custom-input"
                 id="email"
                 placeholder="Enter your student email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              {emailError && <small className="text-danger">{emailError}</small>}
+              {emailError && <small classNameName="text-danger">{emailError}</small>}
             </div>
 
             {/* Campus Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="campus" class="custom-label">
+            <div className="custom-form-group mb-3">
+              <label htmlFor="campus" className="custom-label">
                 Campus:
               </label>
               <input
                 type="text"
-                class="custom-input"
+                className="custom-input"
                 id="campus"
                 placeholder="Enter your campus"
                 required
@@ -98,13 +122,13 @@ function RegisterPage() {
             </div>
 
             {/* Password Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="password" class="custom-label">
+            <div className="custom-form-group mb-3">
+              <label htmlFor="password" className="custom-label">
                 Password:
               </label>
               <input
                 type="password"
-                class="custom-input"
+                className="custom-input"
                 id="password"
                 placeholder="Enter your password"
                 value={password}
@@ -112,52 +136,52 @@ function RegisterPage() {
                 required
               />
               {passwordStrengthError && (
-                <small className="text-danger">{passwordStrengthError}</small>
+                <small classNameName="text-danger">{passwordStrengthError}</small>
               )}
             </div>
 
             {/* Confirm Password Input */}
-            <div class="custom-form-group mb-3">
-              <label htmlFor="confirmPassword" class="custom-label">
+            <div className="custom-form-group mb-3">
+              <label htmlFor="confirmPassword" className="custom-label">
                 Confirm Password:
               </label>
               <input
                 type="password"
-                class="custom-input"
+                className="custom-input"
                 id="confirmPassword"
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              {passwordError && <small className="text-danger">{passwordError}</small>}
+              {passwordError && <small classNameName="text-danger">{passwordError}</small>}
             </div>
 
             {/* Terms & Conditions */}
-            <div class="custom-checkbox mb-3">
+            <div className="custom-checkbox mb-3">
               <input
                 type="checkbox"
-                class="custom-checkbox-input"
+                className="custom-checkbox-input"
                 id="terms"
                 required
               />
-              <label class="custom-checkbox-label" htmlFor="terms">
-                Terms and Conditions <span class="agreement-link"><a href="/agreement/terms">Agreement</a></span> Confirmation
+              <label className="custom-checkbox-label" htmlFor="terms">
+                Terms and Conditions <span className="agreement-link"><a href="/agreement/terms">Agreement</a></span> Confirmation
               </label>
             </div>
 
             {/* Register Button */}
-            <div class="d-grid">
-              <button type="submit" class="custom-btn">
+            <div className="d-grid">
+              <button type="submit" className="custom-btn">
                 Register
               </button>
             </div>
 
             {/* Login Link */}
-            <div class="text-center mt-3">
+            <div className="text-center mt-3">
               <p>
                 Already Registered?{" "}
-                <a href="/login" class="custom-link">
+                <a href="/login" className="custom-link">
                   Login
                 </a>
               </p>
