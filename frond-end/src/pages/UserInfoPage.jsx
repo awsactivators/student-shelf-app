@@ -142,9 +142,6 @@ const UserInfoPage = () => {
     return stars;
   };
 
-  // if (!userData) {
-  //   return <p>Loading...</p>;
-  // }
 
   return (
     <div className="user-info-page">
