@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import "./../styles/Sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import profileImage from "./../assets/images/avatar.png";
+import defaultProfileImage from "./../assets/images/avatar.png";
 
-function Sidebar({ menuItems = [] }) {
+function Sidebar({ menuItems = [], userData }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
@@ -63,9 +63,15 @@ function Sidebar({ menuItems = [] }) {
         ))}
       </ul>
 
-      {/* Profile Image */}
+      {/* Profile Image - Uses Default if No Image is Set */}
       <div className="profile-image">
-        <Link to={"/user-info"}><img src={profileImage} alt="User Profile" className="custom-profile-img" /></Link>
+        <Link to={"/user-info"}>
+          <img
+            src={userData?.profileImage || defaultProfileImage}
+            alt="User Profile"
+            className="custom-profile-img"
+          />
+        </Link>
       </div>
     </div>
   );

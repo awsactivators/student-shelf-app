@@ -145,7 +145,7 @@ const UserInfoPage = () => {
 
   return (
     <div className="user-info-page">
-      <Sidebar menuItems={menuItems} activeMenu="User Info" />
+      <Sidebar menuItems={menuItems} activeMenu="User Info" userData={userData} />
       <main className="user-info-content container mt-4">
         {userData ? (
           <div className="row align-items-center row-container">
