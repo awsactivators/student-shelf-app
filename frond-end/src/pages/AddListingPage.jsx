@@ -104,7 +104,7 @@ function AddListingPage() {
       const data = await response.json();
       if (response.ok) {
         console.log("Listing created:", data);
-        navigate("/success");
+        navigate("/success", { state: { listingTitle: title } });
       } else {
         setError(data.message);
       }

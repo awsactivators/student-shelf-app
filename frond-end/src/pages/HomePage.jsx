@@ -134,12 +134,12 @@ function HomePage() {
               {filteredListings.slice(0, 5).map((listing) => (
                 <div key={listing.id} className="custom-card">
                   <img
-                    src={listing.image}
+                    src={`${API_URL}${listing.coverImage}`}
                     alt={listing.title}
                     className="custom-card-img"
                   />
                   <p className="custom-card-title">{listing.title}</p>
-                  <p className="custom-card-price">{listing.price}</p>
+                  <p className="custom-card-price">${listing.price}</p>
                 </div>
               ))}
             </div>
