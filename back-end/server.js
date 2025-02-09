@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
+const listingsRoutes = require("./routes/listingsRoutes");
 
 dotenv.config();
 
@@ -24,8 +25,11 @@ app.get("/", (req, res) => {
 // Static folder for profile images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// API Routes
+// User Routes
 app.use("/api/users", userRoutes);
+
+// Listing route
+app.use("/api/listings", listingsRoutes);
 
 
 // Listen to server

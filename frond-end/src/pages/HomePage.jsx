@@ -1,44 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./../styles/HomePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import profileImage from "./../assets/images/avatar.png"; 
-import imageOne from "./../assets/images/image.png";
-import imageTwo from "./../assets/images/image-2.png";
-import imageThree from "./../assets/images/image-3.png";
-import imageFour from "./../assets/images/image-4.png";
-import { Link } from "react-router-dom";
+import defaultProfileImage from "./../assets/images/avatar.png";
 
 function HomePage() {
-  // State to simulate user listings
-  const [listings, setListings] = useState([
-    { id: 1, title: "Weave Braiding", price: "$50", image: imageOne },
-    { id: 2, title: "Bouncy Wig", price: "$70", image: imageTwo },
-    { id: 3, title: "Pixie Wig", price: "$45", image: imageThree },
-    { id: 4, title: "Box Braiding", price: "From $50", image: imageFour },
-    { id: 5, title: "Curly Wig", price: "$65", image: imageOne },
-    { id: 6, title: "Straight Wig", price: "$60", image: imageTwo },
-    { id: 7, title: "Cornrows", price: "$40", image: imageThree },
-    { id: 8, title: "Twist Braids", price: "From $55", image: imageFour },
-    { id: 9, title: "Full Lace Wig", price: "$90", image: imageOne },
-    { id: 10, title: "Frontal Wig", price: "$75", image: imageTwo },
-    { id: 11, title: "Box Twist", price: "$50", image: imageThree },
-    { id: 12, title: "Curly Lace", price: "$85", image: imageFour },
-  ]);
+  const [userData, setUserData] = useState(null);
+  const [listings, setListings] = useState([]);
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [filters, setFilters] = useState({ category: "", date: "" });
 
-  // Show only the first 5 listings on the home page
-  const visibleListings = listings.slice(0, 5);  
+  const API_URL = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        console.error("No token found, redirecting to login.");
+        navigate("/login");
+        return;
+      }
+
+      try {
+        console.log("Fetching user data...");
+        const response = await fetch(`${API_URL}/api/users/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+        console.log("User data response:", data);
+
+        if (response.ok) {
+          setUserData(data);
+        } else {
+          console.error("Error fetching user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    const fetchListings = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/listings`);
+        const data = await response.json();
+        if (response.ok) {
+          setListings(data);
+          setFilteredListings(data);
+        } else {
+          console.error("Error fetching listings:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching listings:", error);
+      }
+    };
+
+    fetchUserData();
+    fetchListings();
+  }, [navigate, API_URL]);
+
+  // Handle filter changes
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+
+    let filtered = listings;
+
+    if (filters.category) {
+      filtered = filtered.filter((listing) => listing.category === filters.category);
+    }
+
+    if (filters.date) {
+      filtered = filtered.filter((listing) => new Date(listing.createdAt) >= new Date(filters.date));
+    }
+
+    setFilteredListings(filtered);
+  };
 
   return (
     <div className="custom-home container">
       {/* Welcome Section */}
       <div className="custom-home-header d-flex justify-content-between align-items-center">
         <h1>
-          Welcome <span className="custom-user-name">Lucie</span>!
+          Welcome <span className="custom-user-name">{userData?.name || "User"}</span>!
         </h1>
         <Link to={"/user-info"}>
           <img
-            src={profileImage} 
+            src={userData?.profileImage || defaultProfileImage}
             alt="User Profile"
             className="custom-user-profile-img"
           />
@@ -48,22 +102,36 @@ function HomePage() {
       {/* Listings Section */}
       <div className="custom-listings">
         <h2>Listings</h2>
+
         {listings.length === 0 ? (
           <div className="custom-empty-listing text-center">
             <p>No listings yet.</p>
+            <p>Search for product or service or start selling!</p>
             <button className="btn add-listing-link-btn">
-              <a href="/add-listing" className="add-listing-link">
+              <Link to="/add-listing" className="add-listing-link">
                 Add a Listing
-              </a>
+              </Link>
             </button>
           </div>
         ) : (
           <div className="custom-listings-grid">
+            {/* Filter Section */}
             <div className="custom-filter d-flex align-items-center">
-              <span>Filter</span> <Link to={""}><FontAwesomeIcon icon={faFilter} /></Link>
+              <span>Filter</span>
+              <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+              <select name="category" onChange={handleFilterChange} className="filter-select">
+                <option value="">All Categories</option>
+                <option value="Wigs">Wigs</option>
+                <option value="Braids">Braids</option>
+                <option value="Hair Services">Hair Services</option>
+              </select>
+
+              <input type="date" name="date" onChange={handleFilterChange} className="filter-date" />
             </div>
+
+            {/* Listings Grid */}
             <div className="custom-grid">
-              {visibleListings.map((listing) => (
+              {filteredListings.slice(0, 5).map((listing) => (
                 <div key={listing.id} className="custom-card">
                   <img
                     src={listing.image}
@@ -78,19 +146,15 @@ function HomePage() {
 
             {/* View All Link */}
             {listings.length > 5 ? (
-              <a href="/listings" className="custom-view-all active-link">
+              <Link to="/listings" className="custom-view-all active-link">
                 View All
-              </a>
+              </Link>
             ) : (
-              <span className="custom-view-all inactive-link">
-                View All
-              </span>
+              <span className="custom-view-all inactive-link">View All</span>
             )}
 
             <button className="btn custom-add-listing">
-              <a href="/add-listing">
-                Add a Listing
-              </a>
+              <Link to="/add-listing">Add a Listing</Link>
             </button>
           </div>
         )}
@@ -100,4 +164,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

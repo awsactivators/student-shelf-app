@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
-const dbConfig = require("../config/config.json"); // Your DB Config
-const UserModel = require("./user"); // Import your User model
+const dbConfig = require("../config/config.json"); // DB Config
+const UserModel = require("./user"); // Import User model
 
 const sequelize = new Sequelize(
   dbConfig.development.database,

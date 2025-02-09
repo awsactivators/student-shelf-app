@@ -23,8 +23,8 @@ body {
 }
 
 .custom-user-profile-img {
-  width: 90px;
-  height: 90px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   border: 2px solid #415a77;
 }
@@ -155,8 +155,8 @@ body {
 /* Media Queries */
 @media (max-width: 768px) {
   .custom-user-profile-img {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
   }
 
   .custom-home-header {
