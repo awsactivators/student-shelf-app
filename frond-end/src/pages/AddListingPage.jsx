@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUpload, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/AddListingPage.css";
 
 function AddListingPage() {
