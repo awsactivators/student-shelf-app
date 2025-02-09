@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models"); // Import the User model
 const asyncHandler = require("express-async-handler");
+// const { profileUpload } = require("../middleware/uploadMiddleware");
+
 
 // Register User
 const registerUser = async (req, res) => {
@@ -88,7 +90,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-      res.json(user);
+    const fullProfileImage = user.profileImage?.startsWith("http")
+      ? user.profileImage // Already a full URL, no need to modify
+      : `${req.protocol}://${req.get("host")}${user.profileImage}`;
+
+      res.json({ ...user.toJSON(), profileImage: fullProfileImage });
   } else {
       res.status(404);
       throw new Error("User not found");
@@ -125,23 +131,26 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const uploadProfileImage = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.user.id);
-
-
+  
   if (!user) {
-      res.status(404);
-      throw new Error("User not found");
+    res.status(404);
+    throw new Error("User not found");
   }
 
   if (req.file) {
-      const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-      user.profileImage = imageUrl;
-      await user.save();
-      res.json({ message: "Profile image uploaded successfully", imageUrl });
+    const API_URL = process.env.API_URL || "http://localhost:5500"; 
+    const imageUrl = `${API_URL}/uploads/profile/${req.file.filename}`;
+
+    user.profileImage = imageUrl;
+    await user.save();
+
+    res.json({ message: "Profile image uploaded successfully", imageUrl });
   } else {
-      res.status(400);
-      throw new Error("No image uploaded");
+    res.status(400);
+    throw new Error("No image uploaded");
   }
 });
+
 
 
 module.exports = { 

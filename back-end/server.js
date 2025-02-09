@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const listingsRoutes = require("./routes/listingsRoutes");
+const { errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 5500;
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 // Use user routes
 app.use("/api/users", userRoutes);
@@ -22,14 +24,17 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// Static folder for profile images
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Serve images for profile and listing uploads
+app.use("/uploads/profile", express.static(path.join(__dirname, "uploads/profile")));
+app.use("/uploads/listings", express.static(path.join(__dirname, "uploads/listings")));
 
 // User Routes
 app.use("/api/users", userRoutes);
 
 // Listing route
 app.use("/api/listings", listingsRoutes);
+
+app.use(errorHandler);
 
 
 // Listen to server

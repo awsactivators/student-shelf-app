@@ -1,7 +1,7 @@
 const express = require("express");
 const { registerUser, loginUser, getUserProfile, updateUserProfile, uploadProfileImage } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
-const upload = require("../middleware/uploadMiddleware"); 
+const { profileUpload } = require("../middleware/uploadMiddleware"); 
 
 const router = express.Router();
 
@@ -18,6 +18,6 @@ router.get("/me", protect, getUserProfile);
 router.put("/update", protect, updateUserProfile);
 
 // Upload profile image
-router.post("/upload-profile-image", protect, upload.single("profileImage"), uploadProfileImage);
+router.post("/upload-profile-image", protect, profileUpload.single("profileImage"), uploadProfileImage);
 
 module.exports = router;
