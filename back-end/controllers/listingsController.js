@@ -8,6 +8,9 @@ const { Listing } = require("../models");
 // @route   POST /api/listings
 // @access  Private
 const createListing = asyncHandler(async (req, res) => {
+  console.log("Received fields:", req.body);
+  console.log("Received files:", req.files);
+
   const { title, description, category, subcategory, price } = req.body;
   const userId = req.user.id;
 
@@ -22,27 +25,31 @@ const createListing = asyncHandler(async (req, res) => {
   }
 
   // Get uploaded file paths
-  let imagePaths = req.files.map((file) => `/uploads/listings/${file.filename}`);
+  const imagePaths = req.files.map((file) => `/uploads/listings/${file.filename}`);
+  console.log("Image paths:", imagePaths);
 
-  // Check if the selected cover image exists in the uploaded files
-  const coverImage = req.body.coverImage || (imagePaths.length > 0 ? imagePaths[0] : null);
+  // Set the first image as the cover image if none is specified
+  const coverImage = imagePaths.length > 0 ? imagePaths[0] : null;
 
   // Create new listing
-  const listing = await Listing.create({
-    title,
-    description,
-    category,
-    subcategory,
-    price,
-    images: JSON.stringify(imagePaths), // Store all image paths
-    coverImage, // Store selected cover image
-    userId,
-  });
+  try {
+    const listing = await Listing.create({
+      title,
+      description,
+      category,
+      subcategory,
+      price,
+      images: JSON.stringify(imagePaths), // Store all images
+      coverImage, // Store the selected cover image
+      userId,
+    });
 
-  res.status(201).json({
-    message: "Listing created successfully",
-    listing: listing,
-  });
+    console.log("Listing created:", listing);
+    res.status(201).json({ message: "Listing created successfully", listing });
+  } catch (error) {
+    console.error("Error saving listing:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
 });
 
 

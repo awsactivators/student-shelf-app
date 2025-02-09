@@ -1,53 +1,30 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const User = require("./user"); // Assuming you have a user model
-
-const Listing = sequelize.define("Listing", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  subcategory: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  images: {
-    type: DataTypes.JSON, // Store images as an array
-    allowNull: false,
-  },
-  coverImage: {
-    type: DataTypes.STRING, // The selected cover image
-    allowNull: false,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User,
-      key: "id",
-    },
-  },
-}, {
-  timestamps: true,
-});
-
-Listing.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
-
-module.exports = Listing;
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Listing extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Listing.init({
+    title: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    category: DataTypes.STRING,
+    subcategory: DataTypes.STRING,
+    price: DataTypes.DECIMAL,
+    images: DataTypes.JSON,
+    coverImage: DataTypes.STRING,
+    userId: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'Listing',
+  });
+  return Listing;
+};

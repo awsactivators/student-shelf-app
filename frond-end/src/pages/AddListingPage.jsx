@@ -91,7 +91,7 @@ function AddListingPage() {
       formData.append("images", image);
     });
   
-    formData.append("coverImage", coverImage);
+    formData.append("images", coverImage);
   
     try {
       const token = localStorage.getItem("userToken");
@@ -103,6 +103,7 @@ function AddListingPage() {
   
       const data = await response.json();
       if (response.ok) {
+        console.log("Listing created:", data);
         navigate("/success");
       } else {
         setError(data.message);
@@ -223,8 +224,8 @@ function AddListingPage() {
 
           {/* Image Upload Section */}
           <div className="form-group add-form-group">
-            <label>Upload Images (Max 3)</label>
-            <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
+            <label htmlFor="images">Upload Images (Max 3)</label>
+            <input type="file" name="images" id="images" accept="image/*" multiple onChange={handleImageUpload} />
             <div className="image-preview">
               {images.map((image, index) => (
                 <div key={index} className="image-container">

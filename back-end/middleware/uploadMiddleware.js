@@ -11,7 +11,8 @@ const storage = multer.diskStorage({
     }
   },
   filename: function (req, file, cb) {
-    cb(null, `${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
+    cb(null, `${Date.now()}-${file.originalname}`);
+    // cb(null, `${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
   },
 });
 
@@ -36,15 +37,9 @@ const profileUpload = multer({
 });
 
 const listingUpload = multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit for listings
+    storage,
+    fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 },  // 5MB limit for listings
 });
 
-// Middleware for setting listing upload flag
-const setListingUpload = (req, res, next) => {
-  req.listingUpload = true;
-  next();
-};
-
-module.exports = { profileUpload, listingUpload, setListingUpload };
+module.exports = { profileUpload, listingUpload };
