@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models"); // Import the User model
+const asyncHandler = require("express-async-handler");
 
 // Register User
 const registerUser = async (req, res) => {
@@ -77,4 +78,76 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+
+// @desc    Get user profile
+// @route   GET /api/users/me
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.id, {
+      attributes: { exclude: ["password"] } // Exclude password
+  });
+
+  if (user) {
+      res.json(user);
+  } else {
+      res.status(404);
+      throw new Error("User not found");
+  }
+});
+
+
+// @desc    Update user profile
+// @route   PUT /api/users/update
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.id);
+
+  if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+  }
+
+  // Update fields (email should not be updated)
+  user.name = req.body.name || user.name;
+  user.campus = req.body.campus || user.campus;
+  user.bio = req.body.bio || user.bio;
+  user.policy = req.body.policy || user.policy;
+  user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
+
+  await user.save();
+
+  res.json({ message: "Profile updated successfully", user });
+});
+
+
+// @desc    Upload profile image
+// @route   POST /api/users/upload-profile-image
+// @access  Private
+const uploadProfileImage = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.id);
+
+
+  if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+  }
+
+  if (req.file) {
+      const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      user.profileImage = imageUrl;
+      await user.save();
+      res.json({ message: "Profile image uploaded successfully", imageUrl });
+  } else {
+      res.status(400);
+      throw new Error("No image uploaded");
+  }
+});
+
+
+module.exports = { 
+  registerUser, 
+  loginUser,
+  getUserProfile,
+  updateUserProfile,
+  uploadProfileImage
+};
