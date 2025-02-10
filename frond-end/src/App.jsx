@@ -25,6 +25,7 @@ import ContactUsPage from "./pages/ContactUsPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ReviewPage from "./pages/ReviewPage";
+import EditListingPage from "./pages/EditListingPage";
 
 function Layout({ children, hasNewNotifications, userData }) {
   const location = useLocation();
@@ -75,6 +76,8 @@ function App() {
           <Route path="/agreement/terms" element={<TermsPage />} />
           <Route path="/agreement/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/leave-review" element={<ReviewPage />} />
+          <Route path="/edit-listing/:id" element={<EditListingPage />} />
+
 
         </Routes>
       </Layout>

@@ -45,7 +45,7 @@ h2.title, div .cus-input-field {
   box-shadow: none;
 }
 
-.login-submit-btn {
+.login-submit-btn, .btn {
   background-color: #0daf96;
   border: none;
 

@@ -67,4 +67,42 @@ const getListings = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createListing, getListings };
+
+// @desc    Get a single listing by ID
+// @route   GET /api/listings/:id
+// @access  Private
+const getListingById = asyncHandler(async (req, res) => {
+  const listing = await Listing.findByPk(req.params.id);
+
+  if (listing) {
+    res.json(listing);
+  } else {
+    res.status(404);
+    throw new Error("Listing not found");
+  }
+});
+
+
+// @desc    DELETE listings
+// @route   DELETE /api/listings/:id
+// @access  Public
+const deleteListing = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findByPk(id);
+
+  if (!listing) {
+    res.status(404);
+    throw new Error("Listing not found");
+  }
+
+  if (listing.userId !== req.user.id) {
+    res.status(403);
+    throw new Error("Not authorized to delete this listing");
+  }
+
+  await listing.destroy();
+  res.status(200).json({ message: "Listing deleted successfully" });
+});
+
+
+module.exports = { createListing, getListings, deleteListing, getListingById };

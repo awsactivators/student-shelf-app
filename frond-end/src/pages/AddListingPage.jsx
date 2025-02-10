@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/AddListingPage.css";
 
-function AddListingPage() {
+function AddListingPage({ existingData = null, isEditing = false }) {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [category, setCategory] = useState("");
@@ -88,24 +88,34 @@ function AddListingPage() {
     formData.append("subcategory", subcategory === "Other" ? customSubcategory : subcategory);
     formData.append("price", price);
   
+    // images.forEach((image) => {
+    //   formData.append("images", image);
+    // });
+
     images.forEach((image) => {
-      formData.append("images", image);
+      if (image instanceof File) formData.append("images", image); // Only append new files
     });
   
     formData.append("images", coverImage);
   
     try {
       const token = localStorage.getItem("userToken");
-      const response = await fetch(`${API_URL}/api/listings`, {
-        method: "POST",
+      const response = await fetch(`${API_URL}/api/listings/${isEditing ? existingData.id : ""}`, {
+        method: isEditing ? "PUT" : "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
   
       const data = await response.json();
       if (response.ok) {
-        console.log("Listing created:", data);
-        navigate("/success", { state: { listingTitle: title } });
+        console.log(isEditing ? "Listing updated:" : "Listing created:", data);
+
+        // Conditional redirection
+        if (isEditing) {
+          navigate("/home"); // Redirect to home for edits
+        } else {
+          navigate("/success", { state: { listingTitle: title } }); // Redirect to success for new listings
+        }
       } else {
         setError(data.message);
       }

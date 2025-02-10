@@ -82,8 +82,8 @@ function LoginPage() {
 
             {/* Login Button */}
             <div className="d-grid">
-              <button type="submit" className="btn btn-primary btn-lg login-submit-btn" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
+              <button type="submit" className="btn btn-primary btn-lg login-submit-btn" >
+                Login
               </button>
             </div>
 

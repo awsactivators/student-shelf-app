@@ -1,5 +1,5 @@
 const express = require("express");
-const { createListing, getListings } = require("../controllers/listingsController");
+const { createListing, getListings, getListingById, deleteListing } = require("../controllers/listingsController");
 const { listingUpload } = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -17,5 +17,12 @@ router.post("/", protect, setListingUpload, listingUpload.array("images", 3), cr
 
 // Get all listings
 router.get("/", getListings);
+
+// Get a single listing by ID
+router.get("/:id", protect, getListingById);
+
+// Delete a listing
+router.delete("/:id", protect, deleteListing);
+
 
 module.exports = router;
