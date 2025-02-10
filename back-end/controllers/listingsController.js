@@ -74,12 +74,12 @@ const getListings = asyncHandler(async (req, res) => {
 const getListingById = asyncHandler(async (req, res) => {
   const listing = await Listing.findByPk(req.params.id);
 
-  if (listing) {
-    res.json(listing);
-  } else {
+  if (!listing) {
     res.status(404);
     throw new Error("Listing not found");
   }
+
+  res.json(listing);
 });
 
 

@@ -86,10 +86,10 @@ function ListingsPage() {
                 <span className={`listing-status ${listing.status.toLowerCase()}`}>{listing.status}</span>
                 <span className={`listing-category ${listing.category.toLowerCase()}`}>{listing.category}</span>
                 <div className="listing-actions">
-                  <button className="btn edit-btn">
+                  <button className="edit-btn">
                     <FontAwesomeIcon icon={faEdit} />
                   </button>
-                  <button className="btn delete-btn">
+                  <button className="delete-btn">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>

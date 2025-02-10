@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/AddListingPage.css";
@@ -6,6 +6,7 @@ import "./../styles/AddListingPage.css";
 function AddListingPage({ existingData = null, isEditing = false }) {
   const API_URL = import.meta.env.VITE_API_URL;
 
+  const [existingImages, setExistingImages] = useState([]);
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [customSubcategory, setCustomSubcategory] = useState("");
@@ -59,24 +60,46 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   };
 
   // Handle Image Removal
-  const handleRemoveImage = (index) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    setImages(updatedImages);
-    if (coverImage === images[index]) {
-      setCoverImage(updatedImages[0] || null); // Reset cover image if removed
+  const handleRemoveImage = (index, isExisting) => {
+    if (isExisting) {
+      setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      setImages((prev) => prev.filter((_, i) => i !== index));
+    }
+  
+    // Reset cover image if the removed image was the cover
+    if (coverImage === (isExisting ? existingImages[index] : images[index])) {
+      setCoverImage(null);
     }
   };
+  
+  
 
   // Handle Cover Image Selection
-  const handleCoverImageSelect = (index) => {
-    setCoverImage(images[index]);
+  const handleCoverImageSelect = (index, isExisting) => {
+    const selectedImage = isExisting ? existingImages[index] : images[index];
+    setCoverImage(selectedImage);
   };
+  
+
+  // Populate fields with existing data when editing
+  useEffect(() => {
+    if (isEditing && existingData) {
+      setTitle(existingData.title || "");
+      setDescription(existingData.description || "");
+      setCategory(existingData.category || "");
+      setSubcategory(existingData.subcategory || "");
+      setPrice(existingData.price || "");
+      setExistingImages(existingData.images || []);
+      setCoverImage(existingData.coverImage || null);
+    }
+  }, [isEditing, existingData]);
 
 
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !description || !category || !price || images.length === 0) {
+    if (!title || !description || !category || !price || (isEditing ? false : images.length === 0)) {
       setError("All fields except subcategory are required.");
       return;
     }
@@ -92,29 +115,42 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     //   formData.append("images", image);
     // });
 
+    // Add only new images to the FormData
     images.forEach((image) => {
-      if (image instanceof File) formData.append("images", image); // Only append new files
+      formData.append("images", image);
     });
+
+    // Include existing image paths when editing
+    if (isEditing) {
+      formData.append("existingImages", JSON.stringify(existingImages));
+    }
   
     formData.append("images", coverImage);
   
     try {
       const token = localStorage.getItem("userToken");
-      const response = await fetch(`${API_URL}/api/listings/${isEditing ? existingData.id : ""}`, {
-        method: isEditing ? "PUT" : "POST",
-        headers: { Authorization: `Bearer ${token}` },
+      const url = isEditing
+        ? `${API_URL}/api/listings/${existingData.id}` // Update listing
+        : `${API_URL}/api/listings`; // Create new listing
+      const method = isEditing ? "PUT" : "POST";
+
+        
+      const response = await fetch(url, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
   
       const data = await response.json();
       if (response.ok) {
-        console.log(isEditing ? "Listing updated:" : "Listing created:", data);
-
-        // Conditional redirection
         if (isEditing) {
-          navigate("/home"); // Redirect to home for edits
+          console.log("Listing updated:", data);
+          navigate("/home");
         } else {
-          navigate("/success", { state: { listingTitle: title } }); // Redirect to success for new listings
+          console.log("Listing created:", data);
+          navigate("/success", { state: { listingTitle: title } });
         }
       } else {
         setError(data.message);
@@ -134,7 +170,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     <div className="add-listing-page">
       <Sidebar menuItems={menuItems} activeMenu="Add Listing" />
       <main className="add-listing-content">
-        <h1 className="add-listing-title">Add a Listing</h1>
+      <h1>{isEditing ? "Edit Listing" : "Add a Listing"}</h1>
         <form className="add-listing-form" onSubmit={handleSubmit}>
           {error && <p className="error-message">{error}</p>}
 
@@ -233,36 +269,57 @@ function AddListingPage({ existingData = null, isEditing = false }) {
             />
           </div>
 
+            
           {/* Image Upload Section */}
           <div className="form-group add-form-group">
             <label htmlFor="images">Upload Images (Max 3)</label>
-            <input type="file" name="images" id="images" accept="image/*" multiple onChange={handleImageUpload} />
+            <input
+              type="file"
+              name="images"
+              id="images"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+            />
+
+            {/* Preview Existing and New Images */}
             <div className="image-preview">
-              {images.map((image, index) => (
-                <div key={index} className="image-container">
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Listing Image ${index + 1}`}
-                    className="uploaded-image"
-                  />
-                  <button type="button" className="remove-btn" onClick={() => handleRemoveImage(index)}>
-                    Remove
-                  </button>
-                  <button
-                    type="button"
-                    className={`cover-btn ${coverImage === image ? "selected" : ""}`}
-                    onClick={() => handleCoverImageSelect(index)}
-                  >
-                    {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
-                  </button>
-                </div>
-              ))}
+              {[...existingImages, ...images].map((image, index) => {
+                const isExisting = typeof image === "string"; // Check if image is from existing listing
+                return (
+                  <div key={index} className="image-container">
+                    <img
+                      src={isExisting ? `${API_URL}${image}` : URL.createObjectURL(image)}
+                      alt={`Listing Image ${index + 1}`}
+                      className="uploaded-image"
+                    />
+                    <button
+                      type="button"
+                      className="remove-btn"
+                      onClick={() => handleRemoveImage(index, isExisting)}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      type="button"
+                      className={`cover-btn ${coverImage === image ? "selected" : ""}`}
+                      onClick={() => handleCoverImageSelect(index, isExisting)}
+                    >
+                      {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
 
+
           {/* Submit Button */}
           <button type="submit" className="publish-btn">Publish</button>
+          <button type="button" className="listing-cancel-btn" onClick={() => navigate("/home")}>
+            Cancel
+          </button>
         </form>
       </main>
     </div>

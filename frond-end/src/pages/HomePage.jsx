@@ -178,13 +178,13 @@ function HomePage() {
                     </div>
                     <div className="listing-actions">
                       <button
-                        className="btn edit-btn"
+                        className="edit-btn"
                         onClick={() => handleEditListing(listing.id)}
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </button>
                       <button
-                        className="btn delete-btn"
+                        className="delete-btn"
                         onClick={() => handleDeleteListing(listing.id)}
                       >
                         <FontAwesomeIcon icon={faTrash} />
