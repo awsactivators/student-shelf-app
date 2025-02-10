@@ -50,15 +50,17 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   // Handle Image Upload (Max 3 images)
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length + images.length > 3) {
+    if (files.length + images.length + existingImages.length > 3) {
       setError("You can only upload up to 3 images.");
       return;
     }
+
     setImages((prev) => [...prev, ...files]); // Append new images
     if (!coverImage) {
       setCoverImage(files[0]); // Default to first image if no cover selected
     }
   };
+
 
   // Handle Image Removal
   const handleRemoveImage = (index, isExisting) => {
@@ -74,10 +76,6 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       setCoverImage(null);
     }
   };
-  
-  
-  
-  
   
 
   // Handle Cover Image Selection
@@ -297,35 +295,8 @@ function AddListingPage({ existingData = null, isEditing = false }) {
               accept="image/*"
               multiple
               onChange={handleImageUpload}
+              disabled={images.length + existingImages.length >= 3}
             />
-
-            {/* Preview Existing and New Images */}
-            {/* <div className="image-preview">
-            {Array.isArray(existingImages) &&
-              existingImages.map((image, index) => (
-                <div key={index} className="image-container">
-                  <img
-                    src={`${API_URL}${image}`}
-                    alt={`Listing Image ${index + 1}`}
-                    className="uploaded-image"
-                  />
-                  <button
-                    type="button"
-                    className="remove-btn"
-                    onClick={() => handleRemoveImage(index, true)}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    type="button"
-                    className={`cover-btn ${coverImage === image ? "selected" : ""}`}
-                    onClick={() => handleCoverImageSelect(index, true)}
-                  >
-                    {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
-                  </button>
-                </div>
-              ))}
-          </div> */}
 
           <div className="image-preview">
             {/* Preview Existing Images */}
