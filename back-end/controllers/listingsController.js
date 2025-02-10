@@ -92,7 +92,7 @@ const getListingById = asyncHandler(async (req, res) => {
 
 const updateListing = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { existingImages, ...otherData } = req.body;
+  const { existingImages, coverImage, ...otherData } = req.body;
 
   const listing = await Listing.findByPk(id);
   if (!listing) {
@@ -115,7 +115,7 @@ const updateListing = asyncHandler(async (req, res) => {
   await listing.update({
     ...otherData,
     images: JSON.stringify(updatedImages),
-    coverImage: otherData.coverImage || listing.coverImage,
+    coverImage: coverImage || listing.coverImage,
   });
 
   res.status(200).json(listing);

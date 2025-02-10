@@ -140,6 +140,9 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     if (isEditing) {
       formData.append("existingImages", JSON.stringify(existingImages));
     }
+
+    // Add selected cover image
+    formData.append("coverImage", coverImage);
   
     try {
       const token = localStorage.getItem("userToken");
