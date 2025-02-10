@@ -300,7 +300,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
             />
 
             {/* Preview Existing and New Images */}
-            <div className="image-preview">
+            {/* <div className="image-preview">
             {Array.isArray(existingImages) &&
               existingImages.map((image, index) => (
                 <div key={index} className="image-container">
@@ -325,11 +325,60 @@ function AddListingPage({ existingData = null, isEditing = false }) {
                   </button>
                 </div>
               ))}
-          </div>
+          </div> */}
 
+          <div className="image-preview">
+            {/* Preview Existing Images */}
+            {Array.isArray(existingImages) &&
+              existingImages.map((image, index) => (
+                <div key={index} className="image-container">
+                  <img
+                    src={`${API_URL}${image}`}
+                    alt={`Listing Image ${index + 1}`}
+                    className="uploaded-image"
+                  />
+                  <button
+                    type="button"
+                    className="remove-btn"
+                    onClick={() => handleRemoveImage(index, true)}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    type="button"
+                    className={`cover-btn ${coverImage === image ? "selected" : ""}`}
+                    onClick={() => handleCoverImageSelect(index, true)}
+                  >
+                    {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
+                  </button>
+                </div>
+              ))}
 
-
-
+            {/* Preview New Images */}
+            {images.map((image, index) => (
+              <div key={index} className="image-container">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={`Listing Image ${index + 1}`}
+                  className="uploaded-image"
+                />
+                <button
+                  type="button"
+                  className="remove-btn"
+                  onClick={() => handleRemoveImage(index, false)}
+                >
+                  Remove
+                </button>
+                <button
+                  type="button"
+                  className={`cover-btn ${coverImage === image ? "selected" : ""}`}
+                  onClick={() => handleCoverImageSelect(index, false)}
+                >
+                  {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
+                </button>
+              </div>
+            ))}
+            </div>
 
           </div>
 
