@@ -27,6 +27,7 @@ function AddListingPage() {
       "Home & Furniture",
       "Books",
       "Beauty & Personal Care",
+      "Hair",
       "Toys & Games",
       "Sports Equipment",
       "Other"

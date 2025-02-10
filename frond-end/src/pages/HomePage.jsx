@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./../styles/HomePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import defaultProfileImage from "./../assets/images/avatar.png";
 
 function HomePage() {
@@ -83,6 +83,38 @@ function HomePage() {
     setFilteredListings(filtered);
   };
 
+  const handleEditListing = (listingId) => {
+    navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
+  };
+  
+  const handleDeleteListing = async (listingId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this listing?");
+    if (!confirmDelete) return;
+  
+    try {
+      const token = localStorage.getItem("userToken");
+      const response = await fetch(`${API_URL}/api/listings/${listingId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        setListings((prev) => prev.filter((listing) => listing.id !== listingId));
+        setFilteredListings((prev) => prev.filter((listing) => listing.id !== listingId));
+        alert("Listing deleted successfully!");
+      } else {
+        const data = await response.json();
+        alert(`Error deleting listing: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error deleting listing:", error);
+      alert("Failed to delete listing. Please try again.");
+    }
+  };
+  
+
   return (
     <div className="custom-home container">
       {/* Welcome Section */}
@@ -132,17 +164,42 @@ function HomePage() {
             {/* Listings Grid */}
             <div className="custom-grid">
               {filteredListings.slice(0, 5).map((listing) => (
-                <div key={listing.id} className="custom-card">
+                <div key={listing.id} className="listing-card">
                   <img
                     src={`${API_URL}${listing.coverImage}`}
                     alt={listing.title}
-                    className="custom-card-img"
+                    className="listing-img"
                   />
-                  <p className="custom-card-title">{listing.title}</p>
-                  <p className="custom-card-price">${listing.price}</p>
+                  <div className="listing-details">
+                    <p className="listing-title">{listing.title}</p>
+                    <p className="listing-price">${listing.price}</p>
+                    <div className="listing-status-category">
+                      <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+                        {listing.status || "Active"}
+                      </span>
+                      <span className={`listing-category ${listing.category.toLowerCase()}`}>
+                        {listing.category}
+                      </span>
+                    </div>
+                    <div className="listing-actions">
+                      <button
+                        className="btn edit-btn"
+                        onClick={() => handleEditListing(listing.id)}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                      <button
+                        className="btn delete-btn"
+                        onClick={() => handleDeleteListing(listing.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
+
 
             {/* View All Link */}
             {listings.length > 5 ? (
@@ -153,9 +210,10 @@ function HomePage() {
               <span className="custom-view-all inactive-link">View All</span>
             )}
 
-            <button className="btn custom-add-listing">
-              <Link to="/add-listing">Add a Listing</Link>
-            </button>
+            <Link to="/add-listing" className="custom-add-listing">
+              Add a Listing
+            </Link>
+
           </div>
         )}
       </div>
