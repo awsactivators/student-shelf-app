@@ -68,20 +68,18 @@ function HomePage() {
   // Handle filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
-
+  
+    // Filter the listings based on the selected category
     let filtered = listings;
-
-    if (filters.category) {
-      filtered = filtered.filter((listing) => listing.category === filters.category);
+  
+    if (value) {
+      filtered = listings.filter((listing) => listing.category.toLowerCase() === value.toLowerCase());
     }
-
-    if (filters.date) {
-      filtered = filtered.filter((listing) => new Date(listing.createdAt) >= new Date(filters.date));
-    }
-
-    setFilteredListings(filtered);
+  
+    setFilters({ ...filters, [name]: value }); // Update filters state
+    setFilteredListings(filtered); // Update filtered listings
   };
+  
 
   const handleEditListing = (listingId) => {
     navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
@@ -153,12 +151,11 @@ function HomePage() {
               <FontAwesomeIcon icon={faFilter} className="filter-icon" />
               <select name="category" onChange={handleFilterChange} className="filter-select">
                 <option value="">All Categories</option>
-                <option value="Wigs">Wigs</option>
-                <option value="Braids">Braids</option>
-                <option value="Hair Services">Hair Services</option>
+                <option value="product">Product</option>
+                <option value="service">Service</option>
               </select>
 
-              <input type="date" name="date" onChange={handleFilterChange} className="filter-date" />
+              {/* <input type="date" name="date" onChange={handleFilterChange} className="filter-date" /> */}
             </div>
 
             {/* Listings Grid */}
