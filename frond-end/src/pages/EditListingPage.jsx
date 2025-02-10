@@ -25,7 +25,7 @@ function EditListingPage() {
           console.error("Error response:", errorData);
           throw new Error(`Failed to fetch listing: ${response.status}`);
           navigate("/home");
-        }
+        } 
     
         const data = await response.json();
         setListingData(data);

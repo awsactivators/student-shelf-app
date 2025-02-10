@@ -79,8 +79,47 @@ const getListingById = asyncHandler(async (req, res) => {
     throw new Error("Listing not found");
   }
 
-  res.json(listing);
+  // Parse the JSON images field into an array before sending
+  const parsedListing = {
+    ...listing.toJSON(),
+    images: JSON.parse(listing.images), // Ensure `images` is an array
+  };
+
+  res.json(parsedListing);
 });
+
+
+const updateListing = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { existingImages, ...otherData } = req.body; // Extract existing images from request body
+
+  const listing = await Listing.findByPk(id);
+  if (!listing) {
+    res.status(404);
+    throw new Error("Listing not found");
+  }
+
+  if (listing.userId !== req.user.id) {
+    res.status(403);
+    throw new Error("Not authorized to update this listing");
+  }
+
+  // Merge existing images with new images
+  const updatedImages = [
+    ...(existingImages ? JSON.parse(existingImages) : []),
+    ...(req.files ? req.files.map((file) => `/uploads/listings/${file.filename}`) : []),
+  ];
+
+  // Update listing data
+  await listing.update({
+    ...otherData,
+    images: JSON.stringify(updatedImages),
+    coverImage: otherData.coverImage || listing.coverImage,
+  });
+
+  res.status(200).json(listing);
+});
+
 
 
 // @desc    DELETE listings

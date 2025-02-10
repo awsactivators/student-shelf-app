@@ -5,6 +5,7 @@ import "./../styles/AddListingPage.css";
 
 function AddListingPage({ existingData = null, isEditing = false }) {
   const API_URL = import.meta.env.VITE_API_URL;
+  console.log("API_URL:", API_URL);
 
   const [existingImages, setExistingImages] = useState([]);
   const [category, setCategory] = useState("");
@@ -62,16 +63,21 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   // Handle Image Removal
   const handleRemoveImage = (index, isExisting) => {
     if (isExisting) {
+      console.log("Removing existing image:", existingImages[index]);
       setExistingImages((prev) => prev.filter((_, i) => i !== index));
     } else {
+      console.log("Removing new image:", images[index]);
       setImages((prev) => prev.filter((_, i) => i !== index));
     }
   
     // Reset cover image if the removed image was the cover
-    if (coverImage === (isExisting ? existingImages[index] : images[index])) {
+    const removedImage = isExisting ? existingImages[index] : images[index];
+    if (coverImage === removedImage) {
       setCoverImage(null);
     }
   };
+  
+  
   
   
 
@@ -90,16 +96,17 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       setCategory(existingData.category || "");
       setSubcategory(existingData.subcategory || "");
       setPrice(existingData.price || "");
-      setExistingImages(existingData.images || []);
+      setExistingImages(existingData.images || []); // Load only once
       setCoverImage(existingData.coverImage || null);
     }
-  }, [isEditing, existingData]);
+  }, [isEditing, existingData]);  
 
 
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !description || !category || !price || (isEditing ? false : images.length === 0)) {
+  
+    if (!title || !description || !category || !price || (!isEditing && images.length === 0)) {
       setError("All fields except subcategory are required.");
       return;
     }
@@ -111,21 +118,15 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     formData.append("subcategory", subcategory === "Other" ? customSubcategory : subcategory);
     formData.append("price", price);
   
-    // images.forEach((image) => {
-    //   formData.append("images", image);
-    // });
-
-    // Add only new images to the FormData
+    // Add new images to FormData
     images.forEach((image) => {
       formData.append("images", image);
     });
-
-    // Include existing image paths when editing
+  
+    // Add existing image paths when editing
     if (isEditing) {
       formData.append("existingImages", JSON.stringify(existingImages));
     }
-  
-    formData.append("images", coverImage);
   
     try {
       const token = localStorage.getItem("userToken");
@@ -133,8 +134,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
         ? `${API_URL}/api/listings/${existingData.id}` // Update listing
         : `${API_URL}/api/listings`; // Create new listing
       const method = isEditing ? "PUT" : "POST";
-
-        
+  
       const response = await fetch(url, {
         method,
         headers: {
@@ -160,6 +160,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       setError("Something went wrong. Please try again.");
     }
   };
+  
   
 
   const menuItems = [
@@ -284,33 +285,34 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
             {/* Preview Existing and New Images */}
             <div className="image-preview">
-              {[...existingImages, ...images].map((image, index) => {
-                const isExisting = typeof image === "string"; // Check if image is from existing listing
-                return (
-                  <div key={index} className="image-container">
-                    <img
-                      src={isExisting ? `${API_URL}${image}` : URL.createObjectURL(image)}
-                      alt={`Listing Image ${index + 1}`}
-                      className="uploaded-image"
-                    />
-                    <button
-                      type="button"
-                      className="remove-btn"
-                      onClick={() => handleRemoveImage(index, isExisting)}
-                    >
-                      Remove
-                    </button>
-                    <button
-                      type="button"
-                      className={`cover-btn ${coverImage === image ? "selected" : ""}`}
-                      onClick={() => handleCoverImageSelect(index, isExisting)}
-                    >
-                      {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+            {[...existingImages, ...images].map((image, index) => {
+              const isExisting = typeof image === "string"; // Check if image is an existing URL
+              return (
+                <div key={index} className="image-container">
+                  <img
+                    src={isExisting ? image : URL.createObjectURL(image)}
+                    alt={`Listing Image ${index + 1}`}
+                    className="uploaded-image"
+                  />
+                  <button
+                    type="button"
+                    className="remove-btn"
+                    onClick={() => handleRemoveImage(index, isExisting)}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    type="button"
+                    className={`cover-btn ${coverImage === image ? "selected" : ""}`}
+                    onClick={() => handleCoverImageSelect(index, isExisting)}
+                  >
+                    {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
           </div>
 
 
