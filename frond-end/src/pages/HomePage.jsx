@@ -154,8 +154,6 @@ function HomePage() {
                 <option value="product">Product</option>
                 <option value="service">Service</option>
               </select>
-
-              {/* <input type="date" name="date" onChange={handleFilterChange} className="filter-date" /> */}
             </div>
 
             {/* Listings Grid */}
