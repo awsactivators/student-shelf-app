@@ -1,5 +1,5 @@
 const express = require("express");
-const { createListing, getListings, getListingById, deleteListing } = require("../controllers/listingsController");
+const { createListing, getListings, getListingById, deleteListing, updateListing } = require("../controllers/listingsController");
 const { listingUpload } = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -23,6 +23,9 @@ router.get("/:id", protect, getListingById);
 
 // Delete a listing
 router.delete("/:id", protect, deleteListing);
+
+// Update a listing
+router.put("/:id", protect, listingUpload.array("images", 3), updateListing);
 
 
 module.exports = router;

@@ -63,10 +63,8 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   // Handle Image Removal
   const handleRemoveImage = (index, isExisting) => {
     if (isExisting) {
-      console.log("Removing existing image:", existingImages[index]);
       setExistingImages((prev) => prev.filter((_, i) => i !== index));
     } else {
-      console.log("Removing new image:", images[index]);
       setImages((prev) => prev.filter((_, i) => i !== index));
     }
   
@@ -76,6 +74,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       setCoverImage(null);
     }
   };
+  
   
   
   
@@ -91,12 +90,26 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   // Populate fields with existing data when editing
   useEffect(() => {
     if (isEditing && existingData) {
+      console.log("Loaded existing images:", existingData.images);
+      console.log("Loaded new images:", images);
+      console.log("Loaded cover image:", existingData.coverImage);
+      console.log("Rendering unique images:", [...new Set(existingImages)]);
+      console.log("Cover image:", coverImage);
+
+
       setTitle(existingData.title || "");
       setDescription(existingData.description || "");
       setCategory(existingData.category || "");
       setSubcategory(existingData.subcategory || "");
       setPrice(existingData.price || "");
-      setExistingImages(existingData.images || []); // Load only once
+
+      // Parse existing images correctly
+      const parsedImages = Array.isArray(existingData.images)
+        ? existingData.images
+        : JSON.parse(existingData.images || "[]");
+      console.log("Parsed existing images:", parsedImages);
+      setExistingImages(parsedImages);
+
       setCoverImage(existingData.coverImage || null);
     }
   }, [isEditing, existingData]);  
@@ -285,33 +298,35 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
             {/* Preview Existing and New Images */}
             <div className="image-preview">
-            {[...existingImages, ...images].map((image, index) => {
-              const isExisting = typeof image === "string"; // Check if image is an existing URL
-              return (
+            {Array.isArray(existingImages) &&
+              existingImages.map((image, index) => (
                 <div key={index} className="image-container">
                   <img
-                    src={isExisting ? image : URL.createObjectURL(image)}
+                    src={`${API_URL}${image}`}
                     alt={`Listing Image ${index + 1}`}
                     className="uploaded-image"
                   />
                   <button
                     type="button"
                     className="remove-btn"
-                    onClick={() => handleRemoveImage(index, isExisting)}
+                    onClick={() => handleRemoveImage(index, true)}
                   >
                     Remove
                   </button>
                   <button
                     type="button"
                     className={`cover-btn ${coverImage === image ? "selected" : ""}`}
-                    onClick={() => handleCoverImageSelect(index, isExisting)}
+                    onClick={() => handleCoverImageSelect(index, true)}
                   >
                     {coverImage === image ? "Cover Image ✅" : "Set as Cover"}
                   </button>
                 </div>
-              );
-            })}
+              ))}
           </div>
+
+
+
+
 
           </div>
 

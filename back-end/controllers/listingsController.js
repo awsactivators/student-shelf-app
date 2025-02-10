@@ -84,6 +84,7 @@ const getListingById = asyncHandler(async (req, res) => {
     ...listing.toJSON(),
     images: JSON.parse(listing.images), // Ensure `images` is an array
   };
+  console.log(parsedListing);
 
   res.json(parsedListing);
 });
@@ -91,7 +92,7 @@ const getListingById = asyncHandler(async (req, res) => {
 
 const updateListing = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { existingImages, ...otherData } = req.body; // Extract existing images from request body
+  const { existingImages, ...otherData } = req.body;
 
   const listing = await Listing.findByPk(id);
   if (!listing) {
@@ -104,13 +105,13 @@ const updateListing = asyncHandler(async (req, res) => {
     throw new Error("Not authorized to update this listing");
   }
 
-  // Merge existing images with new images
+  // Merge existing and new images
   const updatedImages = [
     ...(existingImages ? JSON.parse(existingImages) : []),
     ...(req.files ? req.files.map((file) => `/uploads/listings/${file.filename}`) : []),
   ];
 
-  // Update listing data
+  // Update the listing
   await listing.update({
     ...otherData,
     images: JSON.stringify(updatedImages),
@@ -119,6 +120,7 @@ const updateListing = asyncHandler(async (req, res) => {
 
   res.status(200).json(listing);
 });
+
 
 
 
@@ -144,4 +146,4 @@ const deleteListing = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { createListing, getListings, deleteListing, getListingById };
+module.exports = { createListing, getListings, deleteListing, getListingById, updateListing };
