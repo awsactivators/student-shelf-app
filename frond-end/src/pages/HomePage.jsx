@@ -216,7 +216,7 @@ function HomePage() {
               {filteredListings.slice(0, 3).map((listing) => (
                 <div key={listing.id} className="listing-card">
                   <img
-                    src={`${API_URL}${listing.coverImage}`}
+                    src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
                     alt={listing.title}
                     className="listing-img"
                   />

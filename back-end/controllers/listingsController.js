@@ -180,12 +180,12 @@ const updateListing = asyncHandler(async (req, res) => {
 
   let updatedImages = [];
 
-  // If existingImages are present, parse them
+  // Preserve old images
   if (existingImages) {
     updatedImages = JSON.parse(existingImages);
   }
 
-  // If new images are uploaded, add them
+  // Add new images if uploaded
   if (req.files.images) {
     updatedImages = [
       ...updatedImages,
@@ -193,20 +193,31 @@ const updateListing = asyncHandler(async (req, res) => {
     ];
   }
 
-  // Check for new cover image separately
-  const newCoverImage = req.files.coverImage
-    ? `/uploads/listings/${req.files.coverImage[0].filename}`
-    : otherData.coverImage || listing.coverImage;
+  // Update cover image: Prioritize new upload, fallback to existing selection
+  let updatedCoverImage = listing.coverImage; // Default to old cover image
+  if (req.files.coverImage) {
+    updatedCoverImage = `/uploads/listings/${req.files.coverImage[0].filename}`;
+  } else if (otherData.coverImage) {
+    updatedCoverImage = otherData.coverImage;
+  }
 
   // Update listing data
   await listing.update({
     ...otherData,
     images: JSON.stringify(updatedImages),
-    coverImage: newCoverImage,
+    coverImage: updatedCoverImage,
   });
 
-  res.status(200).json(listing);
+  res.status(200).json({
+    message: "Listing updated successfully",
+    listing: {
+      ...listing.toJSON(),
+      images: updatedImages,
+      coverImage: updatedCoverImage,
+    },
+  });
 });
+
 
 
 
