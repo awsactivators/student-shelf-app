@@ -137,7 +137,7 @@ function HomePage() {
           <div className="custom-empty-listing text-center">
             <p>No listings yet.</p>
             <p>Search for product or service or start selling!</p>
-            <button className="btn add-listing-link-btn">
+            <button className=" add-listing-link-btn">
               <Link to="/add-listing" className="add-listing-link">
                 Add a Listing
               </Link>
@@ -197,7 +197,7 @@ function HomePage() {
 
 
             {/* View All Link */}
-            {listings.length > 5 ? (
+            {listings.length > 3 ? (
               <Link to="/listings" className="custom-view-all active-link">
                 View All
               </Link>

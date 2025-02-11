@@ -23,7 +23,7 @@ function EditListingPage() {
         if (!response.ok) {
           const errorData = await response.text(); // Read error response as text for debugging
           console.error("Error response:", errorData);
-          throw new Error(`Failed to fetch listing: ${response.status}`);
+          // throw new Error(`Failed to fetch listing: ${response.status}`);
           navigate("/home");
         } 
     

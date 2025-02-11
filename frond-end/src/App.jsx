@@ -27,7 +27,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ReviewPage from "./pages/ReviewPage";
 import EditListingPage from "./pages/EditListingPage";
 
-function Layout({ children, hasNewNotifications, userData }) {
+function Layout({ children, hasNewNotifications }) {
   const location = useLocation();
 
   // Define the pages where the Header or Footer should NOT be displayed

@@ -69,6 +69,16 @@ body {
 
 .add-listing-link-btn {
   word-wrap: none;
+  border: none;
+  padding: 0px;
+}
+
+.add-listing-link {
+  font-size: 1.3em;
+  background-color: rgb(29, 28, 28);
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
 }
 
 /* Listings Grid */
@@ -274,5 +284,9 @@ body {
 
   .custom-view-all {
     font-size: 0.8rem;
+  }
+
+  .add-listing-link-btn, .add-listing-link {
+    margin: 0px;
   }
 }
