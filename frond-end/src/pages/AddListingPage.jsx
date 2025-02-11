@@ -140,7 +140,11 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     }
 
     // Add selected cover image
-    formData.append("coverImage", coverImage);
+    // formData.append("coverImage", coverImage);
+    if (coverImage && typeof coverImage !== "string") {
+      formData.append("coverImage", coverImage);
+    }
+    
   
     try {
       const token = localStorage.getItem("userToken");

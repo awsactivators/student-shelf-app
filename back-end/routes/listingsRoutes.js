@@ -12,7 +12,20 @@ const setListingUpload = (req, res, next) => {
 };
 
 // Create new listing (with image upload)
-router.post("/", protect, setListingUpload, listingUpload.array("images", 3), createListing);
+// router.post("/", protect, setListingUpload, listingUpload.array("images", 3), createListing);
+
+// Update a listing
+router.put("/:id", protect, listingUpload.fields([
+  { name: "images", maxCount: 3 }, 
+  { name: "coverImage", maxCount: 1 }
+]), updateListing);
+
+// Create new listing
+router.post("/", protect, setListingUpload, listingUpload.fields([
+  { name: "images", maxCount: 3 }, 
+  { name: "coverImage", maxCount: 1 }
+]), createListing);
+
 
 
 // Get all listings

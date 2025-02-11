@@ -7,6 +7,51 @@ const { Listing } = require("../models");
 // @desc    Create new listing
 // @route   POST /api/listings
 // @access  Private
+// const createListing = asyncHandler(async (req, res) => {
+//   console.log("Received fields:", req.body);
+//   console.log("Received files:", req.files);
+
+//   const { title, description, category, subcategory, price } = req.body;
+//   const userId = req.user.id;
+
+//   if (!title || !description || !category || !price) {
+//     res.status(400);
+//     throw new Error("All required fields must be filled");
+//   }
+
+//   if (!req.files || req.files.length === 0) {
+//     res.status(400);
+//     throw new Error("At least one image is required!");
+//   }
+
+//   // Get uploaded file paths
+//   const imagePaths = req.files.map((file) => `/uploads/listings/${file.filename}`);
+//   console.log("Image paths:", imagePaths);
+
+//   // Set the first image as the cover image if none is specified
+//   const coverImage = imagePaths.length > 0 ? imagePaths[0] : null;
+
+//   // Create new listing
+//   try {
+//     const listing = await Listing.create({
+//       title,
+//       description,
+//       category,
+//       subcategory,
+//       price,
+//       images: JSON.stringify(imagePaths), // Store all images
+//       coverImage, // Store the selected cover image
+//       userId,
+//     });
+
+//     console.log("Listing created:", listing);
+//     res.status(201).json({ message: "Listing created successfully", listing });
+//   } catch (error) {
+//     console.error("Error saving listing:", error);
+//     res.status(500).json({ message: "Internal server error", error: error.message });
+//   }
+// });
+
 const createListing = asyncHandler(async (req, res) => {
   console.log("Received fields:", req.body);
   console.log("Received files:", req.files);
@@ -19,38 +64,35 @@ const createListing = asyncHandler(async (req, res) => {
     throw new Error("All required fields must be filled");
   }
 
-  if (!req.files || req.files.length === 0) {
+  if (!req.files || !req.files["images"] || req.files["images"].length === 0) {
     res.status(400);
     throw new Error("At least one image is required!");
   }
 
-  // Get uploaded file paths
-  const imagePaths = req.files.map((file) => `/uploads/listings/${file.filename}`);
-  console.log("Image paths:", imagePaths);
+  // Extract uploaded image paths
+  let imagePaths = req.files["images"].map((file) => `/uploads/listings/${file.filename}`);
 
-  // Set the first image as the cover image if none is specified
-  const coverImage = imagePaths.length > 0 ? imagePaths[0] : null;
+  // Check for cover image separately
+  const coverImagePath = req.files["coverImage"] ? `/uploads/listings/${req.files["coverImage"][0].filename}` : imagePaths[0];
 
-  // Create new listing
-  try {
-    const listing = await Listing.create({
-      title,
-      description,
-      category,
-      subcategory,
-      price,
-      images: JSON.stringify(imagePaths), // Store all images
-      coverImage, // Store the selected cover image
-      userId,
-    });
+  // Save listing to database
+  const listing = await Listing.create({
+    title,
+    description,
+    category,
+    subcategory,
+    price,
+    images: JSON.stringify(imagePaths),
+    coverImage: coverImagePath,
+    userId,
+  });
 
-    console.log("Listing created:", listing);
-    res.status(201).json({ message: "Listing created successfully", listing });
-  } catch (error) {
-    console.error("Error saving listing:", error);
-    res.status(500).json({ message: "Internal server error", error: error.message });
-  }
+  res.status(201).json({
+    message: "Listing created successfully",
+    listing,
+  });
 });
+
 
 
 

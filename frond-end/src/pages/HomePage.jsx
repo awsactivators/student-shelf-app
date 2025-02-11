@@ -10,6 +10,9 @@ function HomePage() {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [filters, setFilters] = useState({ category: "", date: "" });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [listingToDelete, setListingToDelete] = useState(null);
+
 
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -85,13 +88,44 @@ function HomePage() {
     navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
   };
   
-  const handleDeleteListing = async (listingId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this listing?");
-    if (!confirmDelete) return;
+  // const handleDeleteListing = async (listingId) => {
+  //   const confirmDelete = window.confirm("Are you sure you want to delete this listing?");
+  //   if (!confirmDelete) return;
+  
+  //   try {
+  //     const token = localStorage.getItem("userToken");
+  //     const response = await fetch(`${API_URL}/api/listings/${listingId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  
+  //     if (response.ok) {
+  //       setListings((prev) => prev.filter((listing) => listing.id !== listingId));
+  //       setFilteredListings((prev) => prev.filter((listing) => listing.id !== listingId));
+  //       alert("Listing deleted successfully!");
+  //     } else {
+  //       const data = await response.json();
+  //       alert(`Error deleting listing: ${data.message}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting listing:", error);
+  //     alert("Failed to delete listing. Please try again.");
+  //   }
+  // };
+
+  const handleDeleteClick = (listingId) => {
+    setListingToDelete(listingId);
+    setShowDeleteModal(true);
+  };
+  
+  const handleDeleteConfirm = async () => {
+    if (!listingToDelete) return;
   
     try {
       const token = localStorage.getItem("userToken");
-      const response = await fetch(`${API_URL}/api/listings/${listingId}`, {
+      const response = await fetch(`${API_URL}/api/listings/${listingToDelete}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -99,9 +133,8 @@ function HomePage() {
       });
   
       if (response.ok) {
-        setListings((prev) => prev.filter((listing) => listing.id !== listingId));
-        setFilteredListings((prev) => prev.filter((listing) => listing.id !== listingId));
-        alert("Listing deleted successfully!");
+        setListings((prev) => prev.filter((listing) => listing.id !== listingToDelete));
+        setFilteredListings((prev) => prev.filter((listing) => listing.id !== listingToDelete));
       } else {
         const data = await response.json();
         alert(`Error deleting listing: ${data.message}`);
@@ -109,8 +142,30 @@ function HomePage() {
     } catch (error) {
       console.error("Error deleting listing:", error);
       alert("Failed to delete listing. Please try again.");
+    } finally {
+      setShowDeleteModal(false);
+      setListingToDelete(null);
     }
   };
+  
+
+  const DeleteConfirmationModal = ({ show, onClose, onConfirm }) => {
+    if (!show) return null;
+  
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <h2>Confirm Deletion</h2>
+          <p>Are you sure you want to delete this listing?</p>
+          <div className="modal-actions">
+            <button onClick={onConfirm} className="delete-confirm-btn">Yes, Delete</button>
+            <button onClick={onClose} className="delete-cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
   
 
   return (
@@ -185,7 +240,7 @@ function HomePage() {
                       </button>
                       <button
                         className="delete-btn"
-                        onClick={() => handleDeleteListing(listing.id)}
+                        onClick={() => handleDeleteClick(listing.id)}
                       >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
@@ -212,6 +267,12 @@ function HomePage() {
           </div>
         )}
       </div>
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteConfirm}
+      />
+
     </div>
   );
 }
