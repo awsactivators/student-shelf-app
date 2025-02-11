@@ -132,9 +132,40 @@ const getListingById = asyncHandler(async (req, res) => {
 });
 
 
+// const updateListing = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   const { existingImages, coverImage, ...otherData } = req.body;
+
+//   const listing = await Listing.findByPk(id);
+//   if (!listing) {
+//     res.status(404);
+//     throw new Error("Listing not found");
+//   }
+
+//   if (listing.userId !== req.user.id) {
+//     res.status(403);
+//     throw new Error("Not authorized to update this listing");
+//   }
+
+//   // Merge existing and new images
+//   const updatedImages = [
+//     ...(existingImages ? JSON.parse(existingImages) : []),
+//     ...(req.files ? req.files.map((file) => `/uploads/listings/${file.filename}`) : []),
+//   ];
+
+//   // Update the listing
+//   await listing.update({
+//     ...otherData,
+//     images: JSON.stringify(updatedImages),
+//     coverImage: coverImage || listing.coverImage,
+//   });
+
+//   res.status(200).json(listing);
+// });
+
 const updateListing = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { existingImages, coverImage, ...otherData } = req.body;
+  const { existingImages, ...otherData } = req.body;
 
   const listing = await Listing.findByPk(id);
   if (!listing) {
@@ -147,21 +178,36 @@ const updateListing = asyncHandler(async (req, res) => {
     throw new Error("Not authorized to update this listing");
   }
 
-  // Merge existing and new images
-  const updatedImages = [
-    ...(existingImages ? JSON.parse(existingImages) : []),
-    ...(req.files ? req.files.map((file) => `/uploads/listings/${file.filename}`) : []),
-  ];
+  let updatedImages = [];
 
-  // Update the listing
+  // If existingImages are present, parse them
+  if (existingImages) {
+    updatedImages = JSON.parse(existingImages);
+  }
+
+  // If new images are uploaded, add them
+  if (req.files.images) {
+    updatedImages = [
+      ...updatedImages,
+      ...req.files.images.map((file) => `/uploads/listings/${file.filename}`),
+    ];
+  }
+
+  // Check for new cover image separately
+  const newCoverImage = req.files.coverImage
+    ? `/uploads/listings/${req.files.coverImage[0].filename}`
+    : otherData.coverImage || listing.coverImage;
+
+  // Update listing data
   await listing.update({
     ...otherData,
     images: JSON.stringify(updatedImages),
-    coverImage: coverImage || listing.coverImage,
+    coverImage: newCoverImage,
   });
 
   res.status(200).json(listing);
 });
+
 
 
 

@@ -38,7 +38,12 @@ router.get("/:id", protect, getListingById);
 router.delete("/:id", protect, deleteListing);
 
 // Update a listing
-router.put("/:id", protect, listingUpload.array("images", 3), updateListing);
+// router.put("/:id", protect, listingUpload.array("images", 3), updateListing);
+router.put("/:id", protect, listingUpload.fields([
+  { name: "images", maxCount: 3 }, 
+  { name: "coverImage", maxCount: 1 }
+]), updateListing);
+
 
 
 module.exports = router;
