@@ -1,57 +1,10 @@
 const asyncHandler = require("express-async-handler");
-// const db = require("../models"); 
-// const Listing = db.Listing;
 const { Listing } = require("../models");
 
 
 // @desc    Create new listing
 // @route   POST /api/listings
 // @access  Private
-// const createListing = asyncHandler(async (req, res) => {
-//   console.log("Received fields:", req.body);
-//   console.log("Received files:", req.files);
-
-//   const { title, description, category, subcategory, price } = req.body;
-//   const userId = req.user.id;
-
-//   if (!title || !description || !category || !price) {
-//     res.status(400);
-//     throw new Error("All required fields must be filled");
-//   }
-
-//   if (!req.files || req.files.length === 0) {
-//     res.status(400);
-//     throw new Error("At least one image is required!");
-//   }
-
-//   // Get uploaded file paths
-//   const imagePaths = req.files.map((file) => `/uploads/listings/${file.filename}`);
-//   console.log("Image paths:", imagePaths);
-
-//   // Set the first image as the cover image if none is specified
-//   const coverImage = imagePaths.length > 0 ? imagePaths[0] : null;
-
-//   // Create new listing
-//   try {
-//     const listing = await Listing.create({
-//       title,
-//       description,
-//       category,
-//       subcategory,
-//       price,
-//       images: JSON.stringify(imagePaths), // Store all images
-//       coverImage, // Store the selected cover image
-//       userId,
-//     });
-
-//     console.log("Listing created:", listing);
-//     res.status(201).json({ message: "Listing created successfully", listing });
-//   } catch (error) {
-//     console.error("Error saving listing:", error);
-//     res.status(500).json({ message: "Internal server error", error: error.message });
-//   }
-// });
-
 const createListing = asyncHandler(async (req, res) => {
   console.log("Received fields:", req.body);
   console.log("Received files:", req.files);
@@ -95,7 +48,6 @@ const createListing = asyncHandler(async (req, res) => {
 
 
 
-
 // @desc    Get all listings
 // @route   GET /api/listings
 // @access  Public
@@ -132,37 +84,10 @@ const getListingById = asyncHandler(async (req, res) => {
 });
 
 
-// const updateListing = asyncHandler(async (req, res) => {
-//   const { id } = req.params;
-//   const { existingImages, coverImage, ...otherData } = req.body;
 
-//   const listing = await Listing.findByPk(id);
-//   if (!listing) {
-//     res.status(404);
-//     throw new Error("Listing not found");
-//   }
-
-//   if (listing.userId !== req.user.id) {
-//     res.status(403);
-//     throw new Error("Not authorized to update this listing");
-//   }
-
-//   // Merge existing and new images
-//   const updatedImages = [
-//     ...(existingImages ? JSON.parse(existingImages) : []),
-//     ...(req.files ? req.files.map((file) => `/uploads/listings/${file.filename}`) : []),
-//   ];
-
-//   // Update the listing
-//   await listing.update({
-//     ...otherData,
-//     images: JSON.stringify(updatedImages),
-//     coverImage: coverImage || listing.coverImage,
-//   });
-
-//   res.status(200).json(listing);
-// });
-
+// @desc    Update a single listing by ID
+// @route   PUT /api/listings/:id
+// @access  Private
 const updateListing = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { existingImages, coverImage, ...otherData } = req.body;
@@ -186,7 +111,7 @@ const updateListing = asyncHandler(async (req, res) => {
   }
 
   // Add new images if uploaded
-  if (req.files.images) {
+  if (req.files && req.files.images) {
     updatedImages = [
       ...updatedImages,
       ...req.files.images.map((file) => `/uploads/listings/${file.filename}`),
@@ -195,10 +120,11 @@ const updateListing = asyncHandler(async (req, res) => {
 
   // Update cover image: Prioritize new upload, fallback to existing selection
   let updatedCoverImage = listing.coverImage; // Default to old cover image
+  
   if (req.files && req.files.coverImage) {
     updatedCoverImage = `/uploads/listings/${req.files.coverImage[0].filename}`;
   } else if (coverImage && typeof coverImage === "string") {
-    updatedCoverImage = otherData.coverImage;
+    updatedCoverImage = coverImage;
   }
 
   // Update listing data
@@ -217,8 +143,6 @@ const updateListing = asyncHandler(async (req, res) => {
     },
   });
 });
-
-
 
 
 

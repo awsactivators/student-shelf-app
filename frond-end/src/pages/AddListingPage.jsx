@@ -105,10 +105,12 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       const parsedImages = Array.isArray(existingData.images)
         ? existingData.images
         : JSON.parse(existingData.images || "[]");
+
       console.log("Parsed existing images:", parsedImages);
+
       setExistingImages(parsedImages);
 
-      setCoverImage(existingData.coverImage || null);
+      setCoverImage(existingData.coverImage || parsedImages[0] || null);
     }
   }, [isEditing, existingData]);  
 
@@ -141,10 +143,12 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
     // Add selected cover image
     // formData.append("coverImage", coverImage);
-    if (coverImage && typeof coverImage !== "string") {
-      formData.append("coverImage", coverImage);
-    } else if (coverImage) {
-      formData.append("coverImage", coverImage); // If it's a new file
+    if (coverImage) {
+      if (typeof coverImage === "string") {
+        formData.append("coverImage", coverImage);  // If it's an existing URL
+      } else {
+        formData.append("coverImage", coverImage);  // If it's a newly uploaded file
+      }
     }
     
   

@@ -25,10 +25,22 @@ function EditListingPage() {
           console.error("Error response:", errorData);
           // throw new Error(`Failed to fetch listing: ${response.status}`);
           navigate("/home");
+          return;
         } 
     
         const data = await response.json();
-        setListingData(data);
+
+        // Ensure images array is parsed correctly
+        const parsedImages = Array.isArray(data.images) ? data.images : JSON.parse(data.images || "[]");
+
+        // Ensure cover image is set correctly
+        const coverImage = data.coverImage || parsedImages[0] || null;
+
+        setListingData({
+          ...data,
+          images: parsedImages,
+          coverImage, // Make sure cover image is properly set
+        });
       } catch (error) {
         console.error("Error fetching listing data:", error);
         console.log("Failed to load listing data.");
