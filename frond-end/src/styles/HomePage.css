@@ -102,14 +102,14 @@ body {
 .custom-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 30px;
+  column-gap: 110px;
+  row-gap: 30px;
   margin-top: 20px;
 }
 
 
 .listing-card {
-  width: 250px;
-  /* height: 450px; */
+  width: 320px;
   background: white;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -124,7 +124,7 @@ body {
 
 .listing-img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -134,7 +134,7 @@ body {
   padding: 10px;
   background-color: var(--color-blackish);
   color: #ccc;
-  width: 230px;
+  width: 300px;
   border-radius: 8px;
   margin-top: 5px;
 }
@@ -188,11 +188,11 @@ body {
 }
 
 .edit-btn svg {
-  color: #007bff;
+  color: #69abf1;
 }
 
 .delete-btn svg {
-  color: #dc3545;
+  color: #ee6270;
 }
 
 
@@ -242,6 +242,12 @@ body {
 
   .custom-card-img {
     max-height: 150px;
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-grid {
+    place-items: center;
   }
 }
 
