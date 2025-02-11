@@ -34,7 +34,7 @@ function Header({ hasNewNotifications = false }) {
                 
                 {/* Logo */}
                 <div className="custom-logo d-flex align-items-center">
-                    <Link to={"/home"}>
+                    <Link to={"/home"} className="logo-link">
                     <img src={logo} alt="Student Shelf Logo" className="custom-logo-img" />
                     </Link>
                 </div>

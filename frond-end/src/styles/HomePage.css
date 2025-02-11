@@ -189,10 +189,12 @@ body {
 
 .edit-btn svg {
   color: #69abf1;
+  margin-top: 5px;
 }
 
 .delete-btn svg {
   color: #ee6270;
+  margin-top: 5px;
 }
 
 
