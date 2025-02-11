@@ -143,6 +143,8 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     // formData.append("coverImage", coverImage);
     if (coverImage && typeof coverImage !== "string") {
       formData.append("coverImage", coverImage);
+    } else if (coverImage) {
+      formData.append("coverImage", coverImage); // If it's a new file
     }
     
   

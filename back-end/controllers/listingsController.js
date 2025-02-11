@@ -165,7 +165,7 @@ const getListingById = asyncHandler(async (req, res) => {
 
 const updateListing = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { existingImages, ...otherData } = req.body;
+  const { existingImages, coverImage, ...otherData } = req.body;
 
   const listing = await Listing.findByPk(id);
   if (!listing) {
@@ -195,9 +195,9 @@ const updateListing = asyncHandler(async (req, res) => {
 
   // Update cover image: Prioritize new upload, fallback to existing selection
   let updatedCoverImage = listing.coverImage; // Default to old cover image
-  if (req.files.coverImage) {
+  if (req.files && req.files.coverImage) {
     updatedCoverImage = `/uploads/listings/${req.files.coverImage[0].filename}`;
-  } else if (otherData.coverImage) {
+  } else if (coverImage && typeof coverImage === "string") {
     updatedCoverImage = otherData.coverImage;
   }
 
