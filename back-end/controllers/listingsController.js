@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { Listing } = require("../models");
+const { Listing, User } = require("../models");
 
 
 // @desc    Create new listing
@@ -66,7 +66,12 @@ const getListings = asyncHandler(async (req, res) => {
 // @route   GET /api/listings/:id
 // @access  Private
 const getListingById = asyncHandler(async (req, res) => {
-  const listing = await Listing.findByPk(req.params.id);
+  const listing = await Listing.findByPk(req.params.id, {
+    include: {
+      model: User,
+      attributes: ["name", "campus", "rating", "activeListings"], // Select only needed fields
+    },
+  });
 
   if (!listing) {
     res.status(404);

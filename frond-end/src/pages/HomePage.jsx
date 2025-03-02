@@ -188,39 +188,41 @@ function HomePage() {
             {/* Listings Grid */}
             <div className="custom-grid">
               {filteredListings.slice(0, 3).map((listing) => (
-                <div key={listing.id} className="listing-card">
-                  <img
-                    src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
-                    alt={listing.title}
-                    className="listing-img"
-                  />
-                  <div className="listing-details">
-                    <p className="listing-title">{listing.title}</p>
-                    <p className="listing-price">${listing.price}</p>
-                    <div className="listing-status-category">
-                      <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
-                        {listing.status || "Active"}
-                      </span>
-                      <span className={`listing-category ${listing.category.toLowerCase()}`}>
-                        {listing.category}
-                      </span>
-                    </div>
-                    <div className="listing-actions">
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEditListing(listing.id)}
-                      >
-                        <FontAwesomeIcon icon={faEdit} />
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDeleteClick(listing.id)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
+                <Link to={`/listing/${listing.id}`} key={listing.id} className="listing-card-link">
+                  <div key={listing.id} className="listing-card">
+                    <img
+                      src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
+                      alt={listing.title}
+                      className="listing-img"
+                    />
+                    <div className="listing-details">
+                      <p className="listing-title">{listing.title}</p>
+                      <p className="listing-price">${listing.price}</p>
+                      <div className="listing-status-category">
+                        <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+                          {listing.status || "Active"}
+                        </span>
+                        <span className={`listing-category ${listing.category.toLowerCase()}`}>
+                          {listing.category}
+                        </span>
+                      </div>
+                      <div className="listing-actions">
+                        <button
+                          className="edit-btn"
+                          onClick={() => handleEditListing(listing.id)}
+                        >
+                          <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDeleteClick(listing.id)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

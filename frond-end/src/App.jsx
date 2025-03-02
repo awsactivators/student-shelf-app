@@ -88,6 +88,7 @@ function App() {
           <Route path="/agreement/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/leave-review" element={<ReviewPage />} />
           <Route path="/edit-listing/:id" element={<EditListingPage />} />
+          <Route path="/listing/:id" element={<ListingDetailsPage />} />
 
 
         </Routes>
