@@ -159,7 +159,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
         : `${API_URL}/api/listings`; // Create new listing
       const method = isEditing ? "PUT" : "POST";
   
-      const response = await fetchWithAuth(url, {
+      const response = await fetch(url, {
         method,
         headers: {
           Authorization: `Bearer ${token}`,

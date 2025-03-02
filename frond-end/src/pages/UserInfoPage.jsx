@@ -22,7 +22,7 @@ const UserInfoPage = () => {
       }
 
       try {
-        const response = await fetchWithAuth(`${API_URL}/api/users/me`, {
+        const response = await fetch(`${API_URL}/api/users/me`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const UserInfoPage = () => {
     try {
       const token = localStorage.getItem("userToken");
 
-      const response = await fetchWithAuth(`${API_URL}/api/users/update`, {
+      const response = await fetch(`${API_URL}/api/users/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +108,7 @@ const UserInfoPage = () => {
 
     try {
       const token = localStorage.getItem("userToken");
-      const response = await fetchWithAuth(`${API_URL}/api/users/upload-profile-image`, {
+      const response = await fetch(`${API_URL}/api/users/upload-profile-image`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

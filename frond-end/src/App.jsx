@@ -1,6 +1,5 @@
 import React from "react";
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./styles/App.css"; 
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -50,21 +49,20 @@ function Layout({ children, hasNewNotifications }) {
 
 function App() {
   const hasNewNotifications = true;
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
+  // const navigate = useNavigate(); 
+  // const location = useLocation(); 
 
-  // Redirect to login if session expires
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
+  // // Redirect to login if session expires
+  // useEffect(() => {
+  //   const token = localStorage.getItem("userToken");
 
-    if (!token) {
-      console.warn("Session expired or no token found. Redirecting to login.");
-      navigate("/login");
-    }
-  }, [location.pathname]); // Runs when the route changes
+  //   if (!token) {
+  //     console.warn("Session expired or no token found. Redirecting to login.");
+  //     navigate("/login");
+  //   }
+  // }, [location.pathname]); // Runs when the route changes
 
   return (
-    <Router>
       <Layout hasNewNotifications={hasNewNotifications}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -94,7 +92,6 @@ function App() {
 
         </Routes>
       </Layout>
-    </Router>
   );
 }
 

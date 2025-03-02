@@ -13,7 +13,7 @@ function EditListingPage() {
     const fetchListing = async () => {
       try {
         const token = localStorage.getItem("userToken");
-        const response = await fetchWithAuth(`${API_URL}/api/listings/${id}`, {
+        const response = await fetch(`${API_URL}/api/listings/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -28,7 +28,7 @@ function HomePage() {
 
       try {
         console.log("Fetching user data...");
-        const response = await fetchWithAuth(`${API_URL}/api/users/me`, {
+        const response = await fetch(`${API_URL}/api/users/me`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ function HomePage() {
 
     const fetchListings = async () => {
       try {
-        const response = await fetchWithAuth(`${API_URL}/api/listings`);
+        const response = await fetch(`${API_URL}/api/listings`);
         const data = await response.json();
         if (response.ok) {
           setListings(data);

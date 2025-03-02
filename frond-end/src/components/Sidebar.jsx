@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./../styles/Sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import defaultProfileImage from "./../assets/images/avatar.png";
+// import defaultProfileImage from "./../assets/images/avatar.png";
 
 function Sidebar({ menuItems = [], userData }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -64,7 +64,7 @@ function Sidebar({ menuItems = [], userData }) {
       </ul>
 
       {/* Profile Image - Uses Default if No Image is Set */}
-      <div className="profile-image">
+      {/* <div className="profile-image">
         <Link to={"/user-info"}>
           <img
             src={userData?.profileImage || defaultProfileImage}
@@ -72,7 +72,7 @@ function Sidebar({ menuItems = [], userData }) {
             className="custom-profile-img"
           />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
