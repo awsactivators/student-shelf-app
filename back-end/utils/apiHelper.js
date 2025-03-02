@@ -18,7 +18,8 @@ const fetchWithAuth = async (url, options = {}) => {
     const response = await fetch(`${API_URL}${url}`, { ...options, headers });
 
     // If session expired (401 Unauthorized), redirect to login
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
+      console.warn("Session expired. Redirecting to login...");
       localStorage.removeItem("userToken");
       window.location.href = "/login"; // Redirect user to login page
       return;

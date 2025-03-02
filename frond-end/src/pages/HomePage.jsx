@@ -28,7 +28,7 @@ function HomePage() {
 
       try {
         console.log("Fetching user data...");
-        const response = await fetch(`${API_URL}/api/users/me`, {
+        const response = await fetchWithAuth(`${API_URL}/api/users/me`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ function HomePage() {
 
     const fetchListings = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/listings`);
+        const response = await fetchWithAuth(`${API_URL}/api/listings`);
         const data = await response.json();
         if (response.ok) {
           setListings(data);
@@ -88,32 +88,6 @@ function HomePage() {
     navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
   };
   
-  // const handleDeleteListing = async (listingId) => {
-  //   const confirmDelete = window.confirm("Are you sure you want to delete this listing?");
-  //   if (!confirmDelete) return;
-  
-  //   try {
-  //     const token = localStorage.getItem("userToken");
-  //     const response = await fetch(`${API_URL}/api/listings/${listingId}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  
-  //     if (response.ok) {
-  //       setListings((prev) => prev.filter((listing) => listing.id !== listingId));
-  //       setFilteredListings((prev) => prev.filter((listing) => listing.id !== listingId));
-  //       alert("Listing deleted successfully!");
-  //     } else {
-  //       const data = await response.json();
-  //       alert(`Error deleting listing: ${data.message}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting listing:", error);
-  //     alert("Failed to delete listing. Please try again.");
-  //   }
-  // };
 
   const handleDeleteClick = (listingId) => {
     setListingToDelete(listingId);

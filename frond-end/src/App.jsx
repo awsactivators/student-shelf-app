@@ -1,4 +1,5 @@
 import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import "./styles/App.css"; 
 import RegisterPage from "./pages/RegisterPage";
@@ -49,6 +50,18 @@ function Layout({ children, hasNewNotifications }) {
 
 function App() {
   const hasNewNotifications = true;
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+
+  // Redirect to login if session expires
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+
+    if (!token) {
+      console.warn("Session expired or no token found. Redirecting to login.");
+      navigate("/login");
+    }
+  }, [location.pathname]); // Runs when the route changes
 
   return (
     <Router>
