@@ -52,7 +52,7 @@ function EditListingPage() {
   }, [id, API_URL, navigate]);
 
   if (!listingData) {
-    return <p>Loading...</p>; // Show a loading indicator until data is fetched
+    return <p>Loading...</p>; 
   }
 
   return (
