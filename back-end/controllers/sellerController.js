@@ -46,4 +46,29 @@ const getSellerById = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { getSellerById };
+
+// @desc    Get all listings for a specific seller
+// @route   GET /api/sellers/:sellerId/listings
+// @access  Public
+const getSellerListings = asyncHandler(async (req, res) => {
+  const { sellerId } = req.params;
+
+  // Check if seller exists
+  const seller = await User.findByPk(sellerId);
+  if (!seller) {
+    res.status(404);
+    throw new Error("Seller not found");
+  }
+
+  // Fetch listings for the seller
+  const listings = await Listing.findAll({
+    where: { userId: sellerId },
+    attributes: ["id", "title", "coverImage", "price", "category"],
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.json(listings);
+});
+
+
+module.exports = { getSellerById, getSellerListings };
