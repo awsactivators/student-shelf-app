@@ -54,7 +54,14 @@ const getSellerListings = asyncHandler(async (req, res) => {
   const { sellerId } = req.params;
 
   // Check if seller exists
-  const seller = await User.findByPk(sellerId);
+  const seller = await User.findByPk(sellerId, {
+    include: {
+      model: Listing,
+      as: "userListings",
+      attributes: ["id", "title", "coverImage", "price"],
+    },
+  });
+
   if (!seller) {
     res.status(404);
     throw new Error("Seller not found");
@@ -71,4 +78,37 @@ const getSellerListings = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { getSellerById, getSellerListings };
+// @desc    Get a specific listing for a seller
+// @route   GET /api/sellers/:sellerId/listings/:listingId
+// @access  Public
+const getSellerListingById = asyncHandler(async (req, res) => {
+  const { sellerId, listingId } = req.params;
+
+  // Find the listing that belongs to the seller
+  const listing = await Listing.findOne({
+    where: { id: listingId, userId: sellerId },
+    include: [
+      {
+        model: User,
+        as: "user", 
+        attributes: ["id", "name", "campus", "rating", "profileImage", "createdAt"],
+      },
+    ],
+  });
+
+  if (!listing) {
+    res.status(404);
+    throw new Error("Listing not found or does not belong to the seller");
+  }
+
+  // Parse images if stored as a JSON string
+  const parsedListing = {
+    ...listing.toJSON(),
+    images: Array.isArray(listing.images) ? listing.images : JSON.parse(listing.images || "[]"),
+  };
+
+  res.json(parsedListing);
+});
+
+
+module.exports = { getSellerById, getSellerListings, getSellerListingById };
