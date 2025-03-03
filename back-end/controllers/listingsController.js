@@ -69,7 +69,8 @@ const getListingById = asyncHandler(async (req, res) => {
   const listing = await Listing.findByPk(req.params.id, {
     include: {
       model: User,
-      attributes: ["name", "campus", "rating", "activeListings"], // Select only needed fields
+      as: "user", 
+      attributes: ["id", "name", "campus", "rating", "activeListings", "profileImage", "createdAt"], 
     },
   });
 
@@ -78,12 +79,21 @@ const getListingById = asyncHandler(async (req, res) => {
     throw new Error("Listing not found");
   }
 
+  if (!listing.user) {
+    res.status(400);
+    throw new Error("Listing is not associated with User!");
+  }
+  
+  console.log("Full Listing Data:", listing);
+  console.log("User Data:", listing.User); 
+
   // Parse the JSON images field into an array before sending
   const parsedListing = {
     ...listing.toJSON(),
     images: JSON.parse(listing.images), // Ensure `images` is an array
   };
-  console.log(parsedListing);
+
+  console.log("Updated Listing Response:", parsedListing);
 
   res.json(parsedListing);
 });

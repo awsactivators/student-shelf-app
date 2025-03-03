@@ -77,10 +77,12 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/product-service" element={<ListingDetailsPage />} />
-          <Route path="/seller" element={<SellerPage />} />
-          <Route path="/seller-listings" element={<SellerListingsPage />} />
-          <Route path="/seller-listing-details/:listingId" element={<SellerListingDetailsPage />} />
+          {/* <Route path="/product-service" element={<ListingDetailsPage />} /> */}
+          {/* <Route path="/seller" element={<SellerPage />} /> */}
+          <Route path="/seller/:sellerId/listings" element={<SellerListingsPage />} />
+          <Route path="/seller/:sellerId/listing/:listingId" element={<SellerListingDetailsPage />} />
+          {/* <Route path="/seller-listings" element={<SellerListingsPage />} />
+          <Route path="/seller-listing-details/:listingId" element={<SellerListingDetailsPage />} /> */}
           <Route path="/message" element={<MessagePage />} />
           <Route path="/support/faqs" element={<FAQsPage />} />
           <Route path="/support/contact" element={<ContactUsPage />} />
@@ -89,6 +91,7 @@ function App() {
           <Route path="/leave-review" element={<ReviewPage />} />
           <Route path="/edit-listing/:id" element={<EditListingPage />} />
           <Route path="/listing/:id" element={<ListingDetailsPage />} />
+          <Route path="/seller/:sellerId" element={<SellerPage />} />
 
 
         </Routes>

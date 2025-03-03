@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Listing, { foreignKey: "userId", as: "activeListings" });
+      User.hasMany(models.Review, { foreignKey: "sellerId", as: "reviews" });
     }
   }
   User.init({
@@ -23,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     profileImage: DataTypes.STRING,
     rating: DataTypes.DECIMAL,
-    activeListings: DataTypes.INTEGER
+    activeListings: DataTypes.INTEGER,
+    isVerified: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'User',

@@ -38,7 +38,7 @@ function ListingDetailsPage() {
           setListing({
             ...data,
             images: parsedImages,
-            user: data.User || {},
+            user: data.user || {},
           });
         } else {
           setError(data.message || "Listing not found");
@@ -88,6 +88,9 @@ function ListingDetailsPage() {
   if (error) return <p className="error-message">{error}</p>;
   if (!listing) return <p>Listing not found</p>;
 
+  console.log("Seller ID:", listing.user?.id);
+  console.log("Full Listing Data:", listing);
+
   return (
     <div className="search-listing-details-page">
       <main className="search-listing-details-content">
@@ -114,8 +117,13 @@ function ListingDetailsPage() {
         </p>
 
         <div className="search-seller-info">
-          <h2>
-            Seller Info <Link to={`/seller`} className="seller-link-icon"> <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> </Link>
+          <h2 className="search-seller-heading">
+            Seller Info
+            {listing.user?.id && (
+              <Link to={`/seller/${listing.user.id}`} className="seller-link-icon">
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+              </Link>
+            )}
           </h2>
           <p><strong>Name:</strong> {listing.user?.name || "Unknown"}</p>
           <p><strong>Campus:</strong> {listing.user?.campus || "Not provided"}</p>
@@ -150,11 +158,11 @@ export default ListingDetailsPage;
 
 
 
+
 // import React, { useState, useEffect } from "react";
 // import { useParams, Link } from "react-router-dom";
-// // import Sidebar from "../components/Sidebar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowUpRightFromSquare, faMessage, faStar } from "@fortawesome/free-solid-svg-icons";
+// import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import "./../styles/ListingDetailsPage.css";
 
 // function ListingDetailsPage() {
@@ -164,7 +172,7 @@ export default ListingDetailsPage;
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 //   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [focusedImage, setFocusedImage] = useState(null);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
 //   useEffect(() => {
 //     const fetchListing = async () => {
@@ -185,15 +193,14 @@ export default ListingDetailsPage;
 //         });
 
 //         const data = await response.json();
+//         console.log("Fetched Listing Data:", data);
 
 //         if (response.ok) {
-//           // Ensure `images` is an array
 //           const parsedImages = Array.isArray(data.images) ? data.images : JSON.parse(data.images || "[]");
-
 //           setListing({
 //             ...data,
 //             images: parsedImages,
-//             user: data.User || {}, // Ensure user object is always available
+//             user: data.User || {},
 //           });
 //         } else {
 //           setError(data.message || "Listing not found");
@@ -208,14 +215,22 @@ export default ListingDetailsPage;
 //     fetchListing();
 //   }, [id, API_URL]);
 
-//   const openModal = () => setIsModalOpen(true);
-//   const closeModal = () => {
-//     setIsModalOpen(false);
-//     setFocusedImage(null);
+//   const openModal = (index) => {
+//     setCurrentImageIndex(index);
+//     setIsModalOpen(true);
 //   };
 
-//   const openFocusedView = (image) => setFocusedImage(image);
-//   const closeFocusedView = () => setFocusedImage(null);
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//   };
+
+//   const nextImage = () => {
+//     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % listing.images.length);
+//   };
+
+//   const prevImage = () => {
+//     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + listing.images.length) % listing.images.length);
+//   };
 
 //   const renderStars = (rating) => {
 //     const stars = [];
@@ -235,24 +250,12 @@ export default ListingDetailsPage;
 //   if (error) return <p className="error-message">{error}</p>;
 //   if (!listing) return <p>Listing not found</p>;
 
-//   // const menuItems = [
-//   //   {
-//   //     label: "Details",
-//   //     submenu: [
-//   //       { label: "Listing", path: "/search" },
-//   //       { label: "Product/Service", path: "/product-service" },
-//   //     ],
-//   //   },
-//   // ];
-
-
 //   return (
 //     <div className="search-listing-details-page">
-//       {/* <Sidebar menuItems={menuItems} activeMenu="Product/Service" /> */}
 //       <main className="search-listing-details-content">
 //         <div className="search-images-section">
 //           <div className="search-cover-image">
-//             <img src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""} alt="Main Listing" onClick={openModal} />
+//             <img src={`${API_URL}${listing.coverImage}`} alt="Main Listing" onClick={() => openModal(0)} />
 //           </div>
 //           <div className="search-thumbnail-images">
 //             {listing.images.map((image, index) => (
@@ -260,7 +263,7 @@ export default ListingDetailsPage;
 //                 key={index}
 //                 src={`${API_URL}${image}`}
 //                 alt={`Thumbnail ${index + 1}`}
-//                 onClick={openModal}
+//                 onClick={() => openModal(index)}
 //               />
 //             ))}
 //           </div>
@@ -274,7 +277,16 @@ export default ListingDetailsPage;
 
 //         <div className="search-seller-info">
 //           <h2>
-//             Seller Info <Link to={`/seller`} className="seller-link-icon"> <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> </Link>
+//             Seller Info
+//             {listing.user?.id ? (
+//               <Link to={`/seller/${listing.user.id}`} className="seller-link-icon">
+//                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+//               </Link>
+//             ) : (
+//               <span className="disabled-icon">
+//                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+//               </span>
+//             )}
 //           </h2>
 //           <p><strong>Name:</strong> {listing.user?.name || "Unknown"}</p>
 //           <p><strong>Campus:</strong> {listing.user?.campus || "Not provided"}</p>
@@ -292,25 +304,10 @@ export default ListingDetailsPage;
 //         {isModalOpen && (
 //           <div className="search-image-modal" onClick={closeModal}>
 //             <div className="search-modal-content" onClick={(e) => e.stopPropagation()}>
-//               <div className="search-modal-thumbnails">
-//                 {listing.images.map((image, index) => (
-//                   <img
-//                     key={index}
-//                     src={`${API_URL}${image}`}
-//                     alt={`Modal Image ${index + 1}`}
-//                     onClick={() => openFocusedView(image)}
-//                   />
-//                 ))}
-//               </div>
-
-//               <button className="search-modal-close" onClick={closeModal}>✖</button>
-
-//               {focusedImage && (
-//                 <div className="search-focused-view">
-//                   <img src={focusedImage} alt="Focused" />
-//                   <button className="search-focused-close" onClick={closeFocusedView}>✖</button>
-//                 </div>
-//               )}
+//               <button className="search-modal-close" onClick={closeModal}><FontAwesomeIcon icon={faTimes} /></button>
+//               <button className="search-prev-image" onClick={prevImage}><FontAwesomeIcon icon={faChevronLeft} /></button>
+//               <img src={`${API_URL}${listing.images[currentImageIndex]}`} alt="Expanded" className="search-modal-image" />
+//               <button className="search-next-image" onClick={nextImage}><FontAwesomeIcon icon={faChevronRight} /></button>
 //             </div>
 //           </div>
 //         )}

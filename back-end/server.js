@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const listingsRoutes = require("./routes/listingsRoutes");
+const sellerRoutes = require("./routes/sellerRoutes");
 const { errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
@@ -33,6 +34,10 @@ app.use("/api/users", userRoutes);
 
 // Listing route
 app.use("/api/listings", listingsRoutes);
+
+// Seller route
+app.use("/api/sellers", sellerRoutes);
+
 
 app.use(errorHandler);
 
