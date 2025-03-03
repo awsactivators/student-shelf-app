@@ -19,7 +19,8 @@
 }
 
 .sellerdet-cover-image img {
-  width: 100%;
+  width: 225px;
+  height: 225px;
   /* max-width: 600px; */
   border-radius: 10px;
   margin-bottom: 10px;
@@ -142,8 +143,8 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 800px;
-  width: 90%;
+  /* max-width: 800px; */
+  /* width: 90%; */
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -166,6 +167,14 @@
 
 .sellerdet-modal-thumbnails img.selected-thumbnail {
   border-color: #02dcbb;
+}
+
+.sellerdet-modal-image {
+  width: 400px; 
+  height: 390px; 
+  object-fit: contain; 
+  display: block;
+  margin: auto;
 }
 
 .sellerdet-focused-view {
@@ -293,6 +302,11 @@
     font-size: 16px;
     padding: 5px 8px;
   }
+
+  .sellerdet-modal-image {
+    width: 250px; 
+    height: 240px; 
+  }
 }
 
 
@@ -355,5 +369,13 @@
   .sellerdet-go-back-btn {
     font-size: 0.9em;
     padding: 6px 10px;
+  }
+}
+
+
+@media (max-width: 350px) {
+  .sellerdet-modal-image {
+    width: 150px; 
+    height: 140px; 
   }
 }
