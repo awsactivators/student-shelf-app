@@ -31,7 +31,20 @@ const getSellerById = asyncHandler(async (req, res) => {
     throw new Error("Seller not found");
   }
 
-  res.json(seller);
+  // res.json(seller);
+
+  // Fix profileImage URL
+  const API_URL = process.env.API_URL || "http://localhost:5500"; // Ensure BASE URL is correct
+  const fullProfileImage = seller.profileImage
+    ? seller.profileImage.startsWith("http") // Check if already full URL
+      ? seller.profileImage
+      : `${API_URL}${seller.profileImage}`
+    : "../assets/default-logo.jpg"; // Default if no profile image
+
+  res.json({
+    ...seller.toJSON(),
+    profileImage: fullProfileImage,  // ✅ Ensure correct image path
+  });
 });
 
 module.exports = { getSellerById };

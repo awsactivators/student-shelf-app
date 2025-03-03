@@ -84,6 +84,11 @@ function SellerPage() {
   if (error) return <p className="error-message">{error}</p>;
   if (!seller) return <p>Seller not found</p>;
 
+  console.log("Seller profile image:", seller.profileImage);
+  console.log("Full API response:", seller);
+
+
+
   return (
     <div className="sellerinfo-seller-page">
       <div className="sellerinfo-seller-header">
@@ -91,9 +96,13 @@ function SellerPage() {
           <button className="sellerinfo-follow-btn">Follow</button>
         </div>
         <img
-          src={seller.profileImage ? `${API_URL}${seller.profileImage}` : defaultLogo}
+          src={seller.profileImage || defaultLogo}
           alt="Seller Profile"
           className="sellerinfo-seller-profile-img"
+          onError={(e) => {
+            e.target.onerror = null; // Prevent infinite loop
+            e.target.src = defaultLogo; // Set default image if error occurs
+          }}
         />
         <h1 className="sellerinfo-seller-name">
           {seller.name}{" "}
