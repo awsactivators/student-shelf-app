@@ -126,7 +126,7 @@ function SellerPage() {
           {seller.userListings?.length > 0 ? (
             <div className="sellerinfo-listings-grid">
               {seller.userListings.slice(0, 4).map((listing, index) => (
-                <Link to={`/listing/${listing.id}`} key={index}>
+                <Link to={`/seller/${sellerId}/listing/${listing.id}`} key={index}>
                   <img
                     src={`${API_URL}${listing.coverImage}`}
                     alt={`Active Listing ${index + 1}`}
