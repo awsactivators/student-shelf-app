@@ -16,26 +16,6 @@ function ListingsPage() {
   const [listingToDelete, setListingToDelete] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchListings = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await fetch(`${API_URL}/api/listings`);
-  //       const data = await response.json();
-  //       if (response.ok) {
-  //         setListings(data);
-  //       } else {
-  //         setError(data.message || "Failed to load listings");
-  //       }
-  //     } catch (error) {
-  //       setError("An error occurred while fetching listings");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchListings();
-  // }, [API_URL]);
-
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -87,9 +67,9 @@ function ListingsPage() {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
-  const handleEditListing = (listingId) => {
-    navigate(`/edit-listing/${listingId}`, { state: { fromListings: true } });
-  };
+  // const handleEditListing = (listingId) => {
+  //   navigate(`/edit-listing/${listingId}`, { state: { fromListings: true } });
+  // };
 
   const handleDeleteClick = (listingId) => {
     setListingToDelete(listingId);
@@ -162,29 +142,62 @@ function ListingsPage() {
         ) : error ? (
           <p className="error-message">{error}</p>
         ) : (
-          <div className="listings-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
+          <div
+            className="listings-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: "20px",
+            }}
+          >
             {currentListings.map((listing) => (
-              <Link to={`/listing/${listing.id}`} key={listing.id} className="listing-card-link">
-                <div key={listing.id} className="listing-card">
-                  <img src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""} alt={listing.title} className="listing-img" />
-                  <div className="listing-details">
-                    <p className="listing-title">{listing.title}</p>
-                    <p className="listing-price">${listing.price}</p>
-                    <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>{listing.status || "Active"}</span>
-                    <span className={`listing-category ${listing.category.toLowerCase()}`}>{listing.category}</span>
-                    <div className="listing-actions">
-                      <button className="edit-btn" onClick={() => handleEditListing(listing.id)}>
-                        <FontAwesomeIcon icon={faEdit} />
-                      </button>
-                      <button className="delete-btn" onClick={() => handleDeleteClick(listing.id)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
+              <div
+                key={listing.id}
+                className="listing-card"
+                onClick={() => navigate(`/listing/${listing.id}`)} // Navigate to listing details on click
+              >
+                <img
+                  src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""}
+                  alt={listing.title}
+                  className="listing-img"
+                />
+                <div className="listing-details">
+                  <p className="listing-title">{listing.title}</p>
+                  <p className="listing-price">${listing.price}</p>
+                  <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+                    {listing.status || "Active"}
+                  </span>
+                  <span className={`listing-category ${listing.category.toLowerCase()}`}>
+                    {listing.category}
+                  </span>
+                  <div className="listing-actions">
+                    {/* Edit Button */}
+                    <button
+                      className="edit-btn"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevents bubbling to parent div
+                        navigate(`/edit-listing/${listing.id}`); // Navigate to edit page
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+
+                    {/* Delete Button */}
+                    <button
+                      className="delete-btn"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevents bubbling
+                        handleDeleteClick(listing.id);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
+
         )}
 
         <div className="pagination-controls d-flex justify-content-between">

@@ -23,9 +23,6 @@ function HomePage() {
         setError("Not authorized. Please log in.");
         navigate("/login");
         return;
-        // console.error("No token found, redirecting to login.");
-        // navigate("/login");
-        // return;
       }
 
       try {
@@ -51,20 +48,6 @@ function HomePage() {
       }
     };
 
-    // const fetchListings = async () => {
-    //   try {
-    //     const response = await fetch(`${API_URL}/api/listings`);
-    //     const data = await response.json();
-    //     if (response.ok) {
-    //       setListings(data);
-    //       setFilteredListings(data);
-    //     } else {
-    //       console.error("Error fetching listings:", data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching listings:", error);
-    //   }
-    // };
 
     const fetchListings = async () => {
       const token = localStorage.getItem("userToken");
@@ -98,12 +81,11 @@ function HomePage() {
         setFilteredListings([]);
       }
     };
-    
-    
 
     fetchUserData();
     fetchListings();
   }, [navigate, API_URL]);
+
 
   // Handle filter changes
   const handleFilterChange = (e) => {
@@ -121,9 +103,9 @@ function HomePage() {
   };
   
 
-  const handleEditListing = (listingId) => {
-    navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
-  };
+  // const handleEditListing = (listingId) => {
+  //   navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
+  // };
   
 
   const handleDeleteClick = (listingId) => {
@@ -222,46 +204,57 @@ function HomePage() {
               </select>
             </div>
 
-            {/* Listings Grid */}
             <div className="custom-grid">
               {filteredListings.slice(0, 3).map((listing) => (
-                <Link to={`/listing/${listing.id}`} key={listing.id} className="listing-card-link">
-                  <div key={listing.id} className="listing-card">
-                    <img
-                      src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
-                      alt={listing.title}
-                      className="listing-img"
-                    />
-                    <div className="listing-details">
-                      <p className="listing-title">{listing.title}</p>
-                      <p className="listing-price">${listing.price}</p>
-                      <div className="listing-status-category">
-                        <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
-                          {listing.status || "Active"}
-                        </span>
-                        <span className={`listing-category ${listing.category.toLowerCase()}`}>
-                          {listing.category}
-                        </span>
-                      </div>
-                      <div className="listing-actions">
-                        <button
-                          className="edit-btn"
-                          onClick={() => handleEditListing(listing.id)}
-                        >
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteClick(listing.id)}
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </div>
+                <div
+                  key={listing.id}
+                  className="listing-card"
+                  onClick={() => navigate(`/listing/${listing.id}`)} // Navigate to listing details on card click
+                >
+                  <img
+                    src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
+                    alt={listing.title}
+                    className="listing-img"
+                  />
+                  <div className="listing-details">
+                    <p className="listing-title">{listing.title}</p>
+                    <p className="listing-price">${listing.price}</p>
+                    <div className="listing-status-category">
+                      <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+                        {listing.status || "Active"}
+                      </span>
+                      <span className={`listing-category ${listing.category.toLowerCase()}`}>
+                        {listing.category}
+                      </span>
+                    </div>
+                    <div className="listing-actions">
+                      {/* Edit Button (Prevents navigation to details page) */}
+                      <button
+                        className="edit-btn"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevents event from bubbling to parent div
+                          navigate(`/edit-listing/${listing.id}`); // Navigate to edit page
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+
+                      {/* Delete Button */}
+                      <button
+                        className="delete-btn"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevents event bubbling
+                          handleDeleteClick(listing.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
+
 
 
             {/* View All Link */}
