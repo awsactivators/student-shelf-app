@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const listingsRoutes = require("./routes/listingsRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
 const { errorHandler } = require("./middleware/errorMiddleware");
+const searchRoutes = require("./routes/searchRoutes");
 
 dotenv.config();
 
@@ -39,6 +40,9 @@ app.use("/api/listings", listingsRoutes);
 
 // Seller route
 app.use("/api/sellers", sellerRoutes);
+
+// Add Search Route
+app.use("/api/search", searchRoutes);
 
 
 app.use(errorHandler);

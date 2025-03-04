@@ -1,5 +1,5 @@
 const express = require("express");
-const { createListing, getListings, getListingById, deleteListing, updateListing } = require("../controllers/listingsController");
+const { createListing, getListings, getListingById, deleteListing, updateListing, searchListings } = require("../controllers/listingsController");
 const { listingUpload } = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -41,6 +41,8 @@ router.put("/:id", protect, listingUpload.fields([
   { name: "coverImage", maxCount: 1 }
 ]), updateListing);
 
+// Search 
+router.get("/search", searchListings);
 
 
 module.exports = router;

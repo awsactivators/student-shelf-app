@@ -14,7 +14,7 @@ import UserInfoPage from "./pages/UserInfoPage";
 import PasswordPage from "./pages/PasswordPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotificationsPage from "./pages/NotificationsPage";
-import SearchPage from "./pages/SearchPage";
+import SearchResultPage from "./pages/SearchResultPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import SellerPage from "./pages/SellerPage";
 import SellerListingsPage from "./pages/SellerListingsPage";
@@ -76,13 +76,9 @@ function App() {
           <Route path="/password" element={<PasswordPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          {/* <Route path="/product-service" element={<ListingDetailsPage />} /> */}
-          {/* <Route path="/seller" element={<SellerPage />} /> */}
+          <Route path="/search" element={<SearchResultPage />} />
           <Route path="/seller/:sellerId/listings" element={<SellerListingsPage />} />
           <Route path="/seller/:sellerId/listing/:listingId" element={<SellerListingDetailsPage />} />
-          {/* <Route path="/seller-listings" element={<SellerListingsPage />} />
-          <Route path="/seller-listing-details/:listingId" element={<SellerListingDetailsPage />} /> */}
           <Route path="/message" element={<MessagePage />} />
           <Route path="/support/faqs" element={<FAQsPage />} />
           <Route path="/support/contact" element={<ContactUsPage />} />

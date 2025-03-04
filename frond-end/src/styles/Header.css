@@ -136,6 +136,12 @@
   margin-right: 30px;
 }
 
+.custom-search-submit {
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
 /* Notification Bell */
 .notification-container {
   position: relative;
@@ -218,6 +224,12 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .custom-search-box {
+    margin-right: 0;
+  }
+}
+
 
 
 /* Media Query for max-width: 805px */
@@ -262,6 +274,10 @@
     display: none; 
   }
 
+  .custom-search-box {
+    margin-right: 0;
+  }
+
   .mobile-sidebar.open {
     left: 0; /* Align sidebar with the menu icon on the left */
   }
@@ -271,6 +287,7 @@
     align-items: center;
     position: relative;
     transition: width 0.3s ease;
+    margin-right: 0;
   }
 
   .notification-container {

@@ -74,16 +74,6 @@ const getListings = asyncHandler(async (req, res) => {
 });
 
 
-// const getListings = asyncHandler(async (req, res) => {
-//   try {
-//     const listings = await Listing.findAll();
-//     res.json(listings);
-//   } catch (error) {
-//     console.error("Error fetching listings:", error.message);
-//     res.status(500).json({ message: "Server error fetching listings" });
-//   }
-// });
-
 
 // @desc    Get a single listing by ID
 // @route   GET /api/listings/:id
@@ -207,4 +197,27 @@ const deleteListing = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { createListing, getListings, deleteListing, getListingById, updateListing };
+
+// @desc    Search Listings
+// @route   GET /api/listings/search?query=
+// @access  Public
+const searchListings = asyncHandler(async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+  }
+
+  const listings = await Listing.findAll({
+      where: {
+          title: { [Op.like]: `%${query}%` }
+      },
+      attributes: ["id", "title", "coverImage", "price"],
+  });
+
+  res.json(listings);
+});
+
+
+
+module.exports = { createListing, getListings, deleteListing, getListingById, updateListing, searchListings };

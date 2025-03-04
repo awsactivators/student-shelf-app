@@ -1,0 +1,143 @@
+/* General Styles */
+.search-results-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.search-results-page h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Grid Layout for Listings */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Individual Search Result Card */
+.search-listing-card {
+  display: block;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 300px;
+  padding: 10px;
+}
+
+.search-listing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Listing Image */
+.search-listing-img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Listing Information */
+.search-listing-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.search-listing-info h2 {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #000;
+}
+
+.search-listing-info p {
+  font-size: 1.1em;
+  color: var(--color-success);
+}
+
+.search-listing-details {
+  padding: 10px;
+  text-align: center;
+}
+
+
+/* Error Message */
+.error-message {
+  font-size: 1.2em;
+  color: red;
+  font-weight: bold;
+}
+
+/* Responsiveness */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .search-results-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+  }
+
+  .search-listing-card {
+      border-radius: 8px;
+  }
+
+  .search-listing-img {
+      height: 150px;
+  }
+
+  .search-listing-info {
+      padding: 10px;
+  }
+
+  .search-listing-info h2 {
+      font-size: 1.1em;
+  }
+
+  .search-listing-info p {
+      font-size: 1em;
+  }
+}
+
+/* Mobile Devices (576px and below) */
+@media (max-width: 576px) {
+  .search-results-page {
+      padding: 10px;
+      margin-right: 40px;
+  }
+
+  .search-results-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+  }
+
+  .search-listing-img {
+      height: 120px;
+  }
+
+  .search-listing-info {
+      padding: 5px;
+  }
+
+  .search-listing-info h2 {
+      font-size: 1em;
+  }
+
+  .search-listing-info p {
+      font-size: 0.9em;
+  }
+}
