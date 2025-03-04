@@ -53,13 +53,36 @@ const createListing = asyncHandler(async (req, res) => {
 // @access  Public
 const getListings = asyncHandler(async (req, res) => {
   try {
-    const listings = await Listing.findAll();
-    res.json(listings);
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      res.status(401);
+      throw new Error("Not authorized, no token");
+    }
+
+    const userId = req.user.id; // Get the logged-in user's ID
+
+    const listings = await Listing.findAll({
+      where: { userId }, // Only fetch listings for this user
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json(listings.length ? listings : []); // Always return an array
   } catch (error) {
     console.error("Error fetching listings:", error.message);
     res.status(500).json({ message: "Server error fetching listings" });
   }
 });
+
+
+// const getListings = asyncHandler(async (req, res) => {
+//   try {
+//     const listings = await Listing.findAll();
+//     res.json(listings);
+//   } catch (error) {
+//     console.error("Error fetching listings:", error.message);
+//     res.status(500).json({ message: "Server error fetching listings" });
+//   }
+// });
 
 
 // @desc    Get a single listing by ID

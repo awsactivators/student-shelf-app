@@ -28,8 +28,8 @@
 }
 
 .listing-img {
-  width: 100%;
-  max-height: 250px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
 }
 

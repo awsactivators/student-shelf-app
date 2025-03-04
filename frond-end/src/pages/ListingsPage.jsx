@@ -16,11 +16,47 @@ function ListingsPage() {
   const [listingToDelete, setListingToDelete] = useState(null);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const fetchListings = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetch(`${API_URL}/api/listings`);
+  //       const data = await response.json();
+  //       if (response.ok) {
+  //         setListings(data);
+  //       } else {
+  //         setError(data.message || "Failed to load listings");
+  //       }
+  //     } catch (error) {
+  //       setError("An error occurred while fetching listings");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchListings();
+  // }, [API_URL]);
+
+
   useEffect(() => {
     const fetchListings = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/api/listings`);
+        const token = localStorage.getItem("userToken"); // Get the token
+
+        if (!token) {
+          setError("Not authorized. Please log in.");
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`${API_URL}/api/listings`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token
+          },
+        });
+
         const data = await response.json();
         if (response.ok) {
           setListings(data);
@@ -33,8 +69,10 @@ function ListingsPage() {
         setLoading(false);
       }
     };
+
     fetchListings();
   }, [API_URL]);
+
 
   const totalPages = Math.ceil(listings.length / listingsPerPage);
   const startIndex = (currentPage - 1) * listingsPerPage;

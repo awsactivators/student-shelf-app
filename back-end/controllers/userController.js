@@ -86,20 +86,44 @@ const loginUser = async (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.user.id, {
-      attributes: { exclude: ["password"] } // Exclude password
+    attributes: { exclude: ["password"] }, // Exclude password
   });
 
   if (user) {
-    const fullProfileImage = user.profileImage?.startsWith("http")
-      ? user.profileImage // Already a full URL, no need to modify
-      : `${req.protocol}://${req.get("host")}${user.profileImage}`;
+    // Default profile image path
+    const DEFAULT_PROFILE_IMAGE = "/assets/default-profile.jpg"; // Ensure this exists in backend `public/assets/`
+    
+    // Set profile image, ensuring full URL
+    const fullProfileImage = user.profileImage
+      ? user.profileImage.startsWith("http") // use full URL later
+        ? user.profileImage
+        : `${req.protocol}://${req.get("host")}${user.profileImage}`
+      : `${req.protocol}://${req.get("host")}${DEFAULT_PROFILE_IMAGE}`; // Use default
 
-      res.json({ ...user.toJSON(), profileImage: fullProfileImage });
+    res.json({ ...user.toJSON(), profileImage: fullProfileImage });
   } else {
-      res.status(404);
-      throw new Error("User not found");
+    res.status(404);
+    throw new Error("User not found");
   }
 });
+
+
+// const getUserProfile = asyncHandler(async (req, res) => {
+//   const user = await User.findByPk(req.user.id, {
+//       attributes: { exclude: ["password"] } // Exclude password
+//   });
+
+//   if (user) {
+//     const fullProfileImage = user.profileImage?.startsWith("http")
+//       ? user.profileImage // Already a full URL, no need to modify
+//       : `${req.protocol}://${req.get("host")}${user.profileImage}`;
+
+//       res.json({ ...user.toJSON(), profileImage: fullProfileImage });
+//   } else {
+//       res.status(404);
+//       throw new Error("User not found");
+//   }
+// });
 
 
 // @desc    Update user profile

@@ -28,6 +28,8 @@ app.get("/", (req, res) => {
 // Serve images for profile and listing uploads
 app.use("/uploads/profile", express.static(path.join(__dirname, "uploads/profile")));
 app.use("/uploads/listings", express.static(path.join(__dirname, "uploads/listings")));
+app.use("/assets", express.static("public/assets")); // Serve images from public folder
+
 
 // User Routes
 app.use("/api/users", userRoutes);

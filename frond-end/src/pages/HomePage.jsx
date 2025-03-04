@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./../styles/HomePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import defaultProfileImage from "./../assets/images/avatar.png";
 
 function HomePage() {
   const [userData, setUserData] = useState(null);
@@ -21,9 +20,12 @@ function HomePage() {
     const fetchUserData = async () => {
       const token = localStorage.getItem("userToken");
       if (!token) {
-        console.error("No token found, redirecting to login.");
+        setError("Not authorized. Please log in.");
         navigate("/login");
         return;
+        // console.error("No token found, redirecting to login.");
+        // navigate("/login");
+        // return;
       }
 
       try {
@@ -49,20 +51,55 @@ function HomePage() {
       }
     };
 
+    // const fetchListings = async () => {
+    //   try {
+    //     const response = await fetch(`${API_URL}/api/listings`);
+    //     const data = await response.json();
+    //     if (response.ok) {
+    //       setListings(data);
+    //       setFilteredListings(data);
+    //     } else {
+    //       console.error("Error fetching listings:", data.message);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching listings:", error);
+    //   }
+    // };
+
     const fetchListings = async () => {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        setError("Not authorized. Please log in.");
+        return;
+      }
+    
       try {
-        const response = await fetch(`${API_URL}/api/listings`);
+        const response = await fetch(`${API_URL}/api/listings`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
         const data = await response.json();
+        
         if (response.ok) {
-          setListings(data);
-          setFilteredListings(data);
+          setListings(Array.isArray(data) ? data : []); // Ensure it's an array
+          setFilteredListings(Array.isArray(data) ? data : []); // Ensure it's an array
         } else {
           console.error("Error fetching listings:", data.message);
+          setListings([]); // Set empty array if no listings
+          setFilteredListings([]); // Prevent TypeError
         }
       } catch (error) {
         console.error("Error fetching listings:", error);
+        setListings([]); // Prevent TypeError if error occurs
+        setFilteredListings([]);
       }
     };
+    
+    
 
     fetchUserData();
     fetchListings();
@@ -147,11 +184,11 @@ function HomePage() {
       {/* Welcome Section */}
       <div className="custom-home-header d-flex justify-content-between align-items-center">
         <h1>
-          Welcome <span className="custom-user-name">{userData?.name || "User"}</span>!
+          Welcome <span className="custom-user-name">{userData?.name || ""}</span>!
         </h1>
         <Link to={"/user-info"}>
           <img
-            src={userData?.profileImage || defaultProfileImage}
+            src={userData?.profileImage || "../assets/images/default-logo.jpg"}
             alt="User Profile"
             className="custom-user-profile-img"
           />
@@ -162,7 +199,7 @@ function HomePage() {
       <div className="custom-listings">
         <h2>Listings</h2>
 
-        {listings.length === 0 ? (
+        {filteredListings.length === 0 ? (
           <div className="custom-empty-listing text-center">
             <p>No listings yet.</p>
             <p>Search for product or service or start selling!</p>
@@ -228,13 +265,18 @@ function HomePage() {
 
 
             {/* View All Link */}
-            {listings.length > 3 ? (
+            {filteredListings.length > 3 && (
+              <Link to="/listings" className="custom-view-all active-link">
+                View All
+              </Link>
+            )}
+            {/* {listings.length > 3 ? (
               <Link to="/listings" className="custom-view-all active-link">
                 View All
               </Link>
             ) : (
               <span className="custom-view-all inactive-link">View All</span>
-            )}
+            )} */}
 
             <Link to="/add-listing" className="custom-add-listing">
               Add a Listing

@@ -11,8 +11,6 @@ const setListingUpload = (req, res, next) => {
   next();
 };
 
-// Create new listing (with image upload)
-// router.post("/", protect, setListingUpload, listingUpload.array("images", 3), createListing);
 
 // Update a listing
 router.put("/:id", protect, listingUpload.fields([
@@ -29,7 +27,7 @@ router.post("/", protect, setListingUpload, listingUpload.fields([
 
 
 // Get all listings
-router.get("/", getListings);
+router.get("/", protect, getListings);
 
 // Get a single listing by ID
 router.get("/:id", protect, getListingById);
@@ -38,7 +36,6 @@ router.get("/:id", protect, getListingById);
 router.delete("/:id", protect, deleteListing);
 
 // Update a listing
-// router.put("/:id", protect, listingUpload.array("images", 3), updateListing);
 router.put("/:id", protect, listingUpload.fields([
   { name: "images", maxCount: 3 }, 
   { name: "coverImage", maxCount: 1 }
