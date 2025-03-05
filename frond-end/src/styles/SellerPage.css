@@ -113,27 +113,24 @@
   display: flex;
   align-items: center;
   position: relative;
-  overflow: hidden;
-  width: 100%; 
 }
 
 .sellerinfo-reviews-list {
   display: flex;
-  gap: 20px;
-  padding-bottom: 30px;
-  padding-top: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  width: calc(300px * 4); 
+  width: 100%;
+  padding: 10px;
 }
 
 .sellerinfo-review-item {
-  max-width: 290px;
-  padding: 15px;
-  background-color: #000;
-  border-radius: 10px;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-  font-size: 1em;
+  flex: 0 0 auto;
+  width: 250px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
   flex-shrink: 0;
   color: whitesmoke;
@@ -174,6 +171,25 @@
   z-index: 1;
 }
 
+.scroll-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  padding: 10px;
+}
+
+.scroll-btn.left {
+  position: absolute;
+  left: -30px;
+}
+
+.scroll-btn.right {
+  position: absolute;
+  right: -30px;
+}
+
 .sellerinfo-scroll-btn:hover {
   background-color: #e0e0e0;
 }
@@ -183,6 +199,7 @@
 .sellerinfo-action-buttons {
   display: flex;
   gap: 20px; 
+  margin-top: 25px;
 }
 
 .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
@@ -394,5 +411,27 @@
 @media (max-width: 416px) {
   .sellerinfo-leave-review-btn, .sellerinfo-message-btn {
     padding: 10px;
+  }
+
+  .sellerinfo-action-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  .sellerinfo-action-buttons button {
+    width: 90%;
+    max-width: 350px; /* Optional: Limit button width */
+    margin-bottom: 10px;
+  }
+
+  .sellerinfo-action-buttons .seller-message-icon-btn,
+  .sellerinfo-action-buttons .seller-leave-review-icon-btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
   }
 }

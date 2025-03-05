@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./../styles/SellerPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faMessage, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faMessage, faStar, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "./../assets/images/default-logo.jpg";
 
 function SellerPage() {
-  const { sellerId } = useParams();  
+  const { sellerId } = useParams();
   const API_URL = import.meta.env.VITE_API_URL;
   const [seller, setSeller] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const reviewListRef = useRef(null); // Reference for scrolling
 
   useEffect(() => {
     const fetchSeller = async () => {
@@ -40,12 +41,12 @@ function SellerPage() {
         });
 
         const data = await response.json();
-        console.log("Fetched Seller Data:", JSON.stringify(data, null, 2)); 
+        console.log("Fetched Seller Data:", JSON.stringify(data, null, 2));
 
         if (response.ok) {
           setSeller({
             ...data,
-            activeListings: data.userListings || [], 
+            activeListings: data.userListings || [],
           });
         } else {
           setError(data.message || "Seller not found");
@@ -61,17 +62,13 @@ function SellerPage() {
   }, [sellerId, API_URL]);
 
   const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <FontAwesomeIcon
-          key={i}
-          icon={faStar}
-          className={i <= Math.round(rating) ? "sellerinfo-filled-star" : "sellerinfo-empty-star"}
-        />
-      );
-    }
-    return stars;
+    return [...Array(5)].map((_, i) => (
+      <FontAwesomeIcon
+        key={i}
+        icon={faStar}
+        className={i < Math.round(rating) ? "sellerinfo-filled-star" : "sellerinfo-empty-star"}
+      />
+    ));
   };
 
   const formatDate = (dateString) => {
@@ -80,14 +77,19 @@ function SellerPage() {
     return `${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
+  const scrollReviews = (direction) => {
+    if (reviewListRef.current) {
+      const scrollAmount = 250; // Adjust scroll amount as needed
+      reviewListRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   if (loading) return <p>Loading seller details...</p>;
   if (error) return <p className="error-message">{error}</p>;
   if (!seller) return <p>Seller not found</p>;
-
-  console.log("Seller profile image:", seller.profileImage);
-  console.log("Full API response:", seller);
-
-
 
   return (
     <div className="sellerinfo-seller-page">
@@ -100,8 +102,8 @@ function SellerPage() {
           alt="Seller Profile"
           className="sellerinfo-seller-profile-img"
           onError={(e) => {
-            e.target.onerror = null; // Prevent infinite loop
-            e.target.src = defaultLogo; // Set default image if error occurs
+            e.target.onerror = null;
+            e.target.src = defaultLogo;
           }}
         />
         <h1 className="sellerinfo-seller-name">
@@ -118,8 +120,6 @@ function SellerPage() {
           <p><strong>Bio:</strong> {seller.bio || "No bio available"}</p>
           <p><strong>Policies:</strong> {seller.policy || "No policies listed"}</p>
         </div>
-
-        <p><strong>Member Since:</strong> {new Date(seller.createdAt).toLocaleDateString()}</p>
 
         <div className="sellerinfo-active-listings">
           <h2>Active Listings:</h2>
@@ -145,18 +145,33 @@ function SellerPage() {
           )}
         </div>
 
+        {/* Reviews Section with Scrollable Feature */}
         <div className="sellerinfo-reviews-section">
           <h2>Reviews:</h2>
           {seller.reviews?.length > 0 ? (
-            <div className="sellerinfo-reviews-list">
-              {seller.reviews.map((review) => (
-                <div key={review.id} className="sellerinfo-review-item">
-                  <p className="sellerinfo-review-text">{review.comment}</p>
-                  <p className="sellerinfo-reviewer-name">
-                    - {review.buyer?.name || "Anonymous"} ({review.rating}⭐)
-                  </p>
-                </div>
-              ))}
+            <div className="sellerinfo-reviews-container">
+              {seller.reviews.length > 3 && (
+                <button className="scroll-btn left" onClick={() => scrollReviews("left")}>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+              )}
+
+              <div className="sellerinfo-reviews-list" ref={reviewListRef}>
+                {seller.reviews.map((review) => (
+                  <div key={review.id} className="sellerinfo-review-item">
+                    <p className="sellerinfo-review-text">{review.comment}</p>
+                    <p className="sellerinfo-reviewer-name">
+                      - {review.buyer?.name || "Anonymous"} ({review.rating}⭐)
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {seller.reviews.length > 3 && (
+                <button className="scroll-btn right" onClick={() => scrollReviews("right")}>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+              )}
             </div>
           ) : (
             <p>No reviews yet</p>
@@ -173,7 +188,6 @@ function SellerPage() {
             <Link to={`/leave-review/${seller.id}`} className="seller-leave-review-icon-btn">
               Leave a Review
             </Link>
-
           </button>
         </div>
       </div>
