@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/UserInfoPage.css";
-import profileImagePlaceholder from "./../assets/images/avatar.png";
+import profileImagePlaceholder from "./../assets/images/default-logo.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faStar, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faStar, faSave, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const UserInfoPage = () => {
   const [userData, setUserData] = useState(null);
@@ -33,6 +33,7 @@ const UserInfoPage = () => {
         console.log("Response status:", response.status);
 
         const data = await response.json();
+        console.log("User Data Response:", data);
         if (response.ok) {
           setUserData(data);
           setUpdatedUserData(data);
@@ -142,6 +143,19 @@ const UserInfoPage = () => {
     return stars;
   };
 
+  // Scroll reviews
+  const reviewListRef = useRef(null);
+
+  const scrollReviews = (direction) => {
+    if (reviewListRef.current) {
+      const scrollAmount = 250; // Adjust scroll amount if necessary
+      reviewListRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
 
   return (
     <div className="user-info-page">
@@ -214,8 +228,37 @@ const UserInfoPage = () => {
                 <span className="rating-value">({userData.rating}/5)</span>
               </p>
               <p>
-                <strong>Active Listings:</strong> {userData.activeListings}
+                <strong>Active Listings:</strong>{" "}
+                <Link to="/listings" className="active-listing-link">{userData?.userListings?.length || 0}</Link>
               </p>
+              {/* <p>
+                <strong>Active Listings:</strong> {userData.activeListings}
+              </p> */}
+
+              {/* Reviews Section */}
+              <div className="userinfo-reviews-section">
+                <h2>My Reviews</h2>
+                {userData?.reviews?.length > 0 ? (
+                  <div className="userinfo-reviews-wrapper">
+                    <button className="scroll-btn left" onClick={() => scrollReviews("left")}>
+                      <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <div className="userinfo-reviews-list" ref={reviewListRef}>
+                      {userData.reviews.map((review) => (
+                        <div key={review.id} className="userinfo-review-item">
+                          <p className="userinfo-review-text">{review.comment}</p>
+                          <p className="userinfo-reviewer-name">- {review.buyer?.name || "Anonymous"} ({review.rating}⭐)</p>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="scroll-btn right" onClick={() => scrollReviews("right")}>
+                      <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                  </div>
+                ) : (
+                  <p>No reviews yet</p>
+                )}
+              </div>
 
               {editMode ? (
                 <div>

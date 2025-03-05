@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models"); // Import the User model
+const { User, Listing, Review } = require("../models"); // Import the User model
 const asyncHandler = require("express-async-handler");
 // const { profileUpload } = require("../middleware/uploadMiddleware");
 
@@ -87,6 +87,22 @@ const loginUser = async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.user.id, {
     attributes: { exclude: ["password"] }, // Exclude password
+
+    include: [
+      {
+        model: Listing,
+        as: "userListings",
+        attributes: ["id", "title", "coverImage", "price"],
+      },
+      {
+        model: Review,
+        as: "reviews",
+        attributes: ["id", "rating", "comment", "createdAt"],
+        include: [
+          { model: User, as: "seller", attributes: ["name"] },
+        ],
+      },
+    ],
   });
 
   if (user) {
@@ -107,23 +123,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-
-// const getUserProfile = asyncHandler(async (req, res) => {
-//   const user = await User.findByPk(req.user.id, {
-//       attributes: { exclude: ["password"] } // Exclude password
-//   });
-
-//   if (user) {
-//     const fullProfileImage = user.profileImage?.startsWith("http")
-//       ? user.profileImage // Already a full URL, no need to modify
-//       : `${req.protocol}://${req.get("host")}${user.profileImage}`;
-
-//       res.json({ ...user.toJSON(), profileImage: fullProfileImage });
-//   } else {
-//       res.status(404);
-//       throw new Error("User not found");
-//   }
-// });
 
 
 // @desc    Update user profile
