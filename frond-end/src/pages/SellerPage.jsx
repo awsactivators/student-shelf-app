@@ -40,7 +40,7 @@ function SellerPage() {
         });
 
         const data = await response.json();
-        console.log("Fetched Seller Data:", JSON.stringify(data, null, 2)); // Debugging
+        console.log("Fetched Seller Data:", JSON.stringify(data, null, 2)); 
 
         if (response.ok) {
           setSeller({
@@ -147,12 +147,14 @@ function SellerPage() {
 
         <div className="sellerinfo-reviews-section">
           <h2>Reviews:</h2>
-          {seller.userReviews?.length > 0 ? (
+          {seller.reviews?.length > 0 ? (
             <div className="sellerinfo-reviews-list">
-              {seller.userReviews.map((review, index) => (
-                <div key={index} className="sellerinfo-review-item">
-                  <p className="sellerinfo-review-text">{review.text}</p>
-                  <p className="sellerinfo-reviewer-name">- {review.reviewer} ({review.rating}⭐)</p>
+              {seller.reviews.map((review) => (
+                <div key={review.id} className="sellerinfo-review-item">
+                  <p className="sellerinfo-review-text">{review.comment}</p>
+                  <p className="sellerinfo-reviewer-name">
+                    - {review.buyer?.name || "Anonymous"} ({review.rating}⭐)
+                  </p>
                 </div>
               ))}
             </div>
@@ -168,9 +170,10 @@ function SellerPage() {
             </Link>
           </button>
           <button className="sellerinfo-leave-review-btn">
-            <Link to={`/leave-review?sellerId=${sellerId}`} className="seller-leave-review-icon-btn">
+            <Link to={`/leave-review/${seller.id}`} className="seller-leave-review-icon-btn">
               Leave a Review
             </Link>
+
           </button>
         </div>
       </div>

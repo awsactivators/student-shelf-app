@@ -44,6 +44,9 @@ app.use("/api/sellers", sellerRoutes);
 // Add Search Route
 app.use("/api/search", searchRoutes);
 
+// Add Review
+app.use("/api/reviews", require("./routes/reviewRoutes"));
+
 
 app.use(errorHandler);
 

@@ -85,6 +85,7 @@ function App() {
           <Route path="/agreement/terms" element={<TermsPage />} />
           <Route path="/agreement/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/leave-review" element={<ReviewPage />} />
+          <Route path="/leave-review/:sellerId" element={<ReviewPage />} />
           <Route path="/edit-listing/:id" element={<EditListingPage />} />
           <Route path="/listing/:id" element={<ListingDetailsPage />} />
           <Route path="/seller/:sellerId" element={<SellerPage />} />
