@@ -91,16 +91,29 @@ function HomePage() {
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
   
-    // Filter the listings based on the selected category
-    let filtered = listings;
+    // Filter listings based on category
+    let filtered = listings.filter(
+      (listing) => !value || listing.category.toLowerCase() === value.toLowerCase()
+    );
   
-    if (value) {
-      filtered = listings.filter((listing) => listing.category.toLowerCase() === value.toLowerCase());
-    }
-  
-    setFilters({ ...filters, [name]: value }); // Update filters state
-    setFilteredListings(filtered); // Update filtered listings
+    setFilters({ ...filters, [name]: value });
+    setFilteredListings(filtered);
   };
+  
+  
+  // const handleFilterChange = (e) => {
+  //   const { name, value } = e.target;
+  
+  //   // Filter the listings based on the selected category
+  //   let filtered = listings;
+  
+  //   if (value) {
+  //     filtered = listings.filter((listing) => listing.category.toLowerCase() === value.toLowerCase());
+  //   }
+  
+  //   setFilters({ ...filters, [name]: value }); // Update filters state
+  //   setFilteredListings(filtered); // Update filtered listings
+  // };
   
 
   // const handleEditListing = (listingId) => {
@@ -181,11 +194,12 @@ function HomePage() {
       <div className="custom-listings">
         <h2>Listings</h2>
 
-        {filteredListings.length === 0 ? (
+        {/* Show empty state when no listings at all (for new users) */}
+        {listings.length === 0 ? (
           <div className="custom-empty-listing text-center">
             <p>No listings yet.</p>
-            <p>Search for product or service or start selling!</p>
-            <button className=" add-listing-link-btn">
+            <p>Search for a product or service, or start selling!</p>
+            <button className="add-listing-link-btn">
               <Link to="/add-listing" className="add-listing-link">
                 Add a Listing
               </Link>
@@ -204,12 +218,20 @@ function HomePage() {
               </select>
             </div>
 
+            {/* Show message when a filter is applied but no matching results */}
+            {filteredListings.length === 0 && listings.length > 0 && (
+              <p className="custom-no-filtered-listings text-center">
+                No {filters.category} listings available.
+              </p>
+            )}
+
+            {/* Listings Grid */}
             <div className="custom-grid">
               {filteredListings.slice(0, 3).map((listing) => (
                 <div
                   key={listing.id}
                   className="listing-card"
-                  onClick={() => navigate(`/listing/${listing.id}`)} // Navigate to listing details on card click
+                  onClick={() => navigate(`/listing/${listing.id}`)}
                 >
                   <img
                     src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
@@ -228,12 +250,12 @@ function HomePage() {
                       </span>
                     </div>
                     <div className="listing-actions">
-                      {/* Edit Button (Prevents navigation to details page) */}
+                      {/* Edit Button */}
                       <button
                         className="edit-btn"
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevents event from bubbling to parent div
-                          navigate(`/edit-listing/${listing.id}`); // Navigate to edit page
+                          e.stopPropagation();
+                          navigate(`/edit-listing/${listing.id}`);
                         }}
                       >
                         <FontAwesomeIcon icon={faEdit} />
@@ -243,7 +265,7 @@ function HomePage() {
                       <button
                         className="delete-btn"
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevents event bubbling
+                          e.stopPropagation();
                           handleDeleteClick(listing.id);
                         }}
                       >
@@ -255,37 +277,154 @@ function HomePage() {
               ))}
             </div>
 
-
-
             {/* View All Link */}
             {filteredListings.length > 3 && (
               <Link to="/listings" className="custom-view-all active-link">
                 View All
               </Link>
             )}
-            {/* {listings.length > 3 ? (
-              <Link to="/listings" className="custom-view-all active-link">
-                View All
-              </Link>
-            ) : (
-              <span className="custom-view-all inactive-link">View All</span>
-            )} */}
 
             <Link to="/add-listing" className="custom-add-listing">
               Add a Listing
             </Link>
-
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
       <DeleteConfirmationModal
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDeleteConfirm}
       />
-
     </div>
   );
+
+  // return (
+  //   <div className="custom-home container">
+  //     {/* Welcome Section */}
+  //     <div className="custom-home-header d-flex justify-content-between align-items-center">
+  //       <h1>
+  //         Welcome <span className="custom-user-name">{userData?.name || ""}</span>!
+  //       </h1>
+  //       <Link to={"/user-info"}>
+  //         <img
+  //           src={userData?.profileImage || "../assets/images/default-logo.jpg"}
+  //           alt="User Profile"
+  //           className="custom-user-profile-img"
+  //         />
+  //       </Link>
+  //     </div>
+
+  //     {/* Listings Section */}
+  //     <div className="custom-listings">
+  //       <h2>Listings</h2>
+
+  //       {filteredListings.length === 0 ? (
+  //         <div className="custom-empty-listing text-center">
+  //           <p>No listings yet.</p>
+  //           <p>Search for product or service or start selling!</p>
+  //           <button className=" add-listing-link-btn">
+  //             <Link to="/add-listing" className="add-listing-link">
+  //               Add a Listing
+  //             </Link>
+  //           </button>
+  //         </div>
+  //       ) : (
+  //         <div className="custom-listings-grid">
+  //           {/* Filter Section */}
+  //           <div className="custom-filter d-flex align-items-center">
+  //             <span>Filter</span>
+  //             <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+  //             <select name="category" onChange={handleFilterChange} className="filter-select">
+  //               <option value="">All Categories</option>
+  //               <option value="product">Product</option>
+  //               <option value="service">Service</option>
+  //             </select>
+  //           </div>
+
+  //           <div className="custom-grid">
+  //             {filteredListings.slice(0, 3).map((listing) => (
+  //               <div
+  //                 key={listing.id}
+  //                 className="listing-card"
+  //                 onClick={() => navigate(`/listing/${listing.id}`)} // Navigate to listing details on card click
+  //               >
+  //                 <img
+  //                   src={listing.coverImage ? `${API_URL}${listing.coverImage}` : defaultImage}
+  //                   alt={listing.title}
+  //                   className="listing-img"
+  //                 />
+  //                 <div className="listing-details">
+  //                   <p className="listing-title">{listing.title}</p>
+  //                   <p className="listing-price">${listing.price}</p>
+  //                   <div className="listing-status-category">
+  //                     <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+  //                       {listing.status || "Active"}
+  //                     </span>
+  //                     <span className={`listing-category ${listing.category.toLowerCase()}`}>
+  //                       {listing.category}
+  //                     </span>
+  //                   </div>
+  //                   <div className="listing-actions">
+  //                     {/* Edit Button (Prevents navigation to details page) */}
+  //                     <button
+  //                       className="edit-btn"
+  //                       onClick={(e) => {
+  //                         e.stopPropagation(); // Prevents event from bubbling to parent div
+  //                         navigate(`/edit-listing/${listing.id}`); // Navigate to edit page
+  //                       }}
+  //                     >
+  //                       <FontAwesomeIcon icon={faEdit} />
+  //                     </button>
+
+  //                     {/* Delete Button */}
+  //                     <button
+  //                       className="delete-btn"
+  //                       onClick={(e) => {
+  //                         e.stopPropagation(); // Prevents event bubbling
+  //                         handleDeleteClick(listing.id);
+  //                       }}
+  //                     >
+  //                       <FontAwesomeIcon icon={faTrash} />
+  //                     </button>
+  //                   </div>
+  //                 </div>
+  //               </div>
+  //             ))}
+  //           </div>
+
+
+
+  //           {/* View All Link */}
+  //           {filteredListings.length > 3 && (
+  //             <Link to="/listings" className="custom-view-all active-link">
+  //               View All
+  //             </Link>
+  //           )}
+  //           {/* {listings.length > 3 ? (
+  //             <Link to="/listings" className="custom-view-all active-link">
+  //               View All
+  //             </Link>
+  //           ) : (
+  //             <span className="custom-view-all inactive-link">View All</span>
+  //           )} */}
+
+  //           <Link to="/add-listing" className="custom-add-listing">
+  //             Add a Listing
+  //           </Link>
+
+  //         </div>
+  //       )}
+  //     </div>
+  //     <DeleteConfirmationModal
+  //       show={showDeleteModal}
+  //       onClose={() => setShowDeleteModal(false)}
+  //       onConfirm={handleDeleteConfirm}
+  //     />
+
+  //   </div>
+  // );
 }
 
 export default HomePage;
