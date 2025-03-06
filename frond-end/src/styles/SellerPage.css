@@ -149,7 +149,7 @@
 
 
 /* Scroll Buttons */
-.sellerinfo-scroll-btn {
+/* .sellerinfo-scroll-btn {
   background: white;
   border-radius: 50%;
   cursor: pointer;
@@ -157,9 +157,9 @@
   margin: 0 10px;
   width: 35px;
   height: 40px;
-}
+} */
 
-.scroll-left {
+/* .scroll-left {
   position: absolute;
   left: 0;
   z-index: 1;
@@ -169,7 +169,7 @@
   position: absolute;
   right: 0;
   z-index: 1;
-}
+} */
 
 .scroll-btn {
   background: none;
@@ -190,9 +190,9 @@
   right: -30px;
 }
 
-.sellerinfo-scroll-btn:hover {
+/* .sellerinfo-scroll-btn:hover {
   background-color: #e0e0e0;
-}
+} */
 
 
 /* Message Buttons */
@@ -203,7 +203,8 @@
 }
 
 .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
-  background-color: var(--color-success);
+  /* background-color: var(--color-success); */
+  background: #0daf96;
   color: white;
   padding: 15px 20px;
   border: none;

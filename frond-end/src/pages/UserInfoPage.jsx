@@ -148,7 +148,7 @@ const UserInfoPage = () => {
 
   const scrollReviews = (direction) => {
     if (reviewListRef.current) {
-      const scrollAmount = 250; // Adjust scroll amount if necessary
+      const scrollAmount = 250; 
       reviewListRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -231,16 +231,13 @@ const UserInfoPage = () => {
                 <strong>Active Listings:</strong>{" "}
                 <Link to="/listings" className="active-listing-link">{userData?.userListings?.length || 0}</Link>
               </p>
-              {/* <p>
-                <strong>Active Listings:</strong> {userData.activeListings}
-              </p> */}
 
               {/* Reviews Section */}
               <div className="userinfo-reviews-section">
                 <h2>My Reviews</h2>
                 {userData?.reviews?.length > 0 ? (
                   <div className="userinfo-reviews-wrapper">
-                    <button className="scroll-btn left" onClick={() => scrollReviews("left")}>
+                    <button className="scroll-user-btn left" onClick={() => scrollReviews("left")}>
                       <FontAwesomeIcon icon={faChevronLeft} />
                     </button>
                     <div className="userinfo-reviews-list" ref={reviewListRef}>
@@ -251,7 +248,7 @@ const UserInfoPage = () => {
                         </div>
                       ))}
                     </div>
-                    <button className="scroll-btn right" onClick={() => scrollReviews("right")}>
+                    <button className="scroll-user-btn right" onClick={() => scrollReviews("right")}>
                       <FontAwesomeIcon icon={faChevronRight} />
                     </button>
                   </div>

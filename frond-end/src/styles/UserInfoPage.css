@@ -1,6 +1,9 @@
 .user-info-page {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  /* flex-wrap: wrap; */
 }
 
 .row-container {
@@ -11,6 +14,7 @@
 .user-info-content {
   flex: 1;
   padding: 20px;
+  min-width: 0;
 }
 
 .user-content {
@@ -96,20 +100,23 @@ svg.svg-inline--fa {
   position: relative;
   width: 100%;
   max-width: 100%;
+  margin: 0 auto;
 }
 
 .userinfo-reviews-list {
   display: flex;
   overflow-x: auto;
+  width: auto;
   scroll-behavior: smooth;
-  width: 100%;
   max-width: 100%;
   padding: 10px;
 }
 
 .userinfo-review-item {
   flex: 0 0 auto;
-  width: 250px;
+  width: 90%;
+  min-width: 250px;
+  max-width: 250px;
   margin: 10px;
   padding: 10px;
   border-radius: 8px;
@@ -118,6 +125,8 @@ svg.svg-inline--fa {
   text-align: center;
   flex-shrink: 0;
   color: whitesmoke;
+  white-space: normal; /* Ensures text wraps properly */
+  word-wrap: break-word;
 }
 
 .userinfo-review-text {
@@ -141,15 +150,22 @@ svg.svg-inline--fa {
   padding: 10px;
 }
 
-.scroll-btn.left {
+.scroll-user-btn.left {
   position: absolute;
-  left: -30px;
+  left: -20px;
+  border: none;
+  background: none;
+
 }
 
-.scroll-btn.right {
+.scroll-user-btn.right {
   position: absolute;
-  right: -30px;
+  right: -20px;
+  border: none;
+  background: none;
+  margin-left: 10px;
 }
+
 
 
 .active-listing-link {

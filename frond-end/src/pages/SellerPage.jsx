@@ -79,7 +79,7 @@ function SellerPage() {
 
   const scrollReviews = (direction) => {
     if (reviewListRef.current) {
-      const scrollAmount = 250; // Adjust scroll amount as needed
+      const scrollAmount = 250; 
       reviewListRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
