@@ -1,21 +1,13 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PrivacyPolicyPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function PrivacyPolicyPage() {
-  const menuItems = [
-    {
-      label: "Agreement",
-      submenu: [
-        { label: "Terms & Conditions", path: "/agreement/terms" },
-        { label: "Privacy Policy", path: "/agreement/privacy" }
-      ],
-    },
-  ];
 
   return (
     <div className="privacy-policy-page">
-      <Sidebar menuItems={menuItems} activeMenu="Privacy Policy" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" />
       <div className="privacy-main-content">
         <h1 className="privacy-policy-title">Privacy Policy</h1>
         <section className="privacy-policy-content">

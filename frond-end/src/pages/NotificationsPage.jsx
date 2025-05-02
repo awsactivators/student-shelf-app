@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/NotificationsPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay, faUserPlus, faHeart, faGears, faBell } from "@fortawesome/free-solid-svg-icons";
+import { userMenuItems } from "../constants/menuItems";
 
 function NotificationsPage() {
   // Full list of notifications
@@ -21,21 +22,6 @@ function NotificationsPage() {
   const [visibleNotifications, setVisibleNotifications] = useState(allNotifications.slice(0, 5));
   const [hasMore, setHasMore] = useState(allNotifications.length > visibleNotifications.length);
 
-  const menuItems = [
-    {
-      label: "Profile",
-      submenu: [
-        { label: "User Info", path: "/user-info" },
-        { label: "Password", path: "/password" },
-        { label: "Listings", path: "/listings" },
-        { label: "Settings", submenu: [], path: "/settings" },
-        { label: "Notifications", path: "/notifications", hasNew: true },
-        { label: "Support", path: "/support/faqs" },
-        { label: "Terms Policy", path: "/agreement/terms" }
-      ],
-    },
-  ];
-
   // Handle "View More" functionality
   const handleViewMore = () => {
     const nextNotifications = allNotifications.slice(
@@ -52,7 +38,7 @@ function NotificationsPage() {
 
   return (
     <div className="notifications-page">
-      <Sidebar menuItems={menuItems} activeMenu="Notifications" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Notifications" />
       <main className="notifications-content">
         <h1 className="notifications-title">Notifications</h1>
         <ul className="notifications-list">

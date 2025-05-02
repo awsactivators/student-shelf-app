@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/ListingsPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { userMenuItems } from "../constants/menuItems";
 
 function ListingsPage() {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -116,24 +117,9 @@ function ListingsPage() {
     );
   };
 
-  const menuItems = [
-    {
-      label: "Profile",
-      submenu: [
-        { label: "User Info", path: "/user-info" },
-        { label: "Password", path: "/password" },
-        { label: "Listings", path: "/listings" },
-        { label: "Settings", submenu: [], path: "/settings" },
-        { label: "Notifications", path: "/notifications" },
-        { label: "Support", path: "/support/faqs" },
-        { label: "Terms Policy", path: "/agreement/terms" }
-      ],
-    },
-  ];
-
   return (
     <div className="listings-page">
-      <Sidebar menuItems={menuItems} activeMenu="Listings" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Listings" />
       <main className="listings-content">
         <h1>All Listings</h1>
         <a href="/add-listing" className="add-listing-link">Add a Listing</a>

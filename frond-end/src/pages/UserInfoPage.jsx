@@ -5,6 +5,7 @@ import "./../styles/UserInfoPage.css";
 import profileImagePlaceholder from "./../assets/images/default-logo.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faStar, faSave, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { userMenuItems } from "../constants/menuItems";
 
 const UserInfoPage = () => {
   const [userData, setUserData] = useState(null);
@@ -49,21 +50,6 @@ const UserInfoPage = () => {
   }, [navigate, API_URL]);
 
 
-  // Side Bar
-  const menuItems = [
-    {
-      label: "Profile",
-      submenu: [
-        { label: "User Info", path: "/user-info" },
-        { label: "Password", path: "/password" },
-        { label: "Listings", path: "/listings" },
-        { label: "Settings", submenu: [], path: "/settings" },
-        { label: "Notifications", path: "/notifications", hasNew: true },
-        { label: "Support", path: "/support/faqs" },
-        { label: "Terms Policy", path: "/agreement/terms" }
-      ],
-    },
-  ];
 
   // Handle input changes when editing profile
   const handleInputChange = (e) => {
@@ -159,7 +145,7 @@ const UserInfoPage = () => {
 
   return (
     <div className="user-info-page">
-      <Sidebar menuItems={menuItems} activeMenu="User Info" userData={userData} />
+      <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} />
       <main className="user-info-content container mt-4">
         {userData ? (
           <div className="row align-items-center row-container">

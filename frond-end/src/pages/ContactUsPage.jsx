@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/ContactUsPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function ContactUsPage() {
-  const menuItems = [
-    {
-      label: "Support",
-      submenu: [
-        { label: "FAQs", path: "/support/faqs" },
-        { label: "Contact", path: "/support/contact" }
-      ],
-    },
-  ];
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -36,7 +27,7 @@ function ContactUsPage() {
 
   return (
     <div className="contact-us-page">
-      <Sidebar menuItems={menuItems} activeMenu="Contact" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Contact" />
       <div className="contact-main-content">
         <h1 className="contact-us-title">Contact Us</h1>
         <form className="contact-us-form" onSubmit={handleSubmit}>

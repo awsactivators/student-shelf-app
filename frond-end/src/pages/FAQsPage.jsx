@@ -3,18 +3,9 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/FAQsPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { userMenuItems } from "../constants/menuItems";
 
 function FAQsPage() {
-  const menuItems = [
-    {
-      label: "Support",
-      submenu: [
-        { label: "FAQs", path: "/support/faqs" },
-        { label: "Contact", path: "/support/contact" }
-      ],
-    },
-  ];
-
 
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -59,7 +50,7 @@ function FAQsPage() {
 
   return (
     <div className="faqs-page">
-      <Sidebar menuItems={menuItems} activeMenu="FAQs" />
+      <Sidebar menuItems={userMenuItems} activeMenu="FAQs" />
       <div className="faqs-main-content">
         <h1 className="faqs-title">FAQs</h1>
         <div className="faqs-accordion">

@@ -1,26 +1,12 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/SettingsPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function SettingsPage() {
   const [language, setLanguage] = useState("English");
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState("Light");
-
-  const menuItems = [
-    {
-      label: "Profile",
-      submenu: [
-        { label: "User Info", path: "/user-info" },
-        { label: "Password", path: "/password" },
-        { label: "Listings", path: "/listings" },
-        { label: "Settings", submenu: [], path: "/settings" },
-        { label: "Notifications", path: "/notifications" },
-        { label: "Support", path: "/support/faqs" },
-        { label: "Terms Policy", path: "/agreement/terms" }
-      ],
-    },
-  ];
 
   const handleSaveSettings = (e) => {
     e.preventDefault();
@@ -29,7 +15,7 @@ function SettingsPage() {
 
   return (
     <div className="settings-page">
-      <Sidebar menuItems={menuItems} activeMenu="Settings" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Settings" />
       <main className="settings-content">
         <h1 className="settings-title">Settings</h1>
         <form className="settings-form" onSubmit={handleSaveSettings}>

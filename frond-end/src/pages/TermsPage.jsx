@@ -1,21 +1,13 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/TermsPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function TermsPage() {
-  const menuItems = [
-    {
-      label: "Agreement",
-      submenu: [
-        { label: "Terms & Conditions", path: "/agreement/terms" },
-        { label: "Privacy Policy", path: "/agreement/privacy" }
-      ],
-    },
-  ];
 
   return (
     <div className="terms-page-container">
-      <Sidebar menuItems={menuItems} activeMenu="Terms & Conditions" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" />
       <div className="terms-main-content">
         <h1 className="terms-title">Terms and Conditions</h1>
         <section className="terms-content">

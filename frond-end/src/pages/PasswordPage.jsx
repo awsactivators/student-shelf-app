@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PasswordPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function PasswordPage() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -8,21 +9,6 @@ function PasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const menuItems = [
-    {
-      label: "Profile",
-      submenu: [
-        { label: "User Info", path: "/user-info" },
-        { label: "Password", path: "/password" },
-        { label: "Listings", path: "/listings" },
-        { label: "Settings", submenu: [], path: "/settings" },
-        { label: "Notifications", path: "/notifications" },
-        { label: "Support", path: "/support/faqs" },
-        { label: "Terms Policy", path: "/agreement/terms" }
-      ],
-    },
-  ];
 
 
   const validatePassword = () => {
@@ -63,7 +49,7 @@ function PasswordPage() {
 
   return (
     <div className="password-page">
-      <Sidebar menuItems={menuItems} activeMenu="Password" />
+      <Sidebar menuItems={userMenuItems} activeMenu="Password" />
       <main className="password-content">
         <h1>Password Settings</h1>
 
