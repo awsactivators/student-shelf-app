@@ -7,6 +7,9 @@ const listingsRoutes = require("./routes/listingsRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const searchRoutes = require("./routes/searchRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const favoriteRoutes = require("./routes/favoriteRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 dotenv.config();
 
@@ -45,10 +48,13 @@ app.use("/api/sellers", sellerRoutes);
 app.use("/api/search", searchRoutes);
 
 // Add Review
-app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/reviews", reviewRoutes);
 
 // Add Favorite
-app.use("/api/favorites", require("./routes/favoriteRoutes"));
+app.use("/api/favorites", favoriteRoutes);
+
+// Add Notification
+app.use("/api/notifications", notificationRoutes);
 
 
 app.use(errorHandler);

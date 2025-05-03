@@ -28,7 +28,7 @@ import ReviewPage from "./pages/ReviewPage";
 import EditListingPage from "./pages/EditListingPage";
 import FavoritesPage from "./pages/FavoritesPage";
 
-function Layout({ children, hasNewNotifications }) {
+function Layout({ children }) {
   const location = useLocation();
 
   // Define the pages where the Header or Footer should NOT be displayed
@@ -40,7 +40,7 @@ function Layout({ children, hasNewNotifications }) {
   return (
     <div className="app-layout">
       {/* Conditionally render Header */}
-      {showHeader && <Header  hasNewNotifications={hasNewNotifications}/>}
+      {showHeader && <Header />}
       <main className="app-content">{children}</main>
       {/* Conditionally render Footer */}
       {showFooter && <Footer />}
@@ -49,7 +49,7 @@ function Layout({ children, hasNewNotifications }) {
 }
 
 function App() {
-  const hasNewNotifications = true;
+  // const hasNewNotifications = true;
   // const navigate = useNavigate(); 
   // const location = useLocation(); 
 
@@ -64,7 +64,7 @@ function App() {
   // }, [location.pathname]); // Runs when the route changes
 
   return (
-      <Layout hasNewNotifications={hasNewNotifications}>
+      <Layout>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />

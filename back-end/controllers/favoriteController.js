@@ -1,4 +1,4 @@
-const { Favorite, User } = require("../models");
+const { Favorite, User, Notification } = require("../models");
 
 const addFavorite = async (req, res) => {
   const userId = req.user.id;
@@ -8,6 +8,16 @@ const addFavorite = async (req, res) => {
   if (exists) return res.status(400).json({ message: "Already favorited" });
 
   await Favorite.create({ userId, favoriteUserId: sellerId });
+
+  // Create notification for the seller
+  await Notification.create({
+    userId: sellerId,
+    message: `${req.user.name} favorited your profile.`,
+    type: 'favorite',
+    isRead: false,
+    link: `/seller/${sellerId}`,
+  });
+
   res.json({ message: "Seller added to favorites" });
 };
 

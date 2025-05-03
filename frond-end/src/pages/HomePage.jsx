@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./../styles/HomePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import defaultLogo from "../assets/images/default-logo.jpg";
 
 function HomePage() {
   const [userData, setUserData] = useState(null);
@@ -100,26 +101,6 @@ function HomePage() {
     setFilteredListings(filtered);
   };
   
-  
-  // const handleFilterChange = (e) => {
-  //   const { name, value } = e.target;
-  
-  //   // Filter the listings based on the selected category
-  //   let filtered = listings;
-  
-  //   if (value) {
-  //     filtered = listings.filter((listing) => listing.category.toLowerCase() === value.toLowerCase());
-  //   }
-  
-  //   setFilters({ ...filters, [name]: value }); // Update filters state
-  //   setFilteredListings(filtered); // Update filtered listings
-  // };
-  
-
-  // const handleEditListing = (listingId) => {
-  //   navigate(`/edit-listing/${listingId}`); // Redirect to an edit page with the listing ID
-  // };
-  
 
   const handleDeleteClick = (listingId) => {
     setListingToDelete(listingId);
@@ -183,7 +164,7 @@ function HomePage() {
         </h1>
         <Link to={"/user-info"}>
           <img
-            src={userData?.profileImage || "../assets/images/default-logo.jpg"}
+            src={userData?.profileImage || defaultLogo}
             alt="User Profile"
             className="custom-user-profile-img"
           />

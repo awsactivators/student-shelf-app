@@ -1,38 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/NotificationsPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay, faUserPlus, faHeart, faGears, faBell } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
+import { Link } from "react-router-dom";
 
 function NotificationsPage() {
-  // Full list of notifications
-  const allNotifications = [
-    { id: 1, title: "Item Sold", message: "Congratulations! An item has been sold", time: "21 mins ago", icon: faCirclePlay },
-    { id: 2, title: "V2.1 Release", message: "New Release", time: "21 mins ago", icon: faGears },
-    { id: 3, title: "Account Update", message: "Your profile has been successfully updated", time: "21 mins ago", icon: faBell },
-    { id: 4, title: "New Listing Alert", message: "James just added a new item", time: "21 mins ago", icon: faCirclePlay },
-    { id: 5, title: "Review Received", message: "Jane left a review on your profile", time: "21 mins ago", icon: faHeart },
-    { id: 6, title: "New Follower", message: "You have a new follower: Sarah M.", time: "21 mins ago", icon: faUserPlus },
-    { id: 7, title: "System Alert", message: "Password was successfully changed", time: "1 day ago", icon: faGears },
-    { id: 8, title: "Expired Listing", message: "Your listing has expired.", time: "2 days ago", icon: faBell },
-  ];
+  const [notifications, setNotifications] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  // State for visible notifications
-  const [visibleNotifications, setVisibleNotifications] = useState(allNotifications.slice(0, 5));
-  const [hasMore, setHasMore] = useState(allNotifications.length > visibleNotifications.length);
+  // Fetch notifications from API
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const token = localStorage.getItem("userToken");
+        const res = await fetch(`${API_URL}/api/notifications`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
 
-  // Handle "View More" functionality
-  const handleViewMore = () => {
-    const nextNotifications = allNotifications.slice(
-      visibleNotifications.length,
-      visibleNotifications.length + 6
-    ); // Load 6 more notifications
-    setVisibleNotifications((prev) => [...prev, ...nextNotifications]);
+    fetchNotifications();
+  }, [API_URL]);
 
-    // If no more notifications to show, hide "View More" button
-    if (visibleNotifications.length + nextNotifications.length >= allNotifications.length) {
-      setHasMore(false);
+  // Helper to choose icon based on notification type
+  const getIcon = (type) => {
+    switch (type) {
+      case "favorite":
+        return faHeart;
+      case "review":
+        return faBell;
+      case "sale":
+        return faCirclePlay;
+      case "message":
+        return faUserPlus;
+      case "system":
+        return faGears;
+      default:
+        return faBell;
     }
   };
 
@@ -41,24 +51,28 @@ function NotificationsPage() {
       <Sidebar menuItems={userMenuItems} activeMenu="Notifications" />
       <main className="notifications-content">
         <h1 className="notifications-title">Notifications</h1>
-        <ul className="notifications-list">
-          {visibleNotifications.map((notification) => (
-            <li key={notification.id} className="notification-item">
-              <div className="notification-icon">
-                <FontAwesomeIcon icon={notification.icon} />
-              </div>
-              <div className="notification-details">
-                <h2 className="notification-title">{notification.title}</h2>
-                <p className="notification-message">{notification.message}</p>
-              </div>
-              <span className="notification-time">{notification.time}</span>
-            </li>
-          ))}
-        </ul>
-        {hasMore && (
-          <button className="view-more-btn" onClick={handleViewMore}>
-            <FontAwesomeIcon icon={faCirclePlay} /> View more
-          </button>
+        {notifications.length > 0 ? (
+          <div className="notifications-list-container">
+            <ul className="notifications-list">
+              {notifications.map((notification) => (
+                <li key={notification.id} className={`notification-item ${notification.isRead ? "" : "unread"}`}>
+                  <div className="notification-icon">
+                    <FontAwesomeIcon icon={getIcon(notification.type)} />
+                  </div>
+                  <div className="notification-details">
+                    <h2 className="notification-title">{notification.type}</h2>
+                    <p className="notification-message">{notification.message}</p>
+                  </div>
+                  <span className="notification-time">
+                    {new Date(notification.createdAt).toLocaleString()}
+                  </span>
+                  <Link to={notification.link || "#"} className="notification-overlay-link"></Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="no-notifications">No notifications available.</p>
         )}
       </main>
     </div>

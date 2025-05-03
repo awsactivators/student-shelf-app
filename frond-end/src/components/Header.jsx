@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MobileSidebar from "../components/MobileSidebar";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Header.css"; 
@@ -8,10 +8,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-function Header({ hasNewNotifications = false }) {
+function Header() {
     const [searchTerm, setSearchTerm] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        const fetchUnreadCount = async () => {
+          const token = localStorage.getItem("userToken");
+          const res = await fetch(`${API_URL}/api/notifications/unread-count`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          setUnreadCount(data.count);
+        };
+      
+        fetchUnreadCount();
+    }, [API_URL]);
+
 
     // Handle search input change
     const handleSearchChange = (e) => {
@@ -64,7 +80,9 @@ function Header({ hasNewNotifications = false }) {
                     <div className="notification-container">
                         <Link to="/notifications" className="notification-bell">
                             <FontAwesomeIcon icon={faBell} />
-                            {hasNewNotifications && <span className="notification-dot"></span>}
+                            {unreadCount > 0 && (
+                                <span className="notification-dot">{unreadCount > 9 ? "9+" : unreadCount}</span>
+                            )}
                         </Link>
                     </div>
 

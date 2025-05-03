@@ -3,14 +3,21 @@
   min-height: 100vh;
 }
 
+.notifications-list-container {
+  background: #545353;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+}
+
 .notifications-content {
   flex-grow: 1;
-  padding: 20px;
-  max-width: 1200px;
-  justify-content: center;
+  padding: 20px 40px;
+  max-width: 1000px;
+  margin: 0 auto; 
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
+  align-items: flex-start;
 }
 
 .notifications-title {
@@ -22,6 +29,9 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 500px;  
+  overflow-y: auto;
+  width: 100%;
 }
 
 .notification-item {
@@ -33,10 +43,24 @@
   margin-bottom: 10px;
   border-radius: 0 20px 20px 0;
   transition: all 0.3s ease;
+  position: relative;
 }
 
-.notification-item:hover {
-  background: var(--color-blue);
+.notification-overlay-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.notification-link {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  background: inherit;
+  width: 100%;
 }
 
 .notification-icon {
@@ -98,25 +122,25 @@
   .notifications-content {
     margin-left: 20px;
     padding: 15px;
-    max-width: 100%; /* Utilize full width */
+    max-width: 100%; 
   }
 
   .notifications-title {
     font-size: 1.8em;
-    text-align: center; /* Center-align title */
+    text-align: center; 
     margin-bottom: 15px;
   }
 
   .notification-item {
-    flex-direction: column; /* Stack content vertically */
+    flex-direction: column; 
     align-items: flex-start;
     padding: 10px;
   }
 
   .notification-icon {
     font-size: 1.5em;
-    margin-bottom: 10px; /* Add spacing between icon and details */
-    margin-right: 0; /* Remove horizontal margin */
+    margin-bottom: 10px; 
+    margin-right: 0; 
   }
 
   .notification-details {
@@ -133,11 +157,11 @@
 
   .notification-time {
     font-size: 0.8em;
-    margin-top: 10px; /* Add spacing for clarity */
+    margin-top: 10px; 
   }
 
   .view-more-btn {
-    width: 100%; /* Full width for smaller screens */
+    width: 100%; 
     margin: 20px 0;
   }
 }
@@ -145,7 +169,7 @@
 /* For mobile screens (max-width: 576px) */
 @media (max-width: 576px) {
   .notifications-content {
-    margin-left: 0; /* Remove margin to fit small screens */
+    margin-left: 0; 
     padding: 10px;
   }
 
@@ -156,7 +180,7 @@
 
   .notification-item {
     padding: 8px;
-    border-radius: 5px; /* Smaller radius for compact design */
+    border-radius: 5px; 
   }
 
   .notification-icon {

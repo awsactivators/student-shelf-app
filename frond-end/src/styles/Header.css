@@ -148,22 +148,25 @@
 }
 
 .notification-bell {
-  font-size: 1.5rem;
-  color: #fff;
-  text-decoration: none;
-  margin-right: 10px;
+  position: relative;
+  display: inline-block;
 }
 
 .notification-dot {
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 10px;
-  height: 10px;
   background: red;
+  color: white;
   border-radius: 50%;
-  border: 2px solid white;
-  margin-right: 10px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Search Bar for Small Screens */
