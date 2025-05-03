@@ -7,6 +7,8 @@ function SettingsPage() {
   const [language, setLanguage] = useState("English");
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState("Light");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   const handleSaveSettings = (e) => {
     e.preventDefault();
@@ -14,8 +16,14 @@ function SettingsPage() {
   };
 
   return (
-    <div className="settings-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Settings" />
+    <div className="settings-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="settings-content">
         <h1 className="settings-title">Settings</h1>
         <form className="settings-form" onSubmit={handleSaveSettings}>

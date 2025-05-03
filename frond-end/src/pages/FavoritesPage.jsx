@@ -6,6 +6,9 @@ import { userMenuItems } from "../constants/menuItems";
 
 function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -31,8 +34,14 @@ function FavoritesPage() {
   }, [API_URL]);
 
   return (
-    <div className="favorites-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Favorites" />
+    <div className="favorites-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle}  />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <div className="favorites-main-content">
         <h1>My Favorites</h1>
         {favorites.length > 0 ? (

@@ -1,4 +1,4 @@
- /* Sidebar Styling */
+/* Sidebar Styling */
 .sidebar {
   width: 280px;
   height: auto;
@@ -104,7 +104,7 @@ li.sub-menu-item.active a {
 
 
 /* Media Queries */
-  /* Reduce sidebar width for tablets 992px */
+/* Reduce sidebar width for tablets 992px */
 @media (max-width: 992px) {
   .sidebar {
     width: 220px;
@@ -125,7 +125,7 @@ li.sub-menu-item.active a {
 }
 
 
-  /* Reduce sidebar width for tablets 768px */
+/* Reduce sidebar width for tablets 768px */
 @media (max-width: 768px) {
   .sidebar {
     width: 180px;
@@ -150,25 +150,56 @@ li.sub-menu-item.active a {
 }
 
 
-  /* Reduce sidebar width for phones 576px */
+/* For mobile screens (max 576px) make sidebar overlay */
 @media (max-width: 576px) {
+  .main-layout-sidebar { 
+    position: relative;
+    min-height: 80vh;
+  }
+
+  .favorites-main-content h1 {
+    font-size: 1.5rem;
+    margin-left: 40px;
+    margin-top: 20px;
+  }
+
   .sidebar {
-    width: 180px;
+    position: absolute;
+    top: var(--header-height, 0px); 
+    bottom: var(--footer-height, 0px); 
+    left: 0;
+    width: 250px;
+    z-index: 1000;
+    height: auto;
+  }
+
+  .sidebar-overlay {
+    position: absolute;
+    top: var(--header-height, 0px);
+    bottom: var(--footer-height, 0px);
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
   }
 
   .sidebar.collapsed {
-    width: 30px;
+    transform: translateX(-100%); 
   }
 
-  .sidebar.collapsed .profile-image img {
-    display: none;
+  .sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+
+  .favorites-main-content {
+    margin-left: 0; /* remove content shift */
   }
 
   .sub-menu-item, .sub-menu {
-   padding-left: 8px;
-  }
-
-  .menu-item a {
-    margin-left: 5px;
-  }
+    padding-left: 8px;
+   }
+ 
+   .menu-item a {
+     margin-left: 5px;
+   }
 }

@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PrivacyPolicyPage.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function PrivacyPolicyPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   return (
-    <div className="privacy-policy-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" />
+    <div className="privacy-policy-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <div className="privacy-main-content">
         <h1 className="privacy-policy-title">Privacy Policy</h1>
         <section className="privacy-policy-content">

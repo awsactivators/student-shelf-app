@@ -8,6 +8,8 @@ import { userMenuItems } from "../constants/menuItems";
 function FAQsPage() {
 
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   const faqs = [
     {
@@ -49,8 +51,14 @@ function FAQsPage() {
   };
 
   return (
-    <div className="faqs-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="FAQs" />
+    <div className="faqs-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="FAQs" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <div className="faqs-main-content">
         <h1 className="faqs-title">FAQs</h1>
         <div className="faqs-accordion">

@@ -11,6 +11,9 @@ const UserInfoPage = () => {
   const [userData, setUserData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedUserData, setUpdatedUserData] = useState({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
@@ -146,8 +149,14 @@ const UserInfoPage = () => {
   
 
   return (
-    <div className="user-info-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} />
+    <div className="user-info-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="user-info-content container mt-4">
         {userData ? (
           <div className="row align-items-center row-container">

@@ -9,6 +9,8 @@ function PasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
 
   const validatePassword = () => {
@@ -48,8 +50,14 @@ function PasswordPage() {
   };
 
   return (
-    <div className="password-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Password" />
+    <div className="password-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="password-content">
         <h1>Password Settings</h1>
 

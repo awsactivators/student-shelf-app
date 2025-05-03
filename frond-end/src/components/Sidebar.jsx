@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 // import defaultProfileImage from "./../assets/images/avatar.png";
 
-function Sidebar({ menuItems = [], userData }) {
+function Sidebar({ menuItems = [], userData, onToggle }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
@@ -31,6 +31,9 @@ function Sidebar({ menuItems = [], userData }) {
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    if (window.innerWidth <= 576 && onToggle) onToggle(!newState);
   };
 
   const isActive = (path) => location.pathname === path;

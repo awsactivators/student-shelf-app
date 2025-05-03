@@ -4,6 +4,8 @@ import "./../styles/ContactUsPage.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function ContactUsPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -26,8 +28,14 @@ function ContactUsPage() {
   };
 
   return (
-    <div className="contact-us-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Contact" />
+    <div className="contact-us-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Contact" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <div className="contact-main-content">
         <h1 className="contact-us-title">Contact Us</h1>
         <form className="contact-us-form" onSubmit={handleSubmit}>

@@ -16,6 +16,8 @@ function ListingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [listingToDelete, setListingToDelete] = useState(null);
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
 
   useEffect(() => {
@@ -118,8 +120,14 @@ function ListingsPage() {
   };
 
   return (
-    <div className="listings-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Listings" />
+    <div className="listings-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="listings-content">
         <h1>All Listings</h1>
         <a href="/add-listing" className="add-listing-link">Add a Listing</a>

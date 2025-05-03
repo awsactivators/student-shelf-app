@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/TermsPage.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function TermsPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   return (
-    <div className="terms-page-container">
-      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" />
+    <div className="terms-page-container main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <div className="terms-main-content">
         <h1 className="terms-title">Terms and Conditions</h1>
         <section className="terms-content">

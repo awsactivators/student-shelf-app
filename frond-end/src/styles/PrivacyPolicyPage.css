@@ -5,7 +5,7 @@
 .privacy-main-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   padding: 40px 20px;
   background: #f9f9f9;

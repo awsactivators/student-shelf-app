@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 function NotificationsPage() {
   const [notifications, setNotifications] = useState([]);
   const API_URL = import.meta.env.VITE_API_URL;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   // Fetch notifications from API
   useEffect(() => {
@@ -47,8 +49,14 @@ function NotificationsPage() {
   };
 
   return (
-    <div className="notifications-page">
-      <Sidebar menuItems={userMenuItems} activeMenu="Notifications" />
+    <div className="notifications-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Notifications" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="notifications-content">
         <h1 className="notifications-title">Notifications</h1>
         {notifications.length > 0 ? (
