@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User, Listing, Review } = require("../models"); // Import the User model
+const { User, Listing, Review } = require("../models");
 const asyncHandler = require("express-async-handler");
 // const { profileUpload } = require("../middleware/uploadMiddleware");
 
@@ -30,8 +30,8 @@ const registerUser = async (req, res) => {
       email,
       campus,
       password: hashedPassword,
-      rating: 0.0, // Default rating
-      activeListings: 0, // Default number of listings
+      rating: 0.0, 
+      activeListings: 0, 
     });
 
     return res.status(201).json({
@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "3h" } // Token expires in 1 hour
+      { expiresIn: "3h" } // Token expires in 3 hour
     );
 
     res.json({ message: "Login successful", token, user });
@@ -86,7 +86,7 @@ const loginUser = async (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.user.id, {
-    attributes: { exclude: ["password"] }, // Exclude password
+    attributes: { exclude: ["password"] }, 
 
     include: [
       {

@@ -33,12 +33,12 @@ const getSellerById = asyncHandler(async (req, res) => {
 
 
   // Fix profileImage URL
-  const API_URL = process.env.API_URL || "http://localhost:5500"; // Ensure BASE URL is correct
+  const API_URL = process.env.API_URL || "http://localhost:5500";
   const fullProfileImage = seller.profileImage
-    ? seller.profileImage.startsWith("http") // Check if already full URL
+    ? seller.profileImage.startsWith("http") 
       ? seller.profileImage
       : `${API_URL}${seller.profileImage}`
-    : "../assets/default-logo.jpg"; // Default if no profile image
+    : "../assets/default-logo.jpg"; 
 
   res.json({
     ...seller.toJSON(),
