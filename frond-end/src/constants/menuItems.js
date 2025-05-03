@@ -33,6 +33,12 @@ export const userMenuItems = [
     ],
   },
   {
+    label: "Sell",
+    submenu: [
+      { label: "Add Listing", path: "/add-listing" },
+    ],
+  },
+  {
     label: "Support",
     submenu: [
       { label: "FAQs", path: "/support/faqs" },

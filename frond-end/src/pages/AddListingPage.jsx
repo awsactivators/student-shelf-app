@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/AddListingPage.css";
+import { userMenuItems } from "../constants/menuItems";
 
 function AddListingPage({ existingData = null, isEditing = false }) {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -17,6 +18,8 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   const [images, setImages] = useState([]); // Stores uploaded images
   const [coverImage, setCoverImage] = useState(null); // Cover image selection
   const [error, setError] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   const navigate = useNavigate();
 
@@ -185,15 +188,16 @@ function AddListingPage({ existingData = null, isEditing = false }) {
     }
   };
   
-  
-
-  const menuItems = [
-    { label: "Sell", submenu: [{ label: "Add Listing", path: "/add-listing" }] },
-  ];
 
   return (
-    <div className="add-listing-page">
-      <Sidebar menuItems={menuItems} activeMenu="Add Listing" />
+    <div className="add-listing-page main-layout-sidebar">
+      <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} />
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <main className="add-listing-content">
       <h1>{isEditing ? "Edit Listing" : "Add a Listing"}</h1>
         <form className="add-listing-form" onSubmit={handleSubmit}>
