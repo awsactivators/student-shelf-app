@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { Review, User } = require("../models");
+const { Review, User, Notification } = require("../models");
 
 // @desc    Add a review
 // @route   POST /api/reviews/:sellerId
@@ -46,6 +46,19 @@ const addReview = asyncHandler(async (req, res) => {
   seller.rating = averageRating.toFixed(1); 
   await seller.save();
 
+  try {
+    await Notification.create({
+      userId: sellerId,
+      message: `User ${req.user.name} left a review on your profile.`,
+      type: 'review',
+      isRead: false,
+      link: `/seller/${sellerId}`,
+    });
+    console.log("Notification created successfully.");
+  } catch (error) {
+    console.error("Failed to create notification:", error);
+  }
+
   res.status(201).json({
     id: review.id,
     sellerId: review.sellerId,
@@ -57,4 +70,26 @@ const addReview = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { addReview };
+
+// @desc    Get all reviews for a seller (with buyer name)
+// @route   GET /api/reviews/:sellerId
+// @access  Public
+const getReviewsBySeller = asyncHandler(async (req, res) => {
+  const { sellerId } = req.params;
+
+  const reviews = await Review.findAll({
+    where: { sellerId },
+    include: [
+      {
+        model: User,
+        as: "buyer",
+        attributes: ["name"],
+      },
+    ],
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.json(reviews);
+});
+
+module.exports = { addReview, getReviewsBySeller };

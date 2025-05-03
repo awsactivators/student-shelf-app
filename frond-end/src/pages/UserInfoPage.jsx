@@ -143,6 +143,8 @@ const UserInfoPage = () => {
   };
 
 
+  
+
   return (
     <div className="user-info-page">
       <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} />

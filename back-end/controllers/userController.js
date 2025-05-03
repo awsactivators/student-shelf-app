@@ -85,38 +85,34 @@ const loginUser = async (req, res) => {
 // @route   GET /api/users/me
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findByPk(req.user.id, {
-    attributes: { exclude: ["password"] }, 
 
+  const user = await User.findByPk(req.user.id, {
+    attributes: { exclude: ["password"] },
     include: [
-      {
-        model: Listing,
-        as: "userListings",
-        attributes: ["id", "title", "coverImage", "price"],
-      },
-      {
-        model: Review,
-        as: "reviews",
-        attributes: ["id", "rating", "comment", "createdAt"],
-        include: [
-          { model: User, as: "seller", attributes: ["name"] },
-        ],
-      },
-    ],
+      { model: Listing, as: "userListings", attributes: ["id", "title", "coverImage", "price"] }
+    ]
   });
+
+  const reviews = await Review.findAll({
+    where: { sellerId: req.user.id },
+    attributes: ["id", "rating", "comment", "createdAt"],
+    include: [{ model: User, as: "buyer", attributes: ["name"] }],
+    order: [["createdAt", "DESC"]],
+  });
+  console.log("Fetched reviews at backend:", JSON.stringify(reviews, null, 2));
 
   if (user) {
     // Default profile image path
-    const DEFAULT_PROFILE_IMAGE = "/assets/default-profile.jpg"; // Ensure this exists in backend `public/assets/`
+    const DEFAULT_PROFILE_IMAGE = "/assets/default-profile.jpg"; 
     
     // Set profile image, ensuring full URL
     const fullProfileImage = user.profileImage
       ? user.profileImage.startsWith("http") // use full URL later
         ? user.profileImage
         : `${req.protocol}://${req.get("host")}${user.profileImage}`
-      : `${req.protocol}://${req.get("host")}${DEFAULT_PROFILE_IMAGE}`; // Use default
+      : `${req.protocol}://${req.get("host")}${DEFAULT_PROFILE_IMAGE}`; 
 
-    res.json({ ...user.toJSON(), profileImage: fullProfileImage });
+    res.json({ ...user.toJSON(), profileImage: fullProfileImage, reviews: reviews });
   } else {
     res.status(404);
     throw new Error("User not found");
