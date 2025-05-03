@@ -27,6 +27,7 @@ export const userMenuItems = [
       { label: "User Info", path: "/user-info" },
       { label: "Password", path: "/password" },
       { label: "Listings", path: "/listings" },
+      { label: "Favorites", path: "/favorites" },
       { label: "Settings", submenu: [], path: "/settings" },
       { label: "Notifications", path: "/notifications", hasNew: true },
     ],

@@ -4,6 +4,8 @@ import "./../styles/SellerPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faMessage, faStar, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "./../assets/images/default-logo.jpg";
+import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 function SellerPage() {
   const { sellerId } = useParams();
@@ -11,7 +13,8 @@ function SellerPage() {
   const [seller, setSeller] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const reviewListRef = useRef(null); // Reference for scrolling
+  const reviewListRef = useRef(null);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
     const fetchSeller = async () => {
@@ -61,6 +64,38 @@ function SellerPage() {
     fetchSeller();
   }, [sellerId, API_URL]);
 
+
+  // Handle Favorite
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const token = localStorage.getItem("userToken");
+      const res = await fetch(`${API_URL}/api/favorites`, { headers: { Authorization: `Bearer ${token}` }});
+      const data = await res.json();
+      
+      console.log("Favorites API data:", data);
+      console.log("SellerId:", sellerId);
+      console.log("Favorites ids:", data.map(f => f.id));
+      
+      setIsFavorited(data.some(fav => fav.id === parseInt(sellerId)));
+     
+    };
+
+    checkFavorite();
+  }, [sellerId]);
+
+
+  // Toggle Favorite
+  const toggleFavorite = async () => {
+    const token = localStorage.getItem("userToken");
+    if (isFavorited) {
+      await fetch(`${API_URL}/api/favorites/${sellerId}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` }});
+      setIsFavorited(false);
+    } else {
+      await fetch(`${API_URL}/api/favorites/${sellerId}`, { method: "POST", headers: { Authorization: `Bearer ${token}` }});
+      setIsFavorited(true);
+    }
+  };
+
   const renderStars = (rating) => {
     return [...Array(5)].map((_, i) => (
       <FontAwesomeIcon
@@ -95,7 +130,9 @@ function SellerPage() {
     <div className="sellerinfo-seller-page">
       <div className="sellerinfo-seller-header">
         <div>
-          <button className="sellerinfo-follow-btn">Follow</button>
+          <button className="sellerinfo-like-btn" onClick={toggleFavorite}>
+            <FontAwesomeIcon icon={isFavorited ? faSolidHeart : faRegularHeart} color={isFavorited ? "blue" : "black"} />
+          </button>
         </div>
         <img
           src={seller.profileImage || defaultLogo}

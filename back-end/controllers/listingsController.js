@@ -103,7 +103,7 @@ const getListingById = asyncHandler(async (req, res) => {
   // Parse the JSON images field into an array before sending
   const parsedListing = {
     ...listing.toJSON(),
-    images: JSON.parse(listing.images), // Ensure `images` is an array
+    images: JSON.parse(listing.images), // Ensures images is an array
   };
 
   console.log("Updated Listing Response:", parsedListing);

@@ -44,7 +44,7 @@
   margin-left: 10px;
 }
 
-.sellerinfo-follow-btn {
+.sellerinfo-like-btn {
   background-color: var(--color-blue);
   color: white;
   border: none;
@@ -54,8 +54,23 @@
   border-radius: 5px;
   position: absolute;
   top: 250px;
-  right: 100px;
+  right: 40px;  
   width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.sellerinfo-like-btn:hover {
+  background-color: var(--color-darkblue);
+}
+
+.sellerinfo-like-btn:active {
+  transform: scale(0.95);
 }
 
 
@@ -297,7 +312,7 @@
     font-size: 1.5em;
   }
 
-  .sellerinfo-follow-btn {
+  .sellerinfo-like-btn {
     position: static;
     margin: 10px 0;
   }
@@ -346,6 +361,14 @@
 @media (max-width: 576px) {
   .seller-leave-review-icon-btn, .seller-message-icon-btn {
     margin-left: 0;
+  }
+
+  .sellerinfo-like-btn {
+    right: 20px;
+    top: 200px;
+    width: 100px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
   }
 }
 

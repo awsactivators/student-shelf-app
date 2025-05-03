@@ -1,0 +1,114 @@
+.favorites-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.favorites-main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.favorites-main-content h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 300px;
+}
+
+.favorites-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.favorite-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #333;
+  transition: box-shadow 0.2s ease;
+  width: 250px;
+}
+
+.favorite-link:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: #f9f9f9;
+}
+
+.favorite-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.favorites-content p {
+  font-style: italic;
+  color: #666;
+}
+
+.favorite-name {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.no-favorites-message {
+  text-align: center;
+  margin-top: 30px;
+  font-style: italic;
+  color: #777;
+}
+
+/* Responsiveness */
+
+@media (max-width: 768px) {
+  .favorites-list {
+    justify-content: center;
+  }
+
+  .favorite-item {
+    width: 90%;
+  }
+
+  .favorite-profile-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .favorite-name {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorite-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .favorite-profile-img {
+    margin: 0 0 10px 0;
+  }
+
+  .favorite-name {
+    font-size: 1rem;
+  }
+}

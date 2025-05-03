@@ -26,6 +26,7 @@ import TermsPage from "./pages/TermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ReviewPage from "./pages/ReviewPage";
 import EditListingPage from "./pages/EditListingPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 function Layout({ children, hasNewNotifications }) {
   const location = useLocation();
@@ -89,6 +90,7 @@ function App() {
           <Route path="/edit-listing/:id" element={<EditListingPage />} />
           <Route path="/listing/:id" element={<ListingDetailsPage />} />
           <Route path="/seller/:sellerId" element={<SellerPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
 
 
         </Routes>

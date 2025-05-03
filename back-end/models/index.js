@@ -1,8 +1,9 @@
 const { Sequelize } = require("sequelize");
-const dbConfig = require("../config/config.json"); // DB Config
-const UserModel = require("./user"); // Import User model
-const ListingModel = require("./listing"); // Import Listing model
-const ReviewModel = require("./review"); // Import Listing model
+const dbConfig = require("../config/config.json"); 
+const UserModel = require("./user"); 
+const ListingModel = require("./listing"); 
+const ReviewModel = require("./review"); 
+const FavoriteModel = require("./favorite");
 
 const sequelize = new Sequelize(
   dbConfig.development.database,
@@ -19,6 +20,8 @@ db.sequelize = sequelize;
 db.User = UserModel(sequelize, Sequelize);
 db.Listing = ListingModel(sequelize, Sequelize); 
 db.Review = ReviewModel(sequelize, Sequelize)
+db.Favorite = FavoriteModel(sequelize, Sequelize);
+db.Favorite.associate(db);
 
 // Associations
 db.User.hasMany(db.Listing, { foreignKey: "userId", as: "userListings", onDelete: "CASCADE" });
@@ -29,6 +32,5 @@ db.Review.belongsTo(db.User, { foreignKey: "sellerId", as: "seller" });
 
 db.User.hasMany(db.Review, { foreignKey: "buyerId", as: "buyerReviews" });
 db.Review.belongsTo(db.User, { foreignKey: "buyerId", as: "buyer" });
-
 
 module.exports = db;

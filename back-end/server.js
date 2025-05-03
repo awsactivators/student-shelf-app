@@ -47,6 +47,9 @@ app.use("/api/search", searchRoutes);
 // Add Review
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 
+// Add Favorite
+app.use("/api/favorites", require("./routes/favoriteRoutes"));
+
 
 app.use(errorHandler);
 
