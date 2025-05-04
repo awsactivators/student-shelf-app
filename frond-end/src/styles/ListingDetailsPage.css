@@ -57,6 +57,10 @@
   width: 880px;
 }
 
+.search-seller-heading svg {
+  margin-left: 8px;
+}
+
 .search-action-buttons {
   display: flex;
   gap: 20px;
@@ -93,7 +97,9 @@
 }
 
 .search-back-btn {
-  background-color: #1E90FF;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
   border: none;
   padding: 5px;
 }
