@@ -1,25 +1,3 @@
-// export const userMenuItems = [
-//   {
-//     label: "Profile",
-//     submenu: [
-//       { label: "User Info", path: "/user-info" },
-//       { label: "Password", path: "/password" },
-//       { label: "Listings", path: "/listings" },
-//       { label: "Settings", submenu: [], path: "/settings" },
-//       { label: "Notifications", path: "/notifications", hasNew: true },
-//       {
-//         label: "Support",
-//         submenu: [
-//           { label: "FAQs", path: "/support/faqs" },
-//           { label: "Contact", path: "/support/contact" }
-//         ],
-//       },
-//       { label: "Terms Policy", path: "/agreement/terms" }
-//     ],
-//   },
-// ];
-
-
 export const userMenuItems = [
   {
     label: "Profile",
@@ -30,6 +8,7 @@ export const userMenuItems = [
       { label: "Favorites", path: "/favorites" },
       { label: "Settings", submenu: [], path: "/settings" },
       { label: "Notifications", path: "/notifications", hasNew: true },
+      { label: "Logout", path: "/logout"},
     ],
   },
   {

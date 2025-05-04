@@ -27,6 +27,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ReviewPage from "./pages/ReviewPage";
 import EditListingPage from "./pages/EditListingPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import LogoutPage from "./pages/LogoutPage";
 
 function Layout({ children }) {
   const location = useLocation();
@@ -78,6 +79,7 @@ function App() {
           <Route path="/listing/:id" element={<ListingDetailsPage />} />
           <Route path="/seller/:sellerId" element={<SellerPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
 
 
         </Routes>
