@@ -11,6 +11,7 @@ function PasswordPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const validatePassword = () => {
@@ -38,14 +39,49 @@ function PasswordPage() {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  
+  // Handle form submission
+  // This function will be called when the user submits the form
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validatePassword()) {
-      // Simulate successful password update
-      setSuccessMessage("Your password has been successfully updated.");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+    if (!validatePassword()) return;
+
+    setIsLoading(true);
+  
+    try {
+      const token = localStorage.getItem("userToken");
+  
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/update-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setSuccessMessage("Password updated successfully. You will be logged out to re-login.");
+  
+        // Clear token and force logout
+        localStorage.removeItem("userToken");
+  
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 3000);
+      } else {
+        setErrorMessage(data.message || "Failed to update password.");
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      setErrorMessage("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,8 +136,8 @@ function PasswordPage() {
               required
             />
           </div>
-          <button type="submit" className="btn update-password-btn">
-            Update Password
+          <button type="submit" className="btn update-password-btn" disabled={isLoading}>
+            {isLoading ? <span className="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span> : "Update Password"}
           </button>
         </form>
 

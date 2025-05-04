@@ -12,13 +12,15 @@ function RegisterPage() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordStrengthError, setPasswordStrengthError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [successMessage, setSuccessMessage] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false);
   
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate(); // React Router hook for redirection
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
   
     // Validate email format
     const emailRegex = /^[nN]\d{8}@humber\.ca$/;
@@ -75,6 +77,8 @@ function RegisterPage() {
     } catch (error) {
       console.error("Error during registration:", error);
       setSuccessMessage("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -171,7 +175,9 @@ function RegisterPage() {
 
             {/* Register Button */}
             <div className="d-grid">
-              <button type="submit" className="custom-btn">Register</button>
+              <button type="submit" className="custom-btn" disabled={isLoading}>
+                {isLoading ? <span className="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span> : "Register"}
+              </button>
             </div>
 
             {/* Login Link */}
