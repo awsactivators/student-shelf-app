@@ -14,6 +14,13 @@ npx sequelize-cli db:migrate
 verify table schema
 DESC Users;
 
+re-track .env
+git rm --cached .env
+git commit -m "Stop tracking .env file"
+
+
+
+
 
 <!-- 
 
