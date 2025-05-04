@@ -1,19 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/SettingsPage.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function SettingsPage() {
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState(localStorage.getItem("language") || "English");
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState("Light");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  
 
   const handleSaveSettings = (e) => {
     e.preventDefault();
+
+    // Save settings to local storage
+    localStorage.setItem("language", language);
+    localStorage.setItem("notifications", notifications ? "true" : "false");
+    localStorage.setItem("theme", theme);
+    
+    // Apply the selected theme to the body class
+    document.body.className = theme.toLowerCase() + "-theme";
+
+    // Show success message
+    setSuccessMessage("Settings saved!");
+    setTimeout(() => setSuccessMessage(""), 3000);
+    
     console.log("Settings have been updated successfully!");
   };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "Light";
+    setTheme(savedTheme);
+    document.body.className = savedTheme.toLowerCase() + "-theme";
+  }, []);
 
   return (
     <div className="settings-page main-layout-sidebar">
@@ -26,6 +47,7 @@ function SettingsPage() {
       )}
       <main className="settings-content">
         <h1 className="settings-title">Settings</h1>
+        {successMessage && <div className="success-message">{successMessage}</div>}
         <form className="settings-form" onSubmit={handleSaveSettings}>
           {/* Language Setting */}
           <div className="settings-form-group">

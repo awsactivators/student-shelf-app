@@ -64,6 +64,16 @@
   color: white;
 }
 
+body.light-theme {
+  background-color: white;
+  color: black;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
 
 /* Media Queries */
 @media (max-width: 768px) {
