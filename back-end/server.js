@@ -10,6 +10,7 @@ const searchRoutes = require("./routes/searchRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 dotenv.config();
 
@@ -55,6 +56,9 @@ app.use("/api/favorites", favoriteRoutes);
 
 // Add Notification
 app.use("/api/notifications", notificationRoutes);
+
+// Contact Us Route
+app.use("/api/contact", contactRoutes);
 
 
 app.use(errorHandler);
