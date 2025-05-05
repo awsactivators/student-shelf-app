@@ -5,7 +5,7 @@ import shoppingCart from "./../assets/images/shopping-cart.png";
 import successImg from "./../assets/images/success.png";
 import secureImg from "./../assets/images/secure.png";
 import freemiumImg from "./../assets/images/freemium.png";
-import logo from "./../assets/images/logo.png";
+import logo from "./../assets/images/sslogo.png";
 
 function LandingPage() {
   return (

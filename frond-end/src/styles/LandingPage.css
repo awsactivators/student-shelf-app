@@ -54,6 +54,12 @@ body {
   color: white;
 }
 
+.logo-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
 
 /* Media Queries */
 @media (max-width: 768px) {

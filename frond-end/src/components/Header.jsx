@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MobileSidebar from "../components/MobileSidebar";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Header.css"; 
-import logo from "./../assets/images/logo.png"; 
+import logo from "./../assets/images/sslogo.png"; 
 import searchIcon from "./../assets/images/search-icon.png"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faBars } from "@fortawesome/free-solid-svg-icons";
