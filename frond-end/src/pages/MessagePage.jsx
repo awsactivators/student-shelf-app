@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/MessagePage.css";
+import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip, faMicrophone, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import profileImage from "./../assets/images/seller-avatar.png";
@@ -52,7 +53,7 @@ function MessagePage() {
   ];
 
   return (
-    <div className="message-page-container">
+    <div className="message-page-container main-content-header">
       {/* Sidebar */}
       <Sidebar
         menuItems={menuItems.map((item) => ({

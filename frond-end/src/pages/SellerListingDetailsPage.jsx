@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/SellerListingDetailsPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function SellerListingDetailsPage() {
   const { sellerId, listingId } = useParams();
@@ -73,7 +74,7 @@ function SellerListingDetailsPage() {
   if (!listing) return <p>Listing not found</p>;
 
   return (
-    <div className="sellerdet-listing-details-page">
+    <div className="sellerdet-listing-details-page main-content-header">
       <main className="sellerdet-listing-details-content">
         <button className="sellerdet-go-back-btn">
           <Link to={`/seller/${sellerId}/listings`}>← Back to Seller's Listings</Link>

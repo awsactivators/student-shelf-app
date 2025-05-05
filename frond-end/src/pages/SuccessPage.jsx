@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./../styles/SuccessPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function SuccessPage() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function SuccessPage() {
   };
 
   return (
-    <div className="success-page">
+    <div className="success-page main-content-header">
       <h1>Listing Added Successfully!</h1>
       <p>Your listing <strong>{listingTitle}</strong> has been added successfully.</p>
       <div className="success-button">

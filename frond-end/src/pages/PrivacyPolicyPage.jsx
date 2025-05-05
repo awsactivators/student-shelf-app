@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PrivacyPolicyPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function PrivacyPolicyPage() {
@@ -8,7 +9,7 @@ function PrivacyPolicyPage() {
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   return (
-    <div className="privacy-policy-page main-layout-sidebar">
+    <div className="privacy-policy-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

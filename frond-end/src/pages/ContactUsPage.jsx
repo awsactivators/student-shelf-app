@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/ContactUsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function ContactUsPage() {
@@ -58,7 +59,7 @@ function ContactUsPage() {
   };
 
   return (
-    <div className="contact-us-page main-layout-sidebar">
+    <div className="contact-us-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Contact" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

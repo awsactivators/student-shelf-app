@@ -2,6 +2,7 @@
 .sidebar {
   width: 280px;
   height: auto;
+  min-height: 100%;
   background: var(--color-blackish);
   color: white;
   display: flex;
@@ -27,7 +28,7 @@ a {
   padding: 0;
   margin: 0;
   flex-grow: 1;
-  overflow: hidden;
+  overflow: auto;
 
 }
 
@@ -169,7 +170,7 @@ li.sub-menu-item.active a {
     bottom: var(--footer-height, 0px); 
     left: 0;
     width: 250px;
-    z-index: 1000;
+    z-index: 1;
     height: auto;
   }
 

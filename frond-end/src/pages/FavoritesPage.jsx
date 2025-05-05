@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/FavoritesPage.css";
+import "./../styles/HeaderGlobal.css";
 import { Link } from "react-router-dom";
 import { userMenuItems } from "../constants/menuItems";
 
@@ -34,7 +35,7 @@ function FavoritesPage() {
   }, [API_URL]);
 
   return (
-    <div className="favorites-page main-layout-sidebar">
+    <div className="favorites-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle}  />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

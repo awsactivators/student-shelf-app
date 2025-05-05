@@ -1,0 +1,22 @@
+.main-content-header {
+  padding-top: 150px;
+  min-height: 100vh; 
+  display: flex;
+}
+
+
+@media (max-width: 768px) {
+  .search-bar {
+    margin-top: 130px;
+  }
+
+  .main-content-header {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-bar {
+    margin-top: 110px;
+  }
+}

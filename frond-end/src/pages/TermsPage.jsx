@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/TermsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function TermsPage() {
@@ -8,7 +9,7 @@ function TermsPage() {
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   return (
-    <div className="terms-page-container main-layout-sidebar">
+    <div className="terms-page-container main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

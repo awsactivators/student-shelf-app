@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./../styles/SearchResultsPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function SearchResultsPage() {
     const API_URL = import.meta.env.VITE_API_URL;
@@ -61,7 +62,7 @@ function SearchResultsPage() {
     if (error) return <p className="error-message">{error}</p>;
 
     return (
-        <div className="search-results-page">
+        <div className="search-results-page main-content-header">
             <h1>Search Results for "{searchQuery}"</h1>
 
             {results.length === 0 ? (

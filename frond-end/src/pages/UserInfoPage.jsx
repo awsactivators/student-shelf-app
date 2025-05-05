@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/UserInfoPage.css";
+import "./../styles/HeaderGlobal.css";
 import profileImagePlaceholder from "./../assets/images/default-logo.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faStar, faSave, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -149,7 +150,7 @@ const UserInfoPage = () => {
   
 
   return (
-    <div className="user-info-page main-layout-sidebar">
+    <div className="user-info-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

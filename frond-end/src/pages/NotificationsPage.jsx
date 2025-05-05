@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/NotificationsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay, faUserPlus, faHeart, faGears, faBell } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
@@ -93,7 +94,7 @@ function NotificationsPage() {
   };
 
   return (
-    <div className="notifications-page main-layout-sidebar">
+    <div className="notifications-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Notifications" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

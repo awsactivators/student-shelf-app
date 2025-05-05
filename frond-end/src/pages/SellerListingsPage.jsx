@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./../styles/SellerListingsPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function SellerListingsPage() {
   const { sellerId } = useParams();
@@ -74,7 +75,7 @@ function SellerListingsPage() {
   if (!listings.length) return <p>No listings found for this seller.</p>;
 
   return (
-    <div className="sellerlist-listings-page">
+    <div className="sellerlist-listings-page main-content-header">
       <div className="sellerlist-header">
         <button className="sellerlist-go-back-btn" onClick={handleGoBack}>
           ← Go Back to Seller Page

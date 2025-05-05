@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./../styles/SellerPage.css";
+import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faMessage, faStar, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "./../assets/images/default-logo.jpg";
@@ -127,7 +128,7 @@ function SellerPage() {
   if (!seller) return <p>Seller not found</p>;
 
   return (
-    <div className="sellerinfo-seller-page">
+    <div className="sellerinfo-seller-page main-content-header">
       <div className="sellerinfo-seller-header">
         <div>
           <button className="sellerinfo-like-btn" onClick={toggleFavorite}>

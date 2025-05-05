@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/SettingsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function SettingsPage() {
@@ -37,7 +38,7 @@ function SettingsPage() {
   }, []);
 
   return (
-    <div className="settings-page main-layout-sidebar">
+    <div className="settings-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

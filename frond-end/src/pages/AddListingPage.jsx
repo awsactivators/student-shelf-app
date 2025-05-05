@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/AddListingPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function AddListingPage({ existingData = null, isEditing = false }) {
@@ -190,7 +191,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
   
 
   return (
-    <div className="add-listing-page main-layout-sidebar">
+    <div className="add-listing-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

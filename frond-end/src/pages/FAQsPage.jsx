@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/FAQsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
@@ -51,7 +52,7 @@ function FAQsPage() {
   };
 
   return (
-    <div className="faqs-page main-layout-sidebar">
+    <div className="faqs-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="FAQs" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

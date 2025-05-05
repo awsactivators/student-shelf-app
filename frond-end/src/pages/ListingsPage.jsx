@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/ListingsPage.css";
+import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
@@ -120,7 +121,7 @@ function ListingsPage() {
   };
 
   return (
-    <div className="listings-page main-layout-sidebar">
+    <div className="listings-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div

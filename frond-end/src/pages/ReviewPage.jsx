@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/ReviewPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function ReviewPage() {
-  const { sellerId } = useParams(); // Automatically extract sellerId
+  const { sellerId } = useParams(); 
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
   const [reviewData, setReviewData] = useState({ comment: "", rating: 0 });
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null); // Ensure user is detected
+  const [loggedInUser, setLoggedInUser] = useState(null); 
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
@@ -77,7 +78,7 @@ function ReviewPage() {
         setSuccessMessage("Review submitted successfully!");
         setReviewData({ comment: "", rating: 0 });
         setError(null);
-        setTimeout(() => navigate(`/seller/${sellerId}`), 1500); // Redirect after success
+        setTimeout(() => navigate(`/seller/${sellerId}`), 1500); 
       } else {
         setError(data.message || "Failed to submit review.");
       }
@@ -89,7 +90,7 @@ function ReviewPage() {
   
 
   return (
-    <div className="review-page">
+    <div className="review-page main-content-header">
       <h1>Submit a Review</h1>
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}

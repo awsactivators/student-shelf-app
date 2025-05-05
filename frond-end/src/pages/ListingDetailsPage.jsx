@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/ListingDetailsPage.css";
+import "./../styles/HeaderGlobal.css";
 
 function ListingDetailsPage() {
   const { id } = useParams();
@@ -110,7 +111,7 @@ function ListingDetailsPage() {
   console.log("Full Listing Data:", listing);
 
   return (
-    <div className="search-listing-details-page">
+    <div className="search-listing-details-page main-content-header">
       <main className="search-listing-details-content">
         {/* Back to Listings Button */}
         <button className="search-back-btn" onClick={() => navigate("/listings")}>

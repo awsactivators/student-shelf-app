@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PasswordPage.css";
+import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
 
 function PasswordPage() {
@@ -86,7 +87,7 @@ function PasswordPage() {
   };
 
   return (
-    <div className="password-page main-layout-sidebar">
+    <div className="password-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
