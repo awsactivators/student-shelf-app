@@ -15,7 +15,7 @@ const addFavorite = async (req, res) => {
     message: `${req.user.name} favorited your profile.`,
     type: 'favorite',
     isRead: false,
-    link: `/seller/${sellerId}`,
+    link: `/seller/${req.user.id}`,
   });
 
   res.json({ message: "Seller added to favorites" });

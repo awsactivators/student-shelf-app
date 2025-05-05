@@ -47,7 +47,7 @@
 }
 
 .notification-overlay-link {
-  position: absolute;
+  /* position: absolute; */
   inset: 0;
   z-index: 1;
   text-decoration: none;

@@ -28,6 +28,20 @@ function Header() {
         fetchUnreadCount();
     }, [API_URL]);
 
+    useEffect(() => {
+        const handleStorageChange = () => {
+          const storedCount = localStorage.getItem("unreadCount");
+          if (storedCount !== null) {
+            setUnreadCount(parseInt(storedCount));
+          }
+        };
+      
+        window.addEventListener("storage", handleStorageChange);
+        handleStorageChange(); 
+      
+        return () => window.removeEventListener("storage", handleStorageChange);
+    }, []);
+
 
     // Handle search input change
     const handleSearchChange = (e) => {

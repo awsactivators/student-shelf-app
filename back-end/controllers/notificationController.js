@@ -5,6 +5,7 @@ const getNotifications = async (req, res) => {
   const userId = req.user.id;
   const notifications = await Notification.findAll({
     where: { userId },
+    where: { userId, isRead: false },
     order: [["createdAt", "DESC"]],
   });
   res.json(notifications);

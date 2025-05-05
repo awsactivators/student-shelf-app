@@ -49,7 +49,7 @@ const addReview = asyncHandler(async (req, res) => {
   try {
     await Notification.create({
       userId: sellerId,
-      message: `User ${req.user.name} left a review on your profile.`,
+      message: `${req.user.name} left a review on your profile.`,
       type: 'review',
       isRead: false,
       link: `/seller/${sellerId}`,
