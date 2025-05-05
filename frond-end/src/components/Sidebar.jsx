@@ -76,6 +76,11 @@ function Sidebar({ menuItems = [], userData, onToggle }) {
           />
         </Link>
       </div> */}
+      {/* <div className="profile-image">
+        <Link to={"/logout"}>
+          Logout
+        </Link>
+      </div> */}
     </div>
   );
 }

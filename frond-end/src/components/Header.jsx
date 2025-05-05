@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MobileSidebar from "../components/MobileSidebar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./../styles/Header.css"; 
 import logo from "./../assets/images/sslogo.png"; 
 import searchIcon from "./../assets/images/search-icon.png"; 
@@ -12,7 +12,10 @@ function Header() {
     const [searchTerm, setSearchTerm] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
     const [unreadCount, setUnreadCount] = useState(0);
+    const location = useLocation();
+
     const navigate = useNavigate();
+    
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -26,7 +29,7 @@ function Header() {
         };
       
         fetchUnreadCount();
-    }, [API_URL]);
+    }, [API_URL], [location.pathname]);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -41,6 +44,14 @@ function Header() {
       
         return () => window.removeEventListener("storage", handleStorageChange);
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          fetchUnreadCount();
+        }, 10000); 
+      
+        return () => clearInterval(interval);
+      }, []);
 
 
     // Handle search input change

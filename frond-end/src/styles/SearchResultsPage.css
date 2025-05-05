@@ -37,6 +37,7 @@
   color: inherit;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 5px;
+  max-width: 250px;
 }
 
 .search-listing-card:hover {
@@ -48,6 +49,7 @@
 .search-listing-img {
   /* width: 250px; */
   width: 100%;
+  max-width: 250px;
   height: 200px;
   object-fit: cover;
   border-top-left-radius: 10px;

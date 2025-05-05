@@ -11,6 +11,7 @@
   transition: all 0.3s ease;
   min-height: 80vh;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .sidebar.collapsed {
@@ -88,7 +89,9 @@ li.sub-menu-item.active a {
 /* Profile Image */
 .profile-image {
   padding: 10px;
-  text-align: center;
+  /* text-align: center; */
+  font-size: 24px;
+  padding-top: 30px;
 }
 
 .sidebar.collapsed .profile-image {
