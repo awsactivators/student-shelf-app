@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute';
 import "./styles/App.css"; 
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -57,28 +58,28 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/listings" element={<ListingsPage />} />
-          <Route path="/add-listing" element={<AddListingPage />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/user-info" element={<UserInfoPage />} />
-          <Route path="/password" element={<PasswordPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/search" element={<SearchResultPage />} />
-          <Route path="/seller/:sellerId/listings" element={<SellerListingsPage />} />
-          <Route path="/seller/:sellerId/listing/:listingId" element={<SellerListingDetailsPage />} />
-          <Route path="/message" element={<MessagePage />} />
-          <Route path="/support/faqs" element={<FAQsPage />} />
-          <Route path="/support/contact" element={<ContactUsPage />} />
-          <Route path="/agreement/terms" element={<TermsPage />} />
-          <Route path="/agreement/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/leave-review" element={<ReviewPage />} />
-          <Route path="/leave-review/:sellerId" element={<ReviewPage />} />
-          <Route path="/edit-listing/:id" element={<EditListingPage />} />
-          <Route path="/listing/:id" element={<ListingDetailsPage />} />
-          <Route path="/seller/:sellerId" element={<SellerPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/home" element={ <ProtectedRoute> <HomePage /> </ProtectedRoute>} />
+          <Route path="/listings" element={ <ProtectedRoute> <ListingsPage /> </ProtectedRoute>} />
+          <Route path="/add-listing" element={ <ProtectedRoute> <AddListingPage /> </ProtectedRoute>} />
+          <Route path="/success" element={ <ProtectedRoute> <SuccessPage /> </ProtectedRoute>} />
+          <Route path="/user-info" element={ <ProtectedRoute> <UserInfoPage /> </ProtectedRoute>} />
+          <Route path="/password" element={ <ProtectedRoute> <PasswordPage /> </ProtectedRoute>} />
+          <Route path="/settings" element={ <ProtectedRoute> <SettingsPage /> </ProtectedRoute>} />
+          <Route path="/notifications" element={ <ProtectedRoute> <NotificationsPage /> </ProtectedRoute>} />
+          <Route path="/search" element={ <ProtectedRoute> <SearchResultPage /> </ProtectedRoute>} />
+          <Route path="/seller/:sellerId/listings" element={ <ProtectedRoute> <SellerListingsPage /> </ProtectedRoute>} />
+          <Route path="/seller/:sellerId/listing/:listingId" element={ <ProtectedRoute> <SellerListingDetailsPage /> </ProtectedRoute>} />
+          <Route path="/message" element={ <ProtectedRoute> <MessagePage /> </ProtectedRoute>} />
+          <Route path="/support/faqs" element={ <ProtectedRoute> <FAQsPage /> </ProtectedRoute>} />
+          <Route path="/support/contact" element={ <ProtectedRoute> <ContactUsPage /> </ProtectedRoute>} />
+          <Route path="/agreement/terms" element={ <ProtectedRoute> <TermsPage /> </ProtectedRoute>} />
+          <Route path="/agreement/privacy" element={ <ProtectedRoute> <PrivacyPolicyPage /> </ProtectedRoute>} />
+          <Route path="/leave-review" element={ <ProtectedRoute> <ReviewPage /> </ProtectedRoute>} />
+          <Route path="/leave-review/:sellerId" element={ <ProtectedRoute> <ReviewPage /> </ProtectedRoute>} />
+          <Route path="/edit-listing/:id" element={ <ProtectedRoute> <EditListingPage /> </ProtectedRoute>} />
+          <Route path="/listing/:id" element={ <ProtectedRoute> <ListingDetailsPage /> </ProtectedRoute>} />
+          <Route path="/seller/:sellerId" element={ <ProtectedRoute> <SellerPage /> </ProtectedRoute>} />
+          <Route path="/favorites" element={ <ProtectedRoute> <FavoritesPage /> </ProtectedRoute>} />
           <Route path="/logout" element={<LogoutPage />} />
 
 
