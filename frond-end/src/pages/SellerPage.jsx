@@ -218,7 +218,7 @@ function SellerPage() {
 
         <div className="sellerinfo-action-buttons">
           <button className="sellerinfo-message-btn">
-            <Link to={`/message?sellerId=${sellerId}`} className="seller-message-icon-btn">
+            <Link to={`/message/${seller.id}`} className="seller-message-icon-btn">
               <FontAwesomeIcon icon={faMessage} /> Send a Message
             </Link>
           </button>

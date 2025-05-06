@@ -1,5 +1,5 @@
 const express = require("express");
-const { registerUser, loginUser, getUserProfile, updateUserProfile, uploadProfileImage, updateUserPassword } = require("../controllers/userController");
+const { registerUser, loginUser, getUserProfile, updateUserProfile, uploadProfileImage, updateUserPassword, getUserById } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 const { profileUpload } = require("../middleware/uploadMiddleware"); 
 
@@ -22,5 +22,8 @@ router.post("/upload-profile-image", protect, profileUpload.single("profileImage
 
 // Update user password
 router.put("/update-password", protect, updateUserPassword);
+
+// Fetch user by ID
+router.get("/:id", getUserById);
 
 module.exports = router;

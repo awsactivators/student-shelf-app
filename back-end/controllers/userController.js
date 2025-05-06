@@ -203,6 +203,27 @@ const updateUserPassword = async (req, res) => {
 };
 
 
+// @desc    Get user by ID
+// @route   GET /api/users/:id
+// @access  Public
+const getUserById = async (req, res) => {
+  const user = await User.findByPk(req.params.id, {
+    attributes: ["id", "name", "profileImage"]
+  });
+
+  if (user) {
+    const fullProfileImage = user.profileImage
+      ? user.profileImage.startsWith("http")
+        ? user.profileImage
+        : `${req.protocol}://${req.get("host")}${user.profileImage}`
+      : `${req.protocol}://${req.get("host")}/assets/default-profile.jpg`;
+
+    res.json({ id: user.id, name: user.name, image: fullProfileImage });
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+};
+
 
 module.exports = { 
   registerUser, 
@@ -210,5 +231,6 @@ module.exports = {
   getUserProfile,
   updateUserProfile,
   uploadProfileImage,
-  updateUserPassword
+  updateUserPassword,
+  getUserById
 };

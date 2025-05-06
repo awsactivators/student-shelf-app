@@ -1,6 +1,7 @@
 .message-page-container {
   display: flex;
   min-height: 100vh;
+
 }
 
 .message-content-container {
@@ -106,6 +107,7 @@
 .message-footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 30px;
 }
@@ -132,6 +134,71 @@
   font-size: 1.2em;
   margin-left: 5px;
   vertical-align: middle;
+}
+
+.chat-user-list {
+  width: 200px;
+  background: #222;
+  color: white;
+  overflow-y: auto;
+  padding-top: 20px;
+}
+
+.chat-user-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.chat-user-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-user-item.active {
+  background: #444;
+}
+
+.message-input-img {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.message-input-img img {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.message-bubble.sent, .message-bubble.received {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+  max-width: 60%;
+  padding: 8px;
+  border-radius: 10px;
+  margin: 5px;
+  word-break: break-word;
+}
+
+.message-bubble.sent {
+  align-self: flex-end;
+}
+
+.message-bubble.received {
+  align-self: flex-start;
+}
+
+.message-bubble img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px; 
+  border-radius: 8px;
 }
 
 
@@ -182,11 +249,11 @@
 
   .message-footer {
     gap: 5px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
   }
 
   .message-input {
-    width: 50%;
+    /* width: 50%; */
     margin-bottom: 10px;
   }
 

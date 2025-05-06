@@ -11,6 +11,7 @@ const reviewRoutes = require("./routes/reviewRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const messageRoutes = require('./routes/messageRoutes');
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 app.use("/uploads/profile", express.static(path.join(__dirname, "uploads/profile")));
 app.use("/uploads/listings", express.static(path.join(__dirname, "uploads/listings")));
 app.use("/assets", express.static("public/assets")); // Serve images from public folder
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 // User Routes
@@ -59,6 +61,9 @@ app.use("/api/notifications", notificationRoutes);
 
 // Contact Us Route
 app.use("/api/contact", contactRoutes);
+
+// Message Route
+app.use('/api/messages', messageRoutes);
 
 
 app.use(errorHandler);

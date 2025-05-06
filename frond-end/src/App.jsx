@@ -70,6 +70,7 @@ function App() {
           <Route path="/seller/:sellerId/listings" element={ <ProtectedRoute> <SellerListingsPage /> </ProtectedRoute>} />
           <Route path="/seller/:sellerId/listing/:listingId" element={ <ProtectedRoute> <SellerListingDetailsPage /> </ProtectedRoute>} />
           <Route path="/message" element={ <ProtectedRoute> <MessagePage /> </ProtectedRoute>} />
+          <Route path="/messages/:receiverId" element={<ProtectedRoute> <MessagePage /> </ProtectedRoute>} />
           <Route path="/support/faqs" element={ <ProtectedRoute> <FAQsPage /> </ProtectedRoute>} />
           <Route path="/support/contact" element={ <ProtectedRoute> <ContactUsPage /> </ProtectedRoute>} />
           <Route path="/agreement/terms" element={ <ProtectedRoute> <TermsPage /> </ProtectedRoute>} />

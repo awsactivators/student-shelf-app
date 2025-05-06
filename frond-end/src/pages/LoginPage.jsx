@@ -12,7 +12,7 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Clear previous error messages
+    setErrorMessage(""); 
     setLoading(true);
 
     try {
@@ -26,6 +26,7 @@ function LoginPage() {
       
       if (response.ok) {
         localStorage.setItem("userToken", data.token); // Store token for authentication
+        localStorage.setItem("userId", data.user.id); // Store user ID
         navigate("/home"); 
       } else {
         setErrorMessage(data.message || "Invalid login credentials");

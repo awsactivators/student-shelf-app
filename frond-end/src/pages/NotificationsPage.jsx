@@ -36,15 +36,15 @@ function NotificationsPage() {
   // Helper to choose icon based on notification type
   const getIcon = (type) => {
     switch (type) {
-      case "Favorite":
+      case "favorite":
         return faHeart;
-      case "Review":
+      case "review":
         return faBell;
-      case "Sale":
+      case "sale":
         return faCirclePlay;
-      case "Message":
+      case "message":
         return faUserPlus;
-      case "System":
+      case "system":
         return faGears;
       default:
         return faBell;
@@ -84,6 +84,8 @@ function NotificationsPage() {
       if (notification.type === "favorite") {
         // Go to the profile of the user who favorited you
         navigate(notification.link);
+      } else if (notification.type === "message") {
+        navigate(notification.link);
       } else {
         // Use existing link or default to notifications page
         navigate(notification.link || "/notifications");
@@ -113,7 +115,7 @@ function NotificationsPage() {
                     <FontAwesomeIcon icon={getIcon(notification.type)} />
                   </div>
                   <div className="notification-details">
-                    <h2 className="notification-title">{notification.type}</h2>
+                    <h2 className="notification-title">{notification.type === "message" ? "New Message" : notification.type}</h2>
                     <p className="notification-message">{notification.message}</p>
                   </div>
                   <span className="notification-time">

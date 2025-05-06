@@ -1,0 +1,127 @@
+const { Message, User, Notification } = require('../models');
+const { Op } = require('sequelize');
+
+const getMessages = async (req, res) => {
+  const userId = parseInt(req.query.userId);
+  const otherUserId = parseInt(req.query.otherUserId);
+  try {
+    const messages = await Message.findAll({
+      where: {
+        [Op.or]: [
+          { senderId: userId, receiverId: otherUserId },
+          { senderId: otherUserId, receiverId: userId }
+        ]
+      },
+      order: [['createdAt', 'ASC']]
+    });
+
+    // Map imageUrl to full path
+    const messagesWithFullImagePath = messages.map(msg => ({
+      ...msg.toJSON(),
+      imageUrl: msg.imageUrl 
+        ? `${req.protocol}://${req.get('host')}/uploads/messages/${msg.imageUrl}`
+        : null
+    }));
+
+    res.json(messagesWithFullImagePath);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+const sendMessage = async (req, res) => {
+  const { senderId, receiverId, text } = req.body;
+  const imageFile = req.file ? `messages/${req.file.filename}` : null;
+
+  try {
+    // fetch sender so we can use their name
+    const sender = await User.findByPk(senderId);
+
+    if (!sender) {
+      return res.status(404).json({ message: "Sender not found" });
+    }
+
+    // Create message
+    const newMsg = await Message.create({
+      senderId,
+      receiverId,
+      messageText: text,
+      imageUrl: imageFile
+    });
+
+    // Create notification for receiver
+    await Notification.create({
+      userId: receiverId,
+      message: `You have a new message from ${sender.name}`,
+      type: 'message',
+      isRead: false,
+      link: `/messages/${senderId}`, 
+    });
+
+    res.json(newMsg);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+
+const getChatUsers = async (req, res) => {
+  const userId = parseInt(req.query.userId);
+  try {
+    const messages = await Message.findAll({
+      where: {
+        [Op.or]: [
+          { senderId: userId },
+          { receiverId: userId }
+        ]
+      },
+      attributes: ['senderId', 'receiverId'],
+    });
+
+    console.log("messages result:", messages.map(m => m.toJSON())); 
+
+    const userIds = new Set();
+    messages.forEach(msg => {
+      userIds.add(msg.senderId);
+      userIds.add(msg.receiverId);
+    });
+    userIds.delete(userId); 
+
+    console.log("Resolved userIds:", Array.from(userIds));
+
+    if (userIds.size === 0) {
+      return res.json([]); 
+    }
+
+    const users = await User.findAll({
+      where: { id: { [Op.in]: Array.from(userIds) } },
+      attributes: ['id', 'name', 'profileImage'],
+    });
+
+    console.log("Fetched users:", users.map(u => u.toJSON()));
+
+    const usersWithImage = users.map(user => ({
+      id: user.id,
+      name: user.name,
+      image: user.profileImage
+        ? user.profileImage.startsWith("http")
+          ? user.profileImage
+          : `${req.protocol}://${req.get("host")}${user.profileImage}`
+        : `${req.protocol}://${req.get("host")}/assets/default-profile.jpg`
+    }));
+
+    res.json(usersWithImage);
+
+  } catch (err) {
+    console.error("Error in getChatUsers:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { getMessages, sendMessage, getChatUsers };

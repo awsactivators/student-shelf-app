@@ -5,6 +5,7 @@ const ListingModel = require("./listing");
 const ReviewModel = require("./review"); 
 const FavoriteModel = require("./favorite");
 const NotificationModel = require("./notification");
+const MessageModel = require("./message");
 
 const sequelize = new Sequelize(
   dbConfig.development.database,
@@ -23,12 +24,14 @@ db.Listing = ListingModel(sequelize, Sequelize);
 db.Review = ReviewModel(sequelize, Sequelize)
 db.Favorite = FavoriteModel(sequelize, Sequelize);
 db.Notification = NotificationModel(sequelize, Sequelize);
+db.Message = MessageModel(sequelize, Sequelize); 
 
 // Call Associations
 db.Favorite.associate(db);
 db.Notification.associate(db);
 db.Review.associate(db);
 db.User.associate(db);
+db.Message.associate(db);
 
 // Associations
 db.User.hasMany(db.Listing, { foreignKey: "userId", as: "userListings", onDelete: "CASCADE" });
