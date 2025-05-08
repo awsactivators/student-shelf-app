@@ -1,7 +1,6 @@
 .message-page-container {
   display: flex;
   min-height: 100vh;
-
 }
 
 .message-content-container {
@@ -15,6 +14,7 @@
   border-radius: 8px;
   max-width: 1200px;
   margin-left: 100px;
+  height: calc(100vh - 120px);
 }
 
 .message-header-content {
@@ -51,6 +51,7 @@
   padding: 10px;
   background: white;
   border-radius: 10px;
+  max-height: 100%;
 }
 
 .message-date-p {
@@ -199,6 +200,16 @@
   height: auto;
   margin-bottom: 5px; 
   border-radius: 8px;
+}
+
+
+.red-dot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
 }
 
 

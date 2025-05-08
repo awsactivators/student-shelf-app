@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getMessages, sendMessage, getChatUsers } = require('../controllers/messageController');
+const { getMessages, sendMessage, getChatUsers, markMessagesAsRead } = require('../controllers/messageController');
 const multer = require('multer');
 const path = require('path');
 
@@ -23,5 +23,8 @@ router.post('/', upload.single('image'), sendMessage);
 
 // Fetch chat users
 router.get('/chat-users', getChatUsers);
+
+// Mark messages as read
+router.post('/mark-read', markMessagesAsRead);
 
 module.exports = router;
