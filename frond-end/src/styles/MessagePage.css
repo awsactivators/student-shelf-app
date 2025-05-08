@@ -52,6 +52,8 @@
   background: white;
   border-radius: 10px;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .message-date-p {
@@ -213,6 +215,33 @@
 }
 
 
+/* DESKTOP (≥ 992px) */
+@media (min-width: 992px) {
+  .message-bubble.sent {
+    align-self: flex-end;
+    border-radius: 20px 0 20px 20px;
+    color: white;
+    text-align: right;
+  }
+  .message-bubble.received {
+    align-self: flex-start;
+    border-radius: 20px 20px 20px 0;
+    color: black;
+    text-align: left;
+  }
+
+}
+
+
+@media (max-width: 991px) {
+  .message-bubble.sent p,
+  .message-bubble.received p {
+    width: 100%;
+    /* font-size: 0.9rem; */
+  }
+}
+
+
 /* Media Query for max-width 768px */
 @media (max-width: 768px) {
   .message-content-container {
@@ -220,6 +249,7 @@
     margin: 20px;
     max-width: 100%;
     /* margin-left: 20p; */
+    margin-top: 180px;
   }
 
   .message-header-container {
@@ -245,7 +275,7 @@
 
   .message-bubble.sent p,
   .message-bubble.received p {
-    width: 250px;
+    width: 100%;
     font-size: 0.9rem;
   }
 
@@ -277,6 +307,14 @@
   .message-date-p {
     margin-bottom: 40px;
   }
+
+  .message-input-img {
+    width: 100%;
+  }
+
+  .chat-user-list {
+    padding-top: 130px;
+  }
 }
 
 /* Media Query for max-width 576px */
@@ -302,7 +340,7 @@
 
   .message-bubble.sent p,
   .message-bubble.received p {
-    width: 200px;
+    /* width: 200px; */
     font-size: 0.8rem;
   }
 
@@ -325,11 +363,18 @@
 }
 
 
+@media (max-width: 540px) {
+  .chat-user-list {
+    padding-top: 0px;
+  }
+}
+
+
 
 /* Media Query for max-width 420px */
 @media (max-width: 420px) {
   .message-content-container {
     width: 100%;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
   }
 }

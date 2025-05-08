@@ -18,6 +18,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5500;
 
+global.activeChats = {};
+
 // Middleware
 app.use(express.json());
 app.use(cors());

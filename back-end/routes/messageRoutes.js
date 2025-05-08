@@ -27,4 +27,11 @@ router.get('/chat-users', getChatUsers);
 // Mark messages as read
 router.post('/mark-read', markMessagesAsRead);
 
+// Fetch active chat
+router.post('/active', (req, res) => {
+  const { userId, chattingWith } = req.body;
+  global.activeChats[userId] = chattingWith;
+  res.json({ message: 'Active chat updated' });
+});
+
 module.exports = router;
