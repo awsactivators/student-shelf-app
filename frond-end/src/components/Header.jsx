@@ -18,18 +18,28 @@ function Header() {
     
     const API_URL = import.meta.env.VITE_API_URL;
 
-    useEffect(() => {
-        const fetchUnreadCount = async () => {
-          const token = localStorage.getItem("userToken");
-          const res = await fetch(`${API_URL}/api/notifications/unread-count`, {
+    
+
+    const fetchUnreadCount = async () => {
+        const token = localStorage.getItem("userToken");
+        const res = await fetch(`${API_URL}/api/notifications/unread-count`, {
             headers: { Authorization: `Bearer ${token}` },
-          });
-          const data = await res.json();
-          setUnreadCount(data.count);
-        };
-      
+        });
+        const data = await res.json();
+        setUnreadCount(data.count);
+    };
+
+    useEffect(() => {
         fetchUnreadCount();
-    }, [API_URL], [location.pathname]);
+    }, [API_URL, location.pathname]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchUnreadCount();
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -45,13 +55,6 @@ function Header() {
         return () => window.removeEventListener("storage", handleStorageChange);
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-          fetchUnreadCount();
-        }, 10000); 
-      
-        return () => clearInterval(interval);
-      }, []);
 
 
     // Handle search input change

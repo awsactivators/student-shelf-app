@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import "./../styles/MessagePage.css";
 import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,22 @@ function MessagePage() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [userId, setUserId] = useState(null);
+  
+  const [chatUsers, setChatUsers] = useState([]);
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const { receiverId: routeReceiverId } = useParams();
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const sellerId = queryParams.get("sellerId");
+
+  const receiverId = routeReceiverId || sellerId;
 
   useEffect(() => {
     const storedId = localStorage.getItem("userId");
@@ -20,14 +36,6 @@ function MessagePage() {
       window.location.href = "/login";
     }
   }, []);
-  
-  const [chatUsers, setChatUsers] = useState([]);
-  const { receiverId } = useParams();
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [messageInput, setMessageInput] = useState("");
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchChatUsers = async () => {
@@ -40,65 +48,76 @@ function MessagePage() {
   }, [userId]);
 
 
+
   useEffect(() => {
     const fetchUserIfMissing = async () => {
-      if (receiverId && chatUsers.length > 0) {
+      if (receiverId) {
         let foundUser = chatUsers.find(u => u.id === Number(receiverId));
         if (!foundUser) {
-          // fetch user by ID if not in chatUsers
           const res = await fetch(`${API_URL}/api/users/${receiverId}`);
           const user = await res.json();
           foundUser = user ? { id: user.id, name: user.name, image: user.image } : null;
           if (foundUser) {
-            setChatUsers(prev => [...prev, foundUser]);
-            setSelectedUser(foundUser); 
+            setChatUsers(prev => {
+                const exists = prev.some(u => u.id === foundUser.id);
+                return exists ? prev : [...prev, foundUser];
+            });
           }
         }
-        if (foundUser) setSelectedUser(foundUser);
+        setSelectedUser(foundUser || chatUsers[0] || null);
+      } else {
+        setSelectedUser(chatUsers[0] || null);
       }
     };
-  
     fetchUserIfMissing();
   }, [receiverId, chatUsers]);
 
-  // Always select user after chatUsers is loaded
+
   useEffect(() => {
-    if (chatUsers.length > 0) {
-      if (receiverId) {
-        const foundUser = chatUsers.find(u => u.id === Number(receiverId));
-        if (foundUser) {
-          setSelectedUser(foundUser);
-        } else {
-          setSelectedUser(chatUsers[0]); 
-        }
-      } else {
-        setSelectedUser(chatUsers[0]); 
-      }
-    }
-    console.log("chatUsers loaded:", chatUsers);
-  }, [chatUsers, receiverId]);
+    console.log("💥 Final receiverId:", receiverId);
+    console.log("💬 selectedUser updated:", selectedUser);
+  }, [receiverId, selectedUser]);
+
   
-  // Load messages when selectedUser changes
+
   useEffect(() => {
     const fetchMessages = async () => {
+      if (!selectedUser) return;
+  
       const res = await fetch(`${API_URL}/api/messages?userId=${userId}&otherUserId=${selectedUser.id}`);
       const data = await res.json();
       setMessages(Array.isArray(data) ? data : []);
     };
-    if (selectedUser) fetchMessages();
+  
+    fetchMessages();
   }, [selectedUser]);
 
+  
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
 
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+        const event = new Event("storage");
+        window.dispatchEvent(event);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  
+
   const sendMessage = async () => {
     if (!selectedUser) {
       console.error("No user selected to send message to!");
       return;
     }
+  
     const formData = new FormData();
     formData.append("senderId", userId);
     formData.append("receiverId", selectedUser.id);
@@ -109,15 +128,20 @@ function MessagePage() {
       method: "POST",
       body: formData,
     });
-
+  
     setMessageInput("");
     setImageFile(null);
     setImagePreview(null);
-
+  
+    // Reload chat users
+    const chatRes = await fetch(`${API_URL}/api/messages/chat-users?userId=${userId}`);
+    const chatData = await chatRes.json();
+    setChatUsers(chatData);
+  
     // Reload messages
-    const res = await fetch(`${API_URL}/api/messages?userId=${userId}&otherUserId=${selectedUser.id}`);
-    const data = await res.json();
-    setMessages(data);
+    const msgRes = await fetch(`${API_URL}/api/messages?userId=${userId}&otherUserId=${selectedUser.id}`);
+    const msgData = await msgRes.json();
+    setMessages(Array.isArray(msgData) ? msgData : []);
   };
 
   return (

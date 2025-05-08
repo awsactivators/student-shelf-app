@@ -84,19 +84,16 @@ const getChatUsers = async (req, res) => {
       attributes: ['senderId', 'receiverId'],
     });
 
-    console.log("messages result:", messages.map(m => m.toJSON())); 
-
     const userIds = new Set();
-    messages.forEach(msg => {
-      userIds.add(msg.senderId);
-      userIds.add(msg.receiverId);
-    });
-    userIds.delete(userId); 
 
-    console.log("Resolved userIds:", Array.from(userIds));
+    // Collect all distinct user IDs except current user
+    messages.forEach(msg => {
+      if (msg.senderId !== userId) userIds.add(msg.senderId);
+      if (msg.receiverId !== userId) userIds.add(msg.receiverId);
+    });
 
     if (userIds.size === 0) {
-      return res.json([]); 
+      return res.json([]);
     }
 
     const users = await User.findAll({
@@ -104,20 +101,15 @@ const getChatUsers = async (req, res) => {
       attributes: ['id', 'name', 'profileImage'],
     });
 
-    console.log("Fetched users:", users.map(u => u.toJSON()));
-
     const usersWithImage = users.map(user => ({
       id: user.id,
       name: user.name,
-      image: user.profileImage
-        ? user.profileImage.startsWith("http")
-          ? user.profileImage
-          : `${req.protocol}://${req.get("host")}${user.profileImage}`
-        : `${req.protocol}://${req.get("host")}/assets/default-profile.jpg`
+      image: user.profileImage?.startsWith("http")
+        ? user.profileImage
+        : `${req.protocol}://${req.get("host")}${user.profileImage}`
     }));
 
     res.json(usersWithImage);
-
   } catch (err) {
     console.error("Error in getChatUsers:", err);
     res.status(500).json({ error: err.message });
