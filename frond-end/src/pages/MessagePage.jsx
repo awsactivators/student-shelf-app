@@ -16,7 +16,7 @@ function MessagePage() {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const bottomRef = useRef(null);
-  // const [userScrolledUp, setUserScrolledUp] = useState(false);
+
   const [hasUserScrolledUp, setHasUserScrolledUp] = useState(false);
   const messageContainerRef = useRef(null);
 
@@ -35,6 +35,8 @@ function MessagePage() {
     }
   }, []);
 
+
+
   useEffect(() => {
     const fetchChatUsers = async () => {
       if (!userId) return;
@@ -44,6 +46,8 @@ function MessagePage() {
     };
     fetchChatUsers();
   }, [userId]);
+
+
 
   useEffect(() => {
     const fetchUserIfMissing = async () => {
@@ -68,6 +72,21 @@ function MessagePage() {
     fetchUserIfMissing();
   }, [receiverId, chatUsers]);
 
+
+
+  useEffect(() => {
+    const savedSelectedUserId = localStorage.getItem("selectedChatUserId");
+    const matchedUser = chatUsers.find(u => u.id === Number(savedSelectedUserId));
+  
+    if (matchedUser) {
+      setSelectedUser(matchedUser);
+    } else if (chatUsers.length > 0) {
+      setSelectedUser(chatUsers[0]);
+    }
+  }, [chatUsers]);
+
+
+
   useEffect(() => {
     const fetchMessages = async () => {
       if (!selectedUser) return;
@@ -77,6 +96,8 @@ function MessagePage() {
     };
     fetchMessages();
   }, [selectedUser]);
+
+
 
   useEffect(() => {
     const updateActiveChat = async () => {
@@ -92,6 +113,7 @@ function MessagePage() {
   }, [selectedUser]);
 
 
+
   useEffect(() => {
     const interval = setInterval(async () => {
       // Fetch chat users (to update red dots)
@@ -105,34 +127,43 @@ function MessagePage() {
         const msgData = await msgRes.json();
         setMessages(Array.isArray(msgData) ? msgData : []);
       }
-    }, 2000); // 5 sec
+    }, 2000); 
   
     return () => clearInterval(interval);
   }, [userId, selectedUser]);
 
 
+
   useEffect(() => {
     const markCurrentChatAsRead = async () => {
-      if (selectedUser) {
-        await fetch(`${API_URL}/api/messages/mark-read`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, otherUserId: selectedUser.id }),
-        });
+      // if (selectedUser) {
+      if (selectedUser && messages.some(m => m.receiverId === userId && !m.read)) {
+        try {
+          await fetch(`${API_URL}/api/messages/mark-read`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, otherUserId: selectedUser.id }),
+          });
 
-        const res = await fetch(`${API_URL}/api/messages/chat-users?userId=${userId}`);
-        const data = await res.json();
-        setChatUsers(data);
+          const res = await fetch(`${API_URL}/api/messages/chat-users?userId=${userId}`);
+          const data = await res.json();
+          setChatUsers(data);
+        } catch (error) {
+          console.error("Failed to mark messages as read:", error);
+        }
       }
     };
     markCurrentChatAsRead();
   }, [selectedUser, messages]);
+
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
+
 
 
   useEffect(() => {
@@ -150,6 +181,8 @@ function MessagePage() {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+
   useEffect(() => {
     if (!messageContainerRef.current) return;
   
@@ -158,6 +191,8 @@ function MessagePage() {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+
 
   const sendMessage = async () => {
     if (!selectedUser) return;
@@ -193,7 +228,11 @@ function MessagePage() {
           <div
             key={user.id}
             className={`chat-user-item ${selectedUser && selectedUser.id === user.id ? "active" : ""}`}
-            onClick={() => setSelectedUser(user)}
+            onClick={() => {
+              setSelectedUser(user);
+              localStorage.setItem("selectedChatUserId", user.id);
+            }}
+            
           >
             <img
               src={user.image}
@@ -216,24 +255,39 @@ function MessagePage() {
             <img src={selectedUser.image} alt="Seller" className="message-seller-img" />
             <div className="message-header-content">
               <h3>{selectedUser.name}</h3>
-              <span>Active now</span>
+              <span>
+              {(() => {
+                const lastMessage = messages[messages.length - 1];
+                if (
+                  lastMessage &&
+                  lastMessage.receiverId === selectedUser.id &&
+                  lastMessage.read
+                ) {
+                  return "Active now";
+                } else {
+                  return "Offline";
+                }
+              })()}
+            </span>
             </div>
           </header>
         ) : (
           <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+            {/* <FontAwesomeIcon icon={faSpinner} spin size="2x" /> */}
+            <p>No chats yet!</p>
           </div>
         )}
 
         <div className="message-body-container">
           {messages.map((msg, idx) => (
             <div key={idx} className={`message-bubble ${msg.senderId == userId ? "sent" : "received"}`}>
+              {msg.imageUrl && (
+                <img src={msg.imageUrl} alt="msg-img" />
+              )}
               <p>{msg.messageText}</p>
-              {msg.imageUrl && <img src={`${API_URL}/uploads/${msg.imageUrl}`} alt="msg-img" />}
               <span className="message-time">{new Date(msg.createdAt).toLocaleTimeString()}</span>
             </div>
           ))}
-          {/* ✅ Place single ref here AFTER loop */}
           <div ref={bottomRef}></div>
         </div>
 

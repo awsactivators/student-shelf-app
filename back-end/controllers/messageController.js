@@ -15,6 +15,7 @@ const getMessages = async (req, res) => {
       order: [['createdAt', 'ASC']]
     });
 
+
     const messagesWithFullImagePath = messages.map(msg => ({
       ...msg.toJSON(),
       imageUrl: msg.imageUrl
@@ -31,7 +32,7 @@ const getMessages = async (req, res) => {
 
 const sendMessage = async (req, res) => {
   const { senderId, receiverId, text } = req.body;
-  const imageFile = req.file ? `messages/${req.file.filename}` : null;
+  const imageFile = req.file ? req.file.filename : null;
 
   try {
     const sender = await User.findByPk(senderId);
