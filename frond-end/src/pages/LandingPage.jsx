@@ -1,123 +1,97 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./../styles/LandingPage.css";
-import shoppingCart from "./../assets/images/shopping-cart.png";
-import successImg from "./../assets/images/success.png";
-import secureImg from "./../assets/images/secure.png";
-import freemiumImg from "./../assets/images/freemium.png";
 import logo from "./../assets/images/sslogo.png";
 
 function LandingPage() {
+  const [listings, setListings] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const navigate = useNavigate();
+
+  const handleViewDetails = (listingId) => {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      navigate(`/listings/${listingId}`);
+    } else {
+      navigate("/login");
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/listings/all`);
+        if (!res.ok) throw new Error("Failed to fetch listings");
+  
+        const data = await res.json();
+        setListings(data);
+      } catch (error) {
+        console.error("Error fetching listings:", error);
+        setListings([]);
+      }
+    };
+  
+    fetchListings();
+  }, []);
+
   return (
-    <div className="container-fluid text-white d-flex flex-column landing-page">
+    <div className="container-fluid text-white landing-page">
       {/* Header */}
-      <header className="py-3 text-white">
-        <div className="container d-flex flex-column flex-md-row align-items-center justify-content-center">
-          {/* Logo */}
-          <img
-            src={logo}
-            alt="Student Shelf Logo"
-            className="me-md-3 mb-3 mb-md-0 logo-img"
-          />
-          {/* Title */}
-          <h1 className="display-4 text-center text-md-start">STUDENT SHELF</h1>
-        </div>
+      <header className="py-4 text-center">
+        <img src={logo} alt="Student Shelf Logo" className="logo-img mb-3" />
+        <h1 className="display-4">STUDENT SHELF</h1>
+        <p className="lead mb-0">From Students, for Students</p>
       </header>
 
-      {/* Main Content */}
-      <div className="row flex-grow-1 align-items-center px-5 main-container">
-        {/* Text Content */}
-        <div className="col-md-6 text-center text-md-start">
-          <h2 className="mb-4">A Dynamic Marketplace for Students</h2>
-          <p className="lead">
-            Designed to help you buy, sell, and connect with ease whether it’s
-            finding the perfect product, offering your services, or discovering
-            great deals, all within a trusted student community.
-          </p>
-          <p className="fst-italic slogan">
-            Find What You Need, Share What You Have. From Students, For Students.
-          </p>
-          {/* Buttons */}
-          <div className="mt-4 d-flex flex-column flex-sm-row justify-content-center justify-content-md-start login-register-btn">
-            <button className="btn btn-success btn-lg mb-3 mb-sm-0 me-sm-3">
-              <Link to="/register" className="text-white text-decoration-none">
-                Register
-              </Link>
-            </button>
-            <button className="btn btn-info btn-lg">
-              <Link to="/login" className="text-white text-decoration-none">
-                Login
-              </Link>
-            </button>
-          </div>
+      {/* Hero Section */}
+      <section className="hero-section text-center py-5">
+        <h2 className="mb-3">Buy, Sell, and Connect in One Place</h2>
+        <p className="lead mb-4">
+        Student Shelf is a dynamic student marketplace designed to help you buy, sell, and connect with ease whether it’s finding the perfect product, offering your services, or discovering great deals, all within a trusted student community.
+        </p>
+        <div className="d-flex justify-content-center gap-3">
+          <Link to="/register" className="btn btn-success btn-lg">Register</Link>
+          <Link to="/login" className="btn btn-info btn-lg">Login</Link>
         </div>
+      </section>
 
-        {/* Image Content */}
-        <div className="col-md-6 text-center">
-          <img
-            src={shoppingCart}
-            alt="Shopping Cart"
-            className="img-fluid rounded shopping-cart-img"
-          />
+      {/* Listings Section */}
+      <section className="container py-5">
+        <h3 className="text-center mb-4">Browse Listings</h3>
+        <div className="row">
+          {listings.length > 0 ? (
+            listings.map((listing) => (
+              <div key={listing.id} className="col-sm-6 col-md-4 mb-4">
+                <div className="card listing-card h-100">
+                <img src={`${API_URL}${listing.coverImage}`} alt={listing.title} />
+                  <div className="card-body">
+                    <h5 className="card-title">{listing.title}</h5>
+                    <p className="card-text">${listing.price}</p>
+                    <button className="btn btn-primary btn-sm" onClick={() => handleViewDetails(listing.id)}>
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center">No listings available yet.</p>
+          )}
         </div>
-      </div>
+      </section>
 
-      {/* Features Section */}
-      <div className="container my-5">
-        <div className="row text-center">
-          {/* First Card */}
-          <div className="col-sm-6 col-md-4 mb-4">
-            <div className="card h-100 bg-secondary text-white feature-card">
-              <img
-                src={successImg}
-                className="card-img-top"
-                alt="Buy & Sell Scrabble Image"
-              />
-              <div className="card-body">
-                <p className="card-text">
-                  With Student Shelf, you can buy and sell products or services.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Second Card */}
-          <div className="col-sm-6 col-md-4 mb-4">
-            <div className="card h-100 bg-secondary text-white feature-card">
-              <img
-                src={secureImg}
-                className="card-img-top"
-                alt="Padlock Image"
-              />
-              <div className="card-body">
-                <p className="card-text">
-                  Student Shelf is safe, secured, and reliable for student trading.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Third Card */}
-          <div className="col-sm-6 col-md-4 mb-4 mx-auto mx-md-0">
-            <div className="card h-100 bg-secondary text-white feature-card">
-              <img
-                src={freemiumImg}
-                className="card-img-top"
-                alt="Freemium Image"
-              />
-              <div className="card-body">
-                <p className="card-text">
-                  Student Shelf currently offers freemium services for all students.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Contact Section */}
+      <section className="container py-5 text-center" id="contact">
+        <h2 className="mb-4">Contact Us</h2>
+        <p>Email: support@studentshelf.com</p>
+        <p>Phone: +1 234 567 8901</p>
+      </section>
 
       {/* Footer */}
-      <footer className="py-3 text-center landing-footer">
-        <p>Copyright © 2024 studentshelf.com. All Rights Reserved | 2024</p>
+      <footer className="py-3 text-center">
+        <p className="mb-0">&copy; 2024 studentshelf.com | All Rights Reserved</p>
       </footer>
     </div>
   );

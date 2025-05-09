@@ -1,9 +1,12 @@
 const express = require("express");
-const { createListing, getListings, getListingById, deleteListing, updateListing, searchListings } = require("../controllers/listingsController");
+const { createListing, getListings, getListingById, deleteListing, updateListing, searchListings, getAllPublicListings } = require("../controllers/listingsController");
 const { listingUpload } = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
+
+// Get all listings (public)
+router.get("/all", getAllPublicListings);
 
 // Middleware to mark this as a listing upload before processing
 const setListingUpload = (req, res, next) => {

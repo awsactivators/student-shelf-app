@@ -22,7 +22,7 @@ function ListingDetailsPage() {
         const token = localStorage.getItem("userToken");
 
         if (!token) {
-          setError("Not authorized. Please log in.");
+          navigate('/login');
           return;
         }
 

@@ -78,7 +78,8 @@ function App() {
           <Route path="/leave-review" element={ <ProtectedRoute> <ReviewPage /> </ProtectedRoute>} />
           <Route path="/leave-review/:sellerId" element={ <ProtectedRoute> <ReviewPage /> </ProtectedRoute>} />
           <Route path="/edit-listing/:id" element={ <ProtectedRoute> <EditListingPage /> </ProtectedRoute>} />
-          <Route path="/listing/:id" element={ <ProtectedRoute> <ListingDetailsPage /> </ProtectedRoute>} />
+          {/* <Route path="/listing/:id" element={ <ProtectedRoute> <ListingDetailsPage /> </ProtectedRoute>} /> */}
+          <Route path="/listing/:id" element={  <ListingDetailsPage /> } />
           <Route path="/seller/:sellerId" element={ <ProtectedRoute> <SellerPage /> </ProtectedRoute>} />
           <Route path="/favorites" element={ <ProtectedRoute> <FavoritesPage /> </ProtectedRoute>} />
           <Route path="/logout" element={<LogoutPage />} />

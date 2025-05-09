@@ -220,4 +220,26 @@ const searchListings = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { createListing, getListings, deleteListing, getListingById, updateListing, searchListings };
+// @desc Get all listings
+// @route GET /api/listings
+// @access Public
+// Add to listingsController.js
+const getAllPublicListings = asyncHandler(async (req, res) => {
+  const listings = await Listing.findAll({
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["id", "name", "campus", "profileImage"],
+      },
+    ],
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.json(listings);
+});
+
+
+
+
+module.exports = { createListing, getListings, deleteListing, getListingById, updateListing, searchListings, getAllPublicListings };

@@ -61,6 +61,42 @@ body {
 }
 
 
+
+/* Hero */
+.hero-section {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+}
+
+.hero-img {
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.feature-card,
+.listing-card {
+  background-color: #fff;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover,
+.listing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.listing-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+footer {
+  background-color: #222;
+  color: #ddd;
+}
+
+
 /* Media Queries */
 @media (max-width: 768px) {
   .main-container {
