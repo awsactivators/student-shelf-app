@@ -190,7 +190,7 @@ function ListingsPage() {
                     <div
                       key={listing.id}
                       className="listing-card"
-                      onClick={() => navigate(`/listing/${listing.id}`)}
+                      onClick={() => navigate(`/listing/${listing.id}`, { state: { from: "/listings" } })}
                     >
                       <img
                         src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""}

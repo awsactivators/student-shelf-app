@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/ListingDetailsPage.css";
@@ -15,6 +15,7 @@ function ListingDetailsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -114,7 +115,10 @@ function ListingDetailsPage() {
     <div className="search-listing-details-page main-content-header">
       <main className="search-listing-details-content">
         {/* Back to Listings Button */}
-        <button className="search-back-btn" onClick={() => navigate("/home")}>
+        <button
+          className="search-back-btn"
+          onClick={() => navigate(location.state?.from || "/home")}
+        >
           ← Back to Listings
         </button>
 

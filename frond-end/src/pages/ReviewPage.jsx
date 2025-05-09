@@ -125,6 +125,14 @@ function ReviewPage() {
         <button type="submit" className="review-btn-submit">
           Submit Review
         </button>
+
+        <button
+          type="button"
+          className="review-btn-cancel"
+          onClick={() => navigate(`/seller/${sellerId}`)}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   );
