@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { Listing, User } = require("../models");
+const { Op } = require("sequelize");
 
 
 // @desc    Create new listing
@@ -240,6 +241,48 @@ const getAllPublicListings = asyncHandler(async (req, res) => {
 });
 
 
+// Search listings by title
+const searchPublicListings = asyncHandler(async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ message: "Search query is required" });
+  }
+
+  try {
+    const listings = await Listing.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${query}%`,
+        },
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "name", "campus"],
+        },
+      ],
+      attributes: ["id", "title", "coverImage", "price"],
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json(listings);
+  } catch (error) {
+    console.error("Error searching listings:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+});
 
 
-module.exports = { createListing, getListings, deleteListing, getListingById, updateListing, searchListings, getAllPublicListings };
+
+
+module.exports = { 
+  createListing, 
+  getListings, 
+  deleteListing, 
+  getListingById, 
+  updateListing, 
+  searchListings, 
+  getAllPublicListings,
+  searchPublicListings };
