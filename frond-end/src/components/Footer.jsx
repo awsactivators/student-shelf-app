@@ -2,9 +2,10 @@ import React from "react";
 import "./../styles/Footer.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUser, faShoppingCart, faCommentDots } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
+  const location = useLocation();
   return (
     <footer className="custom-footer container-fluid d-flex flex-wrap align-items-center justify-content-between px-3 py-3">
   
@@ -17,16 +18,16 @@ function Footer() {
 
       {/* Footer Icons for Mobile Screens */}
       <div className="custom-footer-icons d-flex justify-content-around">
-        <Link to="/home" className="footer-icon">
+        <Link to="/home" className={`footer-icon ${location.pathname === "/home" ? "active" : ""}`}>
           <FontAwesomeIcon icon={faHome} />
         </Link>
-        <Link to="/user-info" className="footer-icon">
+        <Link to="/user-info" className={`footer-icon ${location.pathname === "/user-info" ? "active" : ""}`}>
           <FontAwesomeIcon icon={faUser} />
         </Link>
-        <Link to="/add-listing" className="footer-icon">
+        <Link to="/add-listing" className={`footer-icon ${location.pathname === "/add-listing" ? "active" : ""}`}>
           <FontAwesomeIcon icon={faShoppingCart} />
         </Link>
-        <Link to="/message" className="footer-icon">
+        <Link to="/message" className={`footer-icon ${location.pathname === "/message" ? "active" : ""}`}>
           <FontAwesomeIcon icon={faCommentDots} />
         </Link>
       </div>

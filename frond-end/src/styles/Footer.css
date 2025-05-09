@@ -48,6 +48,10 @@
   color: #38b000; 
 }
 
+.footer-icon.active {
+  color: #1E90FF; 
+}
+
 
 
 /* Center footer content on small screens */

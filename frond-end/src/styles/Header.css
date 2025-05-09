@@ -51,6 +51,12 @@
   color: #1E90FF; 
 }
 
+.custom-nav-link.active {
+  color: #1E90FF; 
+  font-weight: bold;
+  border-bottom: 2px solid #1E90FF;
+}
+
 
 
 /* Menu Icon Styling */

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MobileSidebar from "../components/MobileSidebar";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./../styles/Header.css"; 
 import logo from "./../assets/images/sslogo.png"; 
 import searchIcon from "./../assets/images/search-icon.png"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 function Header() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -95,10 +94,10 @@ function Header() {
                 {/* Navigation Links */}
                 <div className="menu-container">
                     <nav className={`custom-nav d-flex align-items-center ss-nav-link ${menuOpen ? "open" : ""}`}>
-                        <Link to="/home" className="custom-nav-link">Home</Link>
-                        <Link to="/user-info" className="custom-nav-link">Profile</Link>
-                        <Link to="/add-listing" className="custom-nav-link">Sell</Link>
-                        <Link to="/message" className="custom-nav-link">Messages</Link>
+                        <Link to="/home" className={`custom-nav-link ${location.pathname === "/home" ? "active" : ""}`}>Home</Link>
+                        <Link to="/user-info" className={`custom-nav-link ${location.pathname === "/user-info" ? "active" : ""}`}>Profile</Link>
+                        <Link to="/add-listing" className={`custom-nav-link ${location.pathname === "/add-listing" ? "active" : ""}`}>Sell</Link>
+                        <Link to="/message" className={`custom-nav-link ${location.pathname === "/message" ? "active" : ""}`}>Messages</Link>
                     </nav>
                 </div>
 
