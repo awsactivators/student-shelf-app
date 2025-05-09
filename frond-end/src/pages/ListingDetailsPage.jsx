@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/ListingDetailsPage.css";
 import "./../styles/HeaderGlobal.css";
+import FlagModal from "../components/FlagModal";
 
 function ListingDetailsPage() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ function ListingDetailsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentUserId, setCurrentUserId] = useState(null);
   const location = useLocation();
+  const [showFlagModal, setShowFlagModal] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -71,6 +73,24 @@ function ListingDetailsPage() {
 
     fetchListing();
   }, [id, API_URL]);
+
+  const handleFlagSubmit = async (reason, comment) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const res = await fetch(`${API_URL}/api/flags`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ reason, comment, listingId: listing.id }),
+      });
+  
+      if (!res.ok) throw new Error("Failed to submit flag");
+      alert("Thank you! Your report has been submitted.");
+      setShowFlagModal(false);
+      navigate("/home");
+    } catch (err) {
+      alert("Error reporting listing. Please try again.");
+    }
+  };
 
   const openModal = (index) => {
     setCurrentImageIndex(index);
@@ -143,6 +163,12 @@ function ListingDetailsPage() {
         <p className="search-listing-description">
           <strong>Description:</strong> {listing.description}
         </p>
+        <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button>
+        <FlagModal
+          show={showFlagModal}
+          onClose={() => setShowFlagModal(false)}
+          onSubmit={handleFlagSubmit}
+        />
 
         {/* Only show seller info if the logged-in user is NOT the owner */}
         {currentUserId !== listing.user?.id && (

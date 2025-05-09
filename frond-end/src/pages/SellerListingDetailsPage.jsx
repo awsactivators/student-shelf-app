@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faMessage, faStar, faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./../styles/SellerListingDetailsPage.css";
 import "./../styles/HeaderGlobal.css";
+import FlagModal from "../components/FlagModal";
 
 function SellerListingDetailsPage() {
   const { sellerId, listingId } = useParams();
@@ -13,6 +14,7 @@ function SellerListingDetailsPage() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showFlagModal, setShowFlagModal] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -37,6 +39,24 @@ function SellerListingDetailsPage() {
 
     fetchListing();
   }, [sellerId, listingId, API_URL]);
+
+  const handleFlagSubmit = async (reason, comment) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const res = await fetch(`${API_URL}/api/flags`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ reason, comment, listingId: listing.id }),
+      });
+  
+      if (!res.ok) throw new Error("Failed to submit flag");
+      alert("Thank you! Your report has been submitted.");
+      setShowFlagModal(false);
+      navigate("/home");
+    } catch (err) {
+      alert("Error reporting listing. Please try again.");
+    }
+  };
 
   const openModal = (index) => {
     setCurrentImageIndex(index);
@@ -93,6 +113,12 @@ function SellerListingDetailsPage() {
 
         <h1 className="sellerdet-listing-title">{`${listing.title} - $${listing.price}`}</h1>
         <p className="sellerdet-listing-description"><strong>Description:</strong> {listing.description}</p>
+        <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button>
+        <FlagModal
+          show={showFlagModal}
+          onClose={() => setShowFlagModal(false)}
+          onSubmit={handleFlagSubmit}
+        />
 
         <div className="sellerdet-info">
           <h2>

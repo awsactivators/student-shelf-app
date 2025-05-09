@@ -12,6 +12,7 @@ const favoriteRoutes = require("./routes/favoriteRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const messageRoutes = require('./routes/messageRoutes');
+const flagRoutes = require("./routes/flagRoutes");
 
 dotenv.config();
 
@@ -66,6 +67,9 @@ app.use("/api/contact", contactRoutes);
 
 // Message Route
 app.use('/api/messages', messageRoutes);
+
+// Flag Route
+app.use("/api/flags", flagRoutes);
 
 
 app.use(errorHandler);
