@@ -114,7 +114,7 @@ function ListingDetailsPage() {
     <div className="search-listing-details-page main-content-header">
       <main className="search-listing-details-content">
         {/* Back to Listings Button */}
-        <button className="search-back-btn" onClick={() => navigate("/listings")}>
+        <button className="search-back-btn" onClick={() => navigate("/home")}>
           ← Back to Listings
         </button>
 
@@ -166,9 +166,9 @@ function ListingDetailsPage() {
                 <FontAwesomeIcon icon={faMessage} /> Message Seller
               </Link>
             </button>
-            <button className="search-buy-now-btn">
+            {/* <button className="search-buy-now-btn">
               <Link to={`/order`}>Buy Now</Link>
-            </button>
+            </button> */}
           </div>
         )}
 

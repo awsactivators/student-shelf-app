@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/ListingsPage.css";
 import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
 
 function ListingsPage() {
@@ -19,13 +19,15 @@ function ListingsPage() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [filters, setFilters] = useState({ category: "", date: "" });
 
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem("userToken"); // Get the token
+        const token = localStorage.getItem("userToken"); 
 
         if (!token) {
           setError("Not authorized. Please log in.");
@@ -37,13 +39,14 @@ function ListingsPage() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include the token
+            Authorization: `Bearer ${token}`, 
           },
         });
 
         const data = await response.json();
         if (response.ok) {
           setListings(data);
+          setFilteredListings(data);
         } else {
           setError(data.message || "Failed to load listings");
         }
@@ -58,10 +61,15 @@ function ListingsPage() {
   }, [API_URL]);
 
 
-  const totalPages = Math.ceil(listings.length / listingsPerPage);
+  // const totalPages = Math.ceil(listings.length / listingsPerPage);
+  // const startIndex = (currentPage - 1) * listingsPerPage;
+  // const endIndex = startIndex + listingsPerPage;
+  // const currentListings = listings.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil((filteredListings.length > 0 ? filteredListings : listings).length / listingsPerPage);
   const startIndex = (currentPage - 1) * listingsPerPage;
   const endIndex = startIndex + listingsPerPage;
-  const currentListings = listings.slice(startIndex, endIndex);
+  const currentListings = (filteredListings.length > 0 ? filteredListings : listings).slice(startIndex, endIndex);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -74,6 +82,19 @@ function ListingsPage() {
   // const handleEditListing = (listingId) => {
   //   navigate(`/edit-listing/${listingId}`, { state: { fromListings: true } });
   // };
+
+  // Handle filter changes
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+  
+    const filtered = value
+      ? listings.filter((listing) => listing.category.toLowerCase() === value.toLowerCase())
+      : listings;
+  
+    setFilters({ ...filters, [name]: value });
+    setFilteredListings(filtered);
+    setCurrentPage(1); 
+  };
 
   const handleDeleteClick = (listingId) => {
     setListingToDelete(listingId);
@@ -120,88 +141,135 @@ function ListingsPage() {
     );
   };
 
+
   return (
     <div className="listings-page main-layout-sidebar main-content-header">
       <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} />
       {isSidebarOpen && window.innerWidth <= 576 && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setIsSidebarOpen(false)}
-        />
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
       )}
       <main className="listings-content">
         <h1>All Listings</h1>
         <a href="/add-listing" className="add-listing-link">Add a Listing</a>
+  
+        {/* Filter Section */}
+        <div className="custom-filter d-flex align-items-center">
+          <span>Filter</span>
+          {/* <FontAwesomeIcon icon={faFilter} className="filter-icon" /> */}
+          <select name="category" onChange={handleFilterChange} className="filter-select">
+            <option value="">All Categories</option>
+            <option value="product">Product</option>
+            <option value="service">Service</option>
+          </select>
+        </div>
+  
+        {/* Determine active dataset */}
         {loading ? (
           <p>Loading listings...</p>
         ) : error ? (
           <p className="error-message">{error}</p>
         ) : (
-          <div
-            className="listings-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "20px",
-            }}
-          >
-            {currentListings.map((listing) => (
+          <>
+            {/* Show message when no matching results */}
+            {(filters.category && filteredListings.length === 0) ? (
+              <p className="custom-no-filtered-listings text-center">
+                No {filters.category} listings available.
+              </p>
+            ) : (
               <div
-                key={listing.id}
-                className="listing-card"
-                onClick={() => navigate(`/listing/${listing.id}`)} // Navigate to listing details on click
+                className="listings-grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                  gap: "20px",
+                }}
               >
-                <img
-                  src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""}
-                  alt={listing.title}
-                  className="listing-img"
-                />
-                <div className="listing-details">
-                  <p className="listing-title">{listing.title}</p>
-                  <p className="listing-price">${listing.price}</p>
-                  <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
-                    {listing.status || "Active"}
-                  </span>
-                  <span className={`listing-category ${listing.category.toLowerCase()}`}>
-                    {listing.category}
-                  </span>
-                  <div className="listing-actions">
-                    {/* Edit Button */}
-                    <button
-                      className="edit-btn"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevents bubbling to parent div
-                        navigate(`/edit-listing/${listing.id}`); // Navigate to edit page
-                      }}
+                {(filteredListings.length > 0 ? filteredListings : listings)
+                  .slice((currentPage - 1) * listingsPerPage, currentPage * listingsPerPage)
+                  .map((listing) => (
+                    <div
+                      key={listing.id}
+                      className="listing-card"
+                      onClick={() => navigate(`/listing/${listing.id}`)}
                     >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-
-                    {/* Delete Button */}
-                    <button
-                      className="delete-btn"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevents bubbling
-                        handleDeleteClick(listing.id);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </div>
+                      <img
+                        src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""}
+                        alt={listing.title}
+                        className="listing-img"
+                      />
+                      <div className="listing-details">
+                        <p className="listing-title">{listing.title}</p>
+                        <p className="listing-price">${listing.price}</p>
+                        <span className={`listing-status ${listing.status?.toLowerCase() || "active"}`}>
+                          {listing.status || "Active"}
+                        </span>
+                        <span className={`listing-category ${listing.category.toLowerCase()}`}>
+                          {listing.category}
+                        </span>
+                        <div className="listing-actions">
+                          <button
+                            className="edit-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/edit-listing/${listing.id}`);
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                          <button
+                            className="delete-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteClick(listing.id);
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
-            ))}
-          </div>
-
+            )}
+          </>
         )}
-
+  
         <div className="pagination-controls d-flex justify-content-between">
-          <button className="btn listing-btn-secondary" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <button className="btn listing-btn-secondary" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+          <button
+            className="btn listing-btn-secondary"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of{" "}
+            {Math.ceil(
+              (filteredListings.length > 0 ? filteredListings.length : listings.length) /
+                listingsPerPage
+            )}
+          </span>
+          <button
+            className="btn listing-btn-secondary"
+            onClick={handleNextPage}
+            disabled={
+              currentPage ===
+              Math.ceil(
+                (filteredListings.length > 0 ? filteredListings.length : listings.length) /
+                  listingsPerPage
+              )
+            }
+          >
+            Next
+          </button>
         </div>
       </main>
-      <DeleteConfirmationModal show={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={handleDeleteConfirm} />
+  
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteConfirm}
+      />
     </div>
   );
 }

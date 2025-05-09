@@ -113,9 +113,9 @@ function SellerListingDetailsPage() {
               <FontAwesomeIcon icon={faMessage} /> Message Seller
             </Link>
           </button>
-          <button className="sellerdet-buy-now-btn">
+          {/* <button className="sellerdet-buy-now-btn">
             <Link to={`/order`}>Buy Now</Link>
-          </button>
+          </button> */}
         </div>
 
         {isModalOpen && (
