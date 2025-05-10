@@ -34,6 +34,14 @@ const sendMessage = async (req, res) => {
   const { senderId, receiverId, text } = req.body;
   const imageFile = req.file ? req.file.filename : null;
 
+  global.io.to(`user_${receiverId}`).emit('newMessage', {
+    senderId,
+    receiverId,
+    messageText: text,
+    imageUrl: imageFile,
+    createdAt: new Date(),
+  });
+
   try {
     const sender = await User.findByPk(senderId);
 

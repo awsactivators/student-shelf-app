@@ -4,9 +4,12 @@ import "./../styles/MessagePage.css";
 import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip, faPaperPlane, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import io from 'socket.io-client';
 
 function MessagePage() {
   const API_URL = import.meta.env.VITE_API_URL;
+
+  const socket = io(API_URL);
 
   const [userId, setUserId] = useState(null);
   const [chatUsers, setChatUsers] = useState([]);
@@ -46,6 +49,21 @@ function MessagePage() {
     };
     fetchChatUsers();
   }, [userId]);
+
+
+  useEffect(() => {
+    if (userId) {
+      socket.emit('join', userId);
+    }
+  
+    socket.on('newMessage', (msg) => {
+      if (msg.senderId === selectedUser?.id || msg.receiverId === selectedUser?.id) {
+        setMessages((prev) => [...prev, msg]);
+      }
+    });
+  
+    return () => socket.disconnect();
+  }, [userId, selectedUser]);
 
 
 

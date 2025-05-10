@@ -7,6 +7,7 @@ const FavoriteModel = require("./favorite");
 const NotificationModel = require("./notification");
 const MessageModel = require("./message");
 const FlagModel = require("./flag");
+const ActivityLogModel = require("./activitylog");
 
 const sequelize = new Sequelize(
   dbConfig.development.database,
@@ -27,6 +28,7 @@ db.Favorite = FavoriteModel(sequelize, Sequelize);
 db.Notification = NotificationModel(sequelize, Sequelize);
 db.Message = MessageModel(sequelize, Sequelize); 
 db.Flag = FlagModel(sequelize, Sequelize);
+db.ActivityLog = ActivityLogModel(sequelize, Sequelize);
 
 // Call Associations
 db.Favorite.associate(db);
@@ -35,6 +37,7 @@ db.Review.associate(db);
 db.User.associate(db);
 db.Message.associate(db);
 db.Flag.associate(db);
+db.ActivityLog.associate(db);
 
 // Associations
 db.User.hasMany(db.Listing, { foreignKey: "userId", as: "userListings", onDelete: "CASCADE" });
