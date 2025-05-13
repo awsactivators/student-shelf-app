@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/ContactUsPage.css";
 import "./../styles/HeaderGlobal.css";
@@ -18,6 +18,16 @@ function ContactUsPage() {
     subject: "",
     message: "",
   });
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("userData"));
+    if (storedUser?.email) {
+      setFormData((prev) => ({
+        ...prev,
+        email: storedUser.email,
+      }));
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,8 +100,11 @@ function ContactUsPage() {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
-              required
+              readOnly
+              disabled
+              className="read-only-input"
+              // onChange={handleInputChange}
+              // required
             />
           </div>
           <div className="contact-us-form-group">

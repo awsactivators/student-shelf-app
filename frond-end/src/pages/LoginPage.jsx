@@ -23,11 +23,27 @@ function LoginPage() {
       });
 
       const data = await response.json();
+
+      if (response.status === 403) {
+        setErrorMessage(data.message || "Suspended account. Contact admin.");
+        return;
+      }
       
       if (response.ok) {
-        localStorage.setItem("userToken", data.token); // Store token for authentication
-        localStorage.setItem("userId", data.user.id); // Store user ID
-        navigate("/home"); 
+        localStorage.setItem("userToken", data.token); 
+        localStorage.setItem("userId", data.user.id); 
+        localStorage.setItem("userData", JSON.stringify({
+          ...data.user,
+          isAdmin: !!data.user.isAdmin,
+        }));
+        // navigate("/home"); 
+        
+        // Redirect based on role
+        if (data.user.isAdmin) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/home");
+        }
       } else {
         setErrorMessage(data.message || "Invalid login credentials");
       }

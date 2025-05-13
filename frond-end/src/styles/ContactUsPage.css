@@ -77,6 +77,12 @@
 }
 
 
+.read-only-input {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+
 
 /* For screens below 1230px */
 @media (max-width: 1230px) {

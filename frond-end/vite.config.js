@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:5500", // Proxy API requests to backend
     },
+    port: 5175, // frontend port
   },
 })
 

@@ -1,4 +1,4 @@
-const { User, Listing, Flag, Contact, ActivityLog } = require("../models");
+const { User, Listing, Flag, Contact, ActivityLog, Notification } = require("../models");
 
 exports.getAllUsers = async (req, res) => {
   const users = await User.findAll({ where: { isAdmin: false } });
@@ -49,7 +49,9 @@ exports.dismissFlag = async (req, res) => {
 };
 
 exports.getAllContacts = async (req, res) => {
-  const contacts = await Contact.findAll();
+  const contacts = await Contact.findAll({
+    order: [['createdAt', 'DESC']]
+  });
   res.json(contacts);
 };
 
@@ -60,7 +62,19 @@ exports.resolveContact = async (req, res) => {
   contact.status = "resolved";
   await contact.save();
 
-  res.json({ message: "Issue resolved" });
+  // Send notification to the logged in user who submitted it
+  if (contact.userId) {
+    await Notification.create({
+      userId: contact.userId,
+      title: "Support Request Resolved",
+      message: `Your support request "${contact.subject}" has been marked as resolved.`,
+      type: "support",
+      link: "/support/contact", 
+      isRead: false,
+    });
+  }
+
+  res.json({ message: "Issue marked as resolved" });
 };
 
 exports.getActivityLogs = async (req, res) => {
@@ -69,4 +83,39 @@ exports.getActivityLogs = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
   res.json(logs);
+};
+
+
+exports.getDashboardStats = async (req, res) => {
+  const [users, listings, flags, contacts] = await Promise.all([
+    User.count({ where: { isAdmin: false } }),
+    Listing.count(),
+    Flag.count(),
+    // Contact.count({ where: { status: null } }),
+    Contact.count({ where: { status: "pending" } }),
+  ]);
+
+  res.json({
+    totalUsers: users,
+    totalListings: listings,
+    flaggedListings: flags,
+    supportIssues: contacts,
+  });
+};
+
+
+exports.reactivateUser = async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  user.isVerified = true;
+  await user.save();
+
+  await ActivityLog.create({
+    userId: req.user.id,
+    action: "Reactivate User",
+    description: `Reactivated user ${user.id}`,
+  });
+
+  res.json({ message: "User reactivated" });
 };

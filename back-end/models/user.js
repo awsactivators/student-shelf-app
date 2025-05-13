@@ -26,7 +26,16 @@ module.exports = (sequelize, DataTypes) => {
     profileImage: DataTypes.STRING,
     rating: DataTypes.DECIMAL,
     activeListings: DataTypes.INTEGER,
-    isVerified: DataTypes.BOOLEAN,
+    // isVerified: DataTypes.BOOLEAN,
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    }
   }, {
     sequelize,
     modelName: 'User',

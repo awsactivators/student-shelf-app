@@ -15,12 +15,21 @@ function SellerListingDetailsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFlagModal, setShowFlagModal] = useState(false);
+  const [hasFlagged, setHasFlagged] = useState(false);
+  const [flash, setFlash] = useState("");
 
   useEffect(() => {
     const fetchListing = async () => {
       try {
         const response = await fetch(`${API_URL}/api/sellers/${sellerId}/listings/${listingId}`);
         const data = await response.json();
+
+        const flagsRes = await fetch(`${API_URL}/api/flags?listingId=${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const flagsData = await flagsRes.json();
+        const alreadyFlagged = flagsData.some(flag => flag.userId === userData.id);
+        setHasFlagged(alreadyFlagged);
 
         if (response.ok) {
           setListing({
@@ -45,16 +54,25 @@ function SellerListingDetailsPage() {
       const token = localStorage.getItem("userToken");
       const res = await fetch(`${API_URL}/api/flags`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ reason, comment, listingId: listing.id }),
       });
   
       if (!res.ok) throw new Error("Failed to submit flag");
-      alert("Thank you! Your report has been submitted.");
+  
+      setFlash("Thank you! Your report has been submitted.");
       setShowFlagModal(false);
-      navigate("/home");
+  
+      setTimeout(() => {
+        setFlash("");
+        navigate("/home");
+      }, 2500);
     } catch (err) {
-      alert("Error reporting listing. Please try again.");
+      setFlash("Error reporting listing. Please try again.");
+      setTimeout(() => setFlash(""), 3000);
     }
   };
 
@@ -111,9 +129,20 @@ function SellerListingDetailsPage() {
           </div>
         </div>
 
+        {flash && <div className="flash-message">{flash}</div>}
+
         <h1 className="sellerdet-listing-title">{`${listing.title} - $${listing.price}`}</h1>
         <p className="sellerdet-listing-description"><strong>Description:</strong> {listing.description}</p>
-        <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button>
+        {/* <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button> */}
+        {hasFlagged ? (
+          <button className="flag-btn disabled" disabled>
+            You’ve already flagged this listing
+          </button>
+        ) : (
+          <button className="flag-btn" onClick={() => setShowFlagModal(true)}>
+            Report / Flag Listing
+          </button>
+        )}
         <FlagModal
           show={showFlagModal}
           onClose={() => setShowFlagModal(false)}

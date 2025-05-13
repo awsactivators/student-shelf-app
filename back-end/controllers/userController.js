@@ -61,6 +61,10 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
+    if (!user.isVerified) {
+      return res.status(403).json({ message: "Suspended account. Contact admin." });
+    }
+
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -74,7 +78,12 @@ const loginUser = async (req, res) => {
       { expiresIn: "8760h" } // Token expires in 365 days
     );
 
-    res.json({ message: "Login successful", token, user });
+    // Fetch full user info (without password)
+    const fullUser = await User.findByPk(user.id, {
+      attributes: { exclude: ["password"] },
+    });
+
+    res.json({ message: "Login successful", token, user: fullUser });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -107,7 +116,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     
     // Set profile image, ensuring full URL
     const fullProfileImage = user.profileImage
-      ? user.profileImage.startsWith("http") // use full URL later
+      ? user.profileImage.startsWith("http") 
         ? user.profileImage
         : `${req.protocol}://${req.get("host")}${user.profileImage}`
       : `${req.protocol}://${req.get("host")}${DEFAULT_PROFILE_IMAGE}`; 
