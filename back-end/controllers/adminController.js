@@ -1,11 +1,12 @@
 const { User, Listing, Flag, Contact, ActivityLog, Notification } = require("../models");
 
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   const users = await User.findAll({ where: { isAdmin: false } });
   res.json(users);
 };
 
-exports.suspendUser = async (req, res) => {
+
+const suspendUser = async (req, res) => {
   const user = await User.findByPk(req.params.id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -21,41 +22,48 @@ exports.suspendUser = async (req, res) => {
   res.json({ message: "User suspended" });
 };
 
-exports.deleteUser = async (req, res) => {
+
+const deleteUser = async (req, res) => {
   await User.destroy({ where: { id: req.params.id } });
   res.json({ message: "User deleted" });
 };
 
-exports.getAllListings = async (req, res) => {
+
+const getAllListings = async (req, res) => {
   const listings = await Listing.findAll({ include: ["user"] });
   res.json(listings);
 };
 
-exports.deleteListing = async (req, res) => {
+
+const deleteListing = async (req, res) => {
   await Listing.destroy({ where: { id: req.params.id } });
   res.json({ message: "Listing deleted" });
 };
 
-exports.getAllFlags = async (req, res) => {
+
+const getAllFlags = async (req, res) => {
   const flags = await Flag.findAll({
     include: ["listing", "user"],
   });
   res.json(flags);
 };
 
-exports.dismissFlag = async (req, res) => {
+
+const dismissFlag = async (req, res) => {
   await Flag.destroy({ where: { id: req.params.id } });
   res.json({ message: "Flag dismissed" });
 };
 
-exports.getAllContacts = async (req, res) => {
+
+const getAllContacts = async (req, res) => {
   const contacts = await Contact.findAll({
     order: [['createdAt', 'DESC']]
   });
   res.json(contacts);
 };
 
-exports.resolveContact = async (req, res) => {
+
+const resolveContact = async (req, res) => {
   const contact = await Contact.findByPk(req.params.id);
   if (!contact) return res.status(404).json({ message: "Issue not found" });
 
@@ -77,7 +85,9 @@ exports.resolveContact = async (req, res) => {
   res.json({ message: "Issue marked as resolved" });
 };
 
-exports.getActivityLogs = async (req, res) => {
+
+
+const getActivityLogs = async (req, res) => {
   try {
     console.log("Fetching activity logs...");
     const logs = await ActivityLog.findAll({
@@ -94,7 +104,7 @@ exports.getActivityLogs = async (req, res) => {
 };
 
 
-exports.getDashboardStats = async (req, res) => {
+const getDashboardStats = async (req, res) => {
   const [users, listings, flags, contacts] = await Promise.all([
     User.count({ where: { isAdmin: false } }),
     Listing.count(),
@@ -112,7 +122,7 @@ exports.getDashboardStats = async (req, res) => {
 };
 
 
-exports.reactivateUser = async (req, res) => {
+const reactivateUser = async (req, res) => {
   const user = await User.findByPk(req.params.id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -126,4 +136,22 @@ exports.reactivateUser = async (req, res) => {
   });
 
   res.json({ message: "User reactivated" });
+};
+
+
+
+
+module.exports = { 
+  reactivateUser, 
+  getDashboardStats,
+  getActivityLogs,
+  resolveContact,
+  getAllContacts,
+  dismissFlag,
+  getAllFlags,
+  deleteListing,
+  getAllListings,
+  deleteUser,
+  suspendUser,
+  getAllUsers
 };
