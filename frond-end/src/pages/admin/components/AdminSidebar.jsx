@@ -12,6 +12,7 @@ function AdminSidebar() {
         <li><Link to="/admin/listings">Listings</Link></li>
         <li><Link to="/admin/flags">Flagged Listings</Link></li>
         <li><Link to="/admin/support">Support Issues</Link></li>
+        <li><Link to="/admin/logs">User Activity Log</Link></li>
       </ul>
     </div>
   );

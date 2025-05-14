@@ -78,11 +78,19 @@ exports.resolveContact = async (req, res) => {
 };
 
 exports.getActivityLogs = async (req, res) => {
-  const logs = await ActivityLog.findAll({
-    include: ["user"],
-    order: [["createdAt", "DESC"]],
-  });
-  res.json(logs);
+  try {
+    console.log("Fetching activity logs...");
+    const logs = await ActivityLog.findAll({
+      include: [{ model: User, as: "user", attributes: ["id", "name", "email"] }],
+      order: [["createdAt", "DESC"]],
+    });
+
+    console.log("Logs fetched:", logs);
+    res.json(logs);
+  } catch (err) {
+    console.error("Failed to fetch logs:", err);
+    res.status(500).json({ message: "Error fetching logs" });
+  }
 };
 
 

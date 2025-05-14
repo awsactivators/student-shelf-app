@@ -22,3 +22,12 @@
   font-size: 0.95rem;
   text-align: left;
 }
+
+.admin-activity-table tbody a {
+  color: black;
+  text-decoration: underline;
+}
+
+.admin-activity-table tbody a:hover {
+  color: #1E90FF;
+}

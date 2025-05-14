@@ -19,7 +19,7 @@ router.delete("/flags/:id", adminCtrl.dismissFlag);
 router.get("/contacts", adminCtrl.getAllContacts);
 router.put("/contacts/:id/resolve", adminCtrl.resolveContact);
 
-router.get("/activity", adminCtrl.getActivityLogs);
+router.get("/logs", adminCtrl.getActivityLogs);
 
 router.get("/dashboard-stats", adminCtrl.getDashboardStats);
 

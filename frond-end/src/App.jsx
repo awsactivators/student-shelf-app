@@ -31,12 +31,13 @@ import FavoritesPage from "./pages/FavoritesPage";
 import LogoutPage from "./pages/LogoutPage";
 
 // Admin pages
-import AdminLayout from "./pages/admin/layouts/AdminLayout";
+// import AdminLayout from "./pages/admin/layouts/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminListings from "./pages/admin/AdminListings";
 import AdminFlags from "./pages/admin/AdminFlags";
 import AdminSupport from "./pages/admin/AdminSupport";
+import AdminActivityLog from "./pages/admin/AdminActivityLog"
 
 function Layout({ children }) {
   const location = useLocation();
@@ -108,6 +109,7 @@ function App() {
       <Route path="/admin/listings" element={<AdminListings />} />
       <Route path="/admin/flags" element={<AdminFlags />} />
       <Route path="/admin/support" element={<AdminSupport />} />
+      <Route path="/admin/logs" element={<AdminActivityLog />} />
     </Routes>
   );
 }

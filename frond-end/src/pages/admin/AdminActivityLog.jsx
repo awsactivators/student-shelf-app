@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import "../../styles/admin/AdminActivityLog.css";
 
@@ -15,7 +16,10 @@ function AdminActivityLog() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setLogs(data))
+      .then((data) => {
+        console.log("Fetched Logs:", data);
+        setLogs(data);
+      })
       .catch((err) => console.error("Failed to fetch logs:", err));
   }, []);
 
@@ -38,7 +42,7 @@ function AdminActivityLog() {
             <tbody>
               {logs.map((log) => (
                 <tr key={log.id}>
-                  <td>{log.user?.name || "Unknown"}</td>
+                  <td><Link to={`/seller/${log.user?.id}`}>{log.user?.name || "Unknown"}</Link></td>
                   <td>{log.action}</td>
                   <td>{log.description}</td>
                   <td>{new Date(log.createdAt).toLocaleString()}</td>

@@ -35,7 +35,7 @@ function AdminDashboard() {
           <Link to="/admin/listings" className="admin-card">Manage Listings</Link>
           <Link to="/admin/flags" className="admin-card">Flagged Listings</Link>
           <Link to="/admin/support" className="admin-card">Support Requests</Link>
-          <Link to="/admin/activity" className="admin-card">User Activity Log</Link>
+          <Link to="/admin/logs" className="admin-card">User Activity Log</Link>
         </div>
 
         <div className="admin-dashboard-grid">

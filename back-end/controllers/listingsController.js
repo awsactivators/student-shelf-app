@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { Listing, User } = require("../models");
+const { Listing, User, ActivityLog } = require("../models");
 const { Op } = require("sequelize");
 
 
@@ -40,6 +40,16 @@ const createListing = asyncHandler(async (req, res) => {
     coverImage: coverImagePath,
     userId,
   });
+
+  try {
+    await ActivityLog.create({
+      userId: req.user.id,
+      action: "Add Listing",
+      description: `User ${req.user.name} added a new listing titled "${title}"`
+    });
+  } catch (err) {
+    console.error("Error logging activity:", err);
+  }
 
   res.status(201).json({
     message: "Listing created successfully",
@@ -163,6 +173,12 @@ const updateListing = asyncHandler(async (req, res) => {
     coverImage: updatedCoverImage,
   });
 
+  await ActivityLog.create({
+    userId: req.user.id,
+    action: "Update Listing",
+    description: `User ${req.user.name} updated listing: ${listing.title}`,
+  });
+
   res.status(200).json({
     message: "Listing updated successfully",
     listing: {
@@ -192,6 +208,12 @@ const deleteListing = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("Not authorized to delete this listing");
   }
+
+  await ActivityLog.create({
+    userId: req.user.id,
+    action: "Delete Listing",
+    description: `User ${req.user.name} deleted listing: ${listing.title}`,
+  });
 
   await listing.destroy();
   res.status(200).json({ message: "Listing deleted successfully" });
