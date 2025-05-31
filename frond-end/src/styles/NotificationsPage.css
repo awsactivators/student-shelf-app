@@ -117,12 +117,20 @@
 
 
 
+@media (max-width: 1280px) {
+  .notifications-content {
+    margin-top: 30px;
+  }
+}
+
+
 /* For tablet screens (max-width: 768px) */
 @media (max-width: 768px) {
   .notifications-content {
-    margin-left: 20px;
+    /* margin-left: 20px; */
     padding: 15px;
     max-width: 100%; 
+    margin-top: 130px;
   }
 
   .notifications-title {
@@ -170,7 +178,8 @@
 @media (max-width: 576px) {
   .notifications-content {
     margin-left: 0; 
-    padding: 10px;
+    padding: 25px;
+    margin-top: 0;
   }
 
   .notifications-title {
