@@ -81,7 +81,7 @@ function HomePage() {
       </div>
 
       <div className="custom-listings">
-        <h2>Listings</h2>
+        <h2>All Listings</h2>
         <Link to="/add-listing" className="custom-add-listing">
           Add a Listing
         </Link>
@@ -91,8 +91,8 @@ function HomePage() {
         ) : (
           <>
             <div className="custom-filter d-flex align-items-center mb-3">
-              <span>Filter</span>
-              <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+              <span>Filter: </span>
+              {/* <FontAwesomeIcon icon={faFilter} className="filter-icon" /> */}
 
               <select
                 name="category"
@@ -141,14 +141,14 @@ function HomePage() {
             {filteredListings.length > itemsPerPage && (
               <div className="d-flex justify-content-center mt-3">
                 <button
-                  className="btn btn-outline-light me-2"
+                  className="btn btn-outline-light me-2 paignation-btn"
                   onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
                 >
                   Prev
                 </button>
                 <button
-                  className="btn btn-outline-light"
+                  className="btn btn-outline-light paignation-btn"
                   onClick={() => setCurrentPage(p => p + 1)}
                   disabled={currentPage === Math.ceil(filteredListings.length / itemsPerPage)}
                 >
