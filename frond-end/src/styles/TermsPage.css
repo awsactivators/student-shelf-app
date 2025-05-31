@@ -44,12 +44,14 @@
 
 
 /* For screens below 1230px */
-@media (max-width: 1240px) {
+@media (max-width: 1280px) {
   .terms-main-content {
-    margin: 40px; 
+    /* margin: 0px;  */
     padding: 20px;
     justify-content: start;
     min-height: 700px;
+    width: 100%;
+    
   }
 
   .terms-title {
@@ -66,8 +68,9 @@
 @media (max-width: 768px) {
   .terms-main-content {
     margin: 20px; 
-    width: 90%; 
+    width: 100%; 
     padding: 15px;
+    margin-top: 150px;
   }
 
   .terms-title {
@@ -81,6 +84,18 @@
 
   .terms-content h2 {
     font-size: 1.2em; 
+  }
+}
+
+@media (max-width: 760px) {
+  .terms-main-content {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 540px) {
+  .terms-main-content {
+    margin-top: 30px;
   }
 }
 
