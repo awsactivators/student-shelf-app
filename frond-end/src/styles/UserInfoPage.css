@@ -183,9 +183,16 @@ svg.svg-inline--fa {
 
 /* Media Query for medium to large screens (768px and above) */
 @media (max-width: 768px) {
+  .user-info-row {
+    margin-top: 130px;
+  }
   .user-content {
     flex: 2;
     margin-top: 0;
+  }
+
+  .user-content p {
+    font-size: 24px;
   }
 
   .custom-profile-img {
@@ -194,7 +201,7 @@ svg.svg-inline--fa {
   }
 
   .profile-img {
-    margin-bottom: 50px;
+    margin-bottom: 0px;
   }
 
   .edit-button {
@@ -207,6 +214,10 @@ svg.svg-inline--fa {
 
 /* Media Query for smaller screens (576px and below) */
 @media (max-width: 576px) {
+  .user-info-row {
+    margin-top: 0px;
+  }
+
   .custom-profile-img {
     width: 180px;
     height: 180px;

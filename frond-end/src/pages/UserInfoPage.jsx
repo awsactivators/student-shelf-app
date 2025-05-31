@@ -160,7 +160,7 @@ const UserInfoPage = () => {
       )}
       <main className="user-info-content container mt-4">
         {userData ? (
-          <div className="row align-items-center row-container">
+          <div className="row align-items-center row-container user-info-row">
             <div className="col-md-3 text-center profile-img">
               <img
                 src={userData.profileImage || profileImagePlaceholder}
