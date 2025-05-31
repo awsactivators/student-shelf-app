@@ -4,7 +4,7 @@ export const userMenuItems = [
     submenu: [
       { label: "User Info", path: "/user-info" },
       { label: "Password", path: "/password" },
-      { label: "Listings", path: "/listings" },
+      { label: "My Listings", path: "/listings" },
       { label: "Favorites", path: "/favorites" },
       { label: "Settings", submenu: [], path: "/settings" },
       { label: "Notifications", path: "/notifications", hasNew: true },

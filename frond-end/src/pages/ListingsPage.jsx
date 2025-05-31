@@ -178,11 +178,11 @@ function ListingsPage() {
             ) : (
               <div
                 className="listings-grid"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                  gap: "20px",
-                }}
+                // style={{
+                //   display: "grid",
+                //   gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                //   gap: "20px",
+                // }}
               >
                 {(filteredListings.length > 0 ? filteredListings : listings)
                   .slice((currentPage - 1) * listingsPerPage, currentPage * listingsPerPage)
@@ -234,7 +234,7 @@ function ListingsPage() {
           </>
         )}
   
-        <div className="pagination-controls d-flex justify-content-between">
+        <div className="pagination-controls d-flex">
           <button
             className="btn listing-btn-secondary"
             onClick={handlePrevPage}
