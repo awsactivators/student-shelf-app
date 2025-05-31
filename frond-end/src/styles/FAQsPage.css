@@ -8,6 +8,8 @@
   margin-left: 200px;
   margin-top: 60px;
   margin-bottom: 40px;
+  flex-grow: 1;
+  width: 100%;
 }  
 
 .faqs-title {
@@ -57,16 +59,16 @@
 
 @media (max-width: 1280px) {
   .faqs-main-content {
-    margin: 40px;
+    /* margin: 40px; */
   }
 }
 
 /* For screens below 1230px */
-@media (max-width: 1230px) {
+@media (max-width: 1280px) {
   .faqs-main-content {
-    margin-left: 50px; 
-    padding: 20px;
-    margin-top: 40px;
+    margin-left: 0px; 
+    padding: 30px;
+    margin-top: 20px;
   }
 
   .faqs-title {
@@ -89,8 +91,9 @@
   .faqs-main-content {
     margin: 20px auto; 
     width: 90%; 
-    padding: 15px;
-    margin-left: 10px;
+    padding: 25px;
+    margin-left: 0px;
+    margin-top: 130px;
   }
 
   .faqs-title {
@@ -112,6 +115,19 @@
   }
 }
 
+@media (max-width: 750px) {
+  .faqs-main-content {
+    margin-top: 0;
+  }
+}
+
+
+@media (max-width: 540px) {
+  .faqs-main-content {
+    margin-top: 0;
+  }
+}
+
 /* For screens below 480px */
 @media (max-width: 480px) {
   .faqs-title {
@@ -120,7 +136,8 @@
 
   .faqs-main-content {
     width: 100%; 
-    padding: 10px;
+    padding: 30px;
+    margin-left: 0;
   }
 
   .faq-item {
