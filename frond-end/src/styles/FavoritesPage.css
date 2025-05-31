@@ -88,13 +88,78 @@
 
 /* Responsiveness */
 
-@media (max-width: 768px) {
+@media screen and (max-width: 1280px) {
   .favorites-list {
-    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
 
   .favorite-item {
-    width: 90%;
+    width: 100%;
+    min-width: 600px;
+    max-width: 800px;
+  }
+
+  .favorite-link {
+    width: 100%;
+    max-width: none;
+  }
+
+  .favorites-main-content {
+    margin-top: 30px;
+    padding: 35px;
+  }
+
+  .favorite-name {
+    font-size: 30px;
+  }
+  
+}
+
+@media (max-width: 992px) {
+  .favorites-list {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .favorite-item {
+    width: 100%;
+    min-width: 500px;
+    max-width: 600px;
+  }
+
+  .favorite-link {
+    width: 100%;
+    max-width: none;
+  }
+
+  .favorite-name {
+    font-size: 28px;
+  }
+
+  .favorites-main-content {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .favorites-list {
+    justify-content: start;
+    width: 100%;
+  }
+
+  .favorite-item {
+    width: 100%;
+    min-width: 450px;
+  }
+
+  .favorite-link {
+    width: 100%;
+    max-width: none;
+  }
+
+  .favorites-main-content {
+    margin-top: 130px;
   }
 
   .favorite-profile-img {
@@ -104,15 +169,34 @@
   }
 
   .favorite-name {
-    font-size: 0.95rem;
+    font-size: 24px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .favorites-main-content {
+    margin-top: 0px;
   }
 }
 
 @media (max-width: 480px) {
   .favorite-item {
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
     text-align: center;
+    width: 100%;
+    min-width: 340px;
+    max-width: 360px;
+  }
+
+  .favorite-link {
+    width: 100%;
+  }
+
+  .favorites-list {
+    padding: 20px;
+    max-width: 340px;
   }
 
   .favorite-profile-img {
@@ -120,10 +204,29 @@
   }
 
   .favorite-name {
-    font-size: 1rem;
+    font-size: 20px;
   }
 
   .favorites-main-content {
     padding: 0;
+    margin-top: 0;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .favorite-item {
+    width: 100%;
+    min-width: 280px;
+    max-width: 300px;
+  }
+
+  .favorite-name {
+    font-size: 18px;
+  }
+
+  .favorites-main-content {
+    padding: 10px;
+    margin-top: 0;
   }
 }
