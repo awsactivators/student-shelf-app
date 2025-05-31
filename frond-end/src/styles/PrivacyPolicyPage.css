@@ -68,8 +68,9 @@
 
   .privacy-main-content {
     margin: 20px; 
-    width: 90%; 
+    width: 100%; 
     padding: 15px;
+    margin-top: 150px;
   }
 
   .privacy-policy-title {
@@ -84,6 +85,20 @@
   .privacy-policy-content h2 {
     font-size: 1.2em; 
   }
+}
+
+@media (max-width: 760px) {
+  .privacy-main-content {
+    margin-top: 20px; 
+  }
+  
+}
+
+@media (max-width: 540px) {
+  .privacy-main-content {
+    margin-top: 20px; 
+  }
+  
 }
 
 /* For screens below 480px */
