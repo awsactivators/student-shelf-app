@@ -155,7 +155,7 @@ function ListingDetailsPage() {
       <main className="search-listing-details-content">
         {/* Back to Listings Button */}
         <button
-          className="search-back-btn"
+          className="list-search-back-btn"
           onClick={() => navigate(location.state?.from || "/home")}
         >
           ← Back to Listings
@@ -186,11 +186,11 @@ function ListingDetailsPage() {
         </p>
         {/* <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button> */}
         {hasFlagged ? (
-          <button className="flag-btn disabled" disabled>
+          <button className="flag-btn-buyer disabled" disabled>
             You’ve already flagged this listing
           </button>
         ) : (
-          <button className="flag-btn" onClick={() => setShowFlagModal(true)}>
+          <button className="flag-btn-buyer" onClick={() => setShowFlagModal(true)}>
             Report / Flag Listing
           </button>
         )}

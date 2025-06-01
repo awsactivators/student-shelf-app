@@ -1,6 +1,6 @@
 /* General Header Styling */
 .custom-header {
-  background-color: #000E00;
+  background-color: #222;
   color: #ffffff;
   height: 130px;
   display: flex;
@@ -300,6 +300,7 @@
     position: relative;
     transition: width 0.3s ease;
     margin-right: 0;
+    gap: 20px;
   }
 
   .notification-container {

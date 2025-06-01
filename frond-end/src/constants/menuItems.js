@@ -8,7 +8,7 @@ export const userMenuItems = [
       { label: "Favorites", path: "/favorites" },
       { label: "Settings", submenu: [], path: "/settings" },
       { label: "Notifications", path: "/notifications", hasNew: true },
-      { label: "Logout", path: "/logout"},
+      // { label: "Logout", path: "/logout"},
     ],
   },
   {

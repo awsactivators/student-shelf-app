@@ -359,6 +359,18 @@
   }
 }
 
+
+@media (max-width: 760px) {
+  .message-content-container {
+    margin-top: 10px;
+  }
+
+  .chat-user-list {
+    margin-top: 0;
+  }
+}
+
+
 /* Media Query for max-width 576px */
 @media (max-width: 576px) {
   .message-content-container {

@@ -211,6 +211,16 @@ svg.svg-inline--fa {
 
 }
 
+@media (max-width: 760px) {
+  .user-info-row {
+    margin-top: 0px;
+  }
+
+  .menu {
+    margin-top: 0;
+  }
+}
+
 
 /* Media Query for smaller screens (576px and below) */
 @media (max-width: 576px) {

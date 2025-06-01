@@ -96,8 +96,8 @@
   color: white;
 }
 
-.search-back-btn {
-  background-color: black;
+.list-search-back-btn {
+  background-color: #333;
   color: white;
   border-radius: 5px;
   border: none;
@@ -214,9 +214,9 @@
 
 
 /* Media Query for width between 768px and 1230px */
-@media (max-width: 1230px) {
+@media (max-width: 1280px) {
   .search-listing-details-content {
-    margin: 20px auto; 
+    margin: 30px auto; 
     padding: 15px;
     max-width: 90%; 
   }
@@ -270,6 +270,10 @@
   .search-images-section img {
     border-radius: 8px;
   }
+
+  .search-message-seller-btn a{
+    font-size: 22px;
+  }
 }
 
 
@@ -278,6 +282,16 @@
   .search-modal-image {
     width: 250px;
     height: 240px;
+  }
+
+  .search-listing-details-content {
+    margin-top: 150px;
+  }
+}
+
+@media (max-width: 760px) {
+  .search-listing-details-content {
+    margin-top: 10px;
   }
 }
 
@@ -324,4 +338,8 @@
   .search-listing-title {
     font-size: 1.2em;
   }
+
+  .search-message-seller-btn a{
+    font-size: 22px;
+  }  
 }

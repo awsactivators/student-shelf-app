@@ -233,12 +233,25 @@
   cursor: pointer;
 }
 
+.flag-btn-buyer {
+  border-radius: 5px;
+  background-color: #dea7a7;
+  border: none;
+  padding: 5px 8px;
+  font-size: 18px;
+}
+
+.flag-btn-buyer:disabled {
+  background-color: #ccc;
+}
+
 
 /* For tablets (768px and below) */
 @media (max-width: 768px) {
   .sellerdet-listing-details-content {
-    max-width: 100%;
+    width: 100%;
     padding: 10px;
+    margin-top: 130px;
   }
 
   .sellerdet-images-section {
@@ -370,6 +383,12 @@
     font-size: 0.9em;
     padding: 6px 10px;
   }
+
+  .list-search-back-btn {
+    margin-bottom: 20px;
+  }
+
+  
 }
 
 

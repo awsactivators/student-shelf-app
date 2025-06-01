@@ -281,6 +281,12 @@ textarea {
   }
 }
 
+@media (max-width: 760px) {
+  .add-listing-content {
+    margin-top: 0px;
+  }
+}
+
 /* Media Query for max-width 576px */
 @media (max-width: 576px) {
   .add-listing-content {

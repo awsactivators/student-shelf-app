@@ -189,7 +189,7 @@ function ListingsPage() {
                   .map((listing) => (
                     <div
                       key={listing.id}
-                      className="listing-card"
+                      className="listing-card-listing"
                       onClick={() => navigate(`/listing/${listing.id}`, { state: { from: "/listings" } })}
                     >
                       <img

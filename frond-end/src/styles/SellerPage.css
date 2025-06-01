@@ -1,13 +1,13 @@
 /* Container */
 .sellerinfo-seller-page {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 100px;
   margin-bottom: 60px;
 }
 
@@ -53,7 +53,7 @@
   cursor: pointer;
   border-radius: 5px;
   position: absolute;
-  top: 250px;
+  top: 220px;
   right: 40px;  
   width: 120px;
   display: flex;
@@ -200,6 +200,7 @@
   cursor: pointer;
   border-radius: 5px;
   display: block;
+  width: 250px;
 }
 
 .sellerinfo-message-btn svg{
@@ -231,10 +232,11 @@
 
 
 /* For screens below 1230px */
-@media (max-width: 1230px) {
+@media (max-width: 1280px) {
   .sellerinfo-seller-page {
-    padding: 10px;
-    margin: 30px;
+    padding: 40px;
+    margin: 0px;
+    margin-top: 150px;
   }
 
   .sellerinfo-seller-header {
@@ -250,10 +252,10 @@
     font-size: 1.8em;
   }
 
-  .sellerinfo-follow-btn {
+  .sellerinfo-like-btn {
     width: 100px;
     padding: 8px 15px;
-    top: 230px;
+    top: 200px;
     right: 80px;
   }
 
@@ -261,15 +263,79 @@
     gap: 15px;
     
   }
+
+  .seller-detail-container {
+    margin: 0px;
+    width: 100%;
+  }
 }
 
 
+@media (max-width: 1024px) {
+  .sellerinfo-seller-page {
+   margin-top: 0px;
+  }
+
+  .sellerinfo-like-btn {
+    width: 100px;
+    padding: 8px 15px;
+    top: 250px;
+    right: 80px;
+  }
+
+  .sellerinfo-action-buttons {
+    width: 100%;
+    margin-top: 25px;
+  }
+
+  .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
+    font-size: 26px;
+    padding: 15px;
+    width: 280px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .sellerinfo-seller-page {
+   margin-top: 130px;
+  }
+
+  .sellerinfo-like-btn {
+    width: 100px;
+    padding: 8px 15px;
+    top: 250px;
+    right: 80px;
+  }
+}
+
+@media (max-width: 915px) {
+  .sellerinfo-seller-page {
+   margin-top: 0px;
+  }
+}
+
+
+@media (max-width: 850px) {
+  .sellerinfo-seller-page {
+   margin-top: 70px;
+  }
+
+  .sellerinfo-like-btn {
+    width: 100px;
+    padding: 8px 15px;
+    top: 250px;
+    right: 80px;
+  }
+}
 
 /* For screens below 768px */
 @media (max-width: 768px) {
   .sellerinfo-seller-page {
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 20px;
+    margin-top: 130px;
   }
 
   .sellerinfo-seller-header {
@@ -328,6 +394,31 @@
     font-size: 0.9em;
     padding: 10px 15px;
   }
+
+  .sellerinfo-action-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  .sellerinfo-action-buttons button {
+    width: 100%;
+    /* max-width: 350px; Optional: Limit button width */
+    margin-bottom: 10px;
+  }
+
+  .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
+    font-size: 24px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sellerinfo-seller-page {
+   margin-top: 0px;
+  }
 }
 
 
@@ -344,12 +435,26 @@
     padding: 8px 16px;
     font-size: 0.9rem;
   }
+
+  .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .sellerinfo-seller-page {
+    margin-top: 0;
+    padding: 35px;
+  }
 }
 
 
 
 /* For screens below 480px */
 @media (max-width: 480px) {
+  .sellerinfo-seller-page {
+    padding: 20px;
+  }
+
   .sellerinfo-seller-header {
     gap: 10px;
   }
@@ -392,13 +497,10 @@
     font-size: 0.8em;
   }
 
-  .sellerinfo-message-btn {
-    font-size: 0.9em;
-    padding: 12px;
+  .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
+    font-size: 20px;
+    padding: 10px;
     margin-top: 0;
-  }
-
-  .seller-message-icon-btn {
     margin-left: 0;
   }
 }
@@ -408,7 +510,7 @@
 /* For screens below 416px */
 @media (max-width: 416px) {
   .sellerinfo-leave-review-btn, .sellerinfo-message-btn {
-    padding: 10px;
+    /* padding: 10px; */
   }
 
   .sellerinfo-action-buttons {
@@ -431,5 +533,12 @@
     justify-content: center;
     width: 100%;
     padding: 12px;
+  }
+
+  .sellerinfo-message-btn, .sellerinfo-leave-review-btn {
+    font-size: 18px;
+    padding: 0px;
+    margin-top: 0;
+    margin-left: 0;
   }
 }

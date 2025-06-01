@@ -173,6 +173,12 @@
   }
 }
 
+@media (max-width: 760px) {
+  .favorites-main-content{
+    margin-top: 10px;
+  }
+}
+
 
 @media (max-width: 600px) {
   .favorites-main-content {

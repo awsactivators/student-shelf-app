@@ -41,12 +41,12 @@
   padding-bottom: 20px;
 }
 
-.listing-card {
+.listing-card-listing{
   width: 100%;
   max-width: 320px;
   margin: 0 auto;
   background: white;
-  border: 1px solid #ccc;
+  border: 2px solid #a9a9a9;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -58,7 +58,7 @@
 }
 
 
-.listing-card:hover {
+.listing-card-listing:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -258,6 +258,13 @@ a.add-listing-link:hover {
   }
 }
 
+
+@media (max-width: 760px) {
+  .listings-content{
+    margin-top: 10px;
+  }
+}
+
 @media (max-width: 576px) {
   .listings-content {
     margin-top: 0px;
@@ -301,7 +308,7 @@ a.add-listing-link:hover {
 
 
 @media (max-width: 480px) {
-  .listing-card {
+  .listing-card-listing {
     /* max-width: 100%; */
     margin: 0 auto;
   }

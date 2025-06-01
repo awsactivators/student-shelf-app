@@ -136,14 +136,8 @@
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
   .search-results-grid {
-    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
-    /* grid-template-columns: repeat(2, 1fr); */
     gap: 15px;
   }
-
-  /* .search-results-page {
-    margin-top: 150px;
-  } */
 
   .search-listing-card {
       border-radius: 8px;
@@ -163,6 +157,12 @@
 
   .search-listing-info p {
       font-size: 1em;
+  }
+}
+
+@media (max-width: 760px) {
+  .search-results-page{
+    margin-top: 10px;
   }
 }
 
