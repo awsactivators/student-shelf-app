@@ -60,12 +60,40 @@ body {
   border-radius: 50%;
 }
 
+.landing-filter{
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.landing-form-control, .landing-form-select {
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 280px;
+}
+
 
 
 /* Hero */
+
 .hero-section {
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  padding: 60px 20px;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+.hero-section h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.hero-section p.lead {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .hero-img {
@@ -91,9 +119,78 @@ body {
   object-fit: cover;
 }
 
+.listing-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 2px solid #9a9a9a;
+}
+
+.listing-card:hover {
+  transform: scale(1.02);
+}
+
+.listing-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body-landing {
+  padding: 15px;
+  text-align: center;
+  background-color: #ccc;
+}
+
+.card-title-landing {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card-text-landing {
+  color: #38b000;
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 19px;
+}
+
 footer {
   background-color: #222;
   color: #ddd;
+}
+
+.pagination-controls-landing button {
+  background-color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  color: black;
+  font-weight: 500;
+}
+
+@media (max-width:1280px) {
+  .landing-filter {
+    /* gap: 20px; */
+    justify-content: space-evenly;
+    
+  }
+
+  .landing-form-control, .landing-form-select {
+    width: 250px;
+  }
+}
+
+
+@media (max-width:992px) {
+  .landing-filter {
+    flex-direction: column;
+  }
 }
 
 
@@ -113,6 +210,10 @@ footer {
     font-size: 1rem;
     margin-bottom: 30px;
   }
+
+  .landing-filter {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 576px) {
@@ -124,5 +225,37 @@ footer {
   .feature-card img {
     max-height: 200px;
     object-fit: cover;
+  }
+
+  .browse-listings {
+    padding: 14px;
+    padding-top: 14px;
+
+  }
+
+  .hero-section {
+    margin-bottom: 0;
+  }
+
+  .hero-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section p.lead {
+    font-size: 1rem;
+  }
+
+  .landing-filter > div {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .landing-page .btn-lg {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .listing-card img {
+    height: 180px;
   }
 }

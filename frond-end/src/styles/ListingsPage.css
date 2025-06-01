@@ -65,8 +65,6 @@
 
 .listing-img {
   width: 100%;
-  min-width: 264.66px;
-  max-width: 264.66px;
   height: 250px;
   object-fit: cover;
   border-radius: 5px;
@@ -222,35 +220,13 @@ a.add-listing-link:hover {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
-  .listing-img {
-    /* height: 180px; */
-    min-width: 225px;
-    max-width: 275px;
-  }
-
 }
 
-
-@media (max-width: 860px) {
-
-  .listing-img {
-    /* height: 180px; */
-    min-width: 225px;
-    max-width: 242px;
-  }
-
-}
 
 @media (max-width: 768px) {
   .listings-content {
     padding: 20px;
     margin-top: 150px;
-  }
-
-  .listing-img {
-    /* height: 180px; */
-    min-width: 239px;
-    max-width: 239px;
   }
 
   .menu {
@@ -280,8 +256,6 @@ a.add-listing-link:hover {
 
   .listing-img {
     height: 160px;
-    min-width: 215px;
-    max-width: 215px;
   }
 
   .listing-title {
@@ -315,8 +289,6 @@ a.add-listing-link:hover {
 
   .listing-img {
     height: 150px;
-    min-width: 298px;
-    max-width: 298px;
   }
 
   .listing-title {

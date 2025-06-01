@@ -140,7 +140,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
@@ -150,10 +150,8 @@ body {
   transform: translateY(-3px);
 }
 
-.listing-img {
+.listing-img-home {
   width: 100%;
-  min-width: 264.66px;
-  max-width: 264.66px;
   height: 250px;
   object-fit: cover;
   border-radius: 5px;
@@ -389,10 +387,8 @@ body {
     margin-bottom: 20px;
   }
 
-  .listing-img {
+  .listing-img-home {
     height: 200px;
-    min-width: 302px;
-    max-width: 302px;
   }
 
   .custom-filter-home {

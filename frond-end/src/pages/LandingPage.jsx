@@ -80,7 +80,7 @@ function LandingPage() {
   return (
     <div className="container-fluid text-white landing-page">
       {/* Header */}
-      <header className="py-4 text-center">
+      <header className="py-4 text-center landing-header">
         <img src={logo} alt="Student Shelf Logo" className="logo-img mb-3" />
         <h1 className="display-4">STUDENT SHELF</h1>
         <p className="lead mb-0">From Students, for Students</p>
@@ -92,22 +92,22 @@ function LandingPage() {
         <p className="lead mb-4">
         Student Shelf is a dynamic student marketplace designed to help you buy, sell, and connect with ease whether it’s finding the perfect product, offering your services, or discovering great deals, all within a trusted student community.
         </p>
-        <div className="d-flex justify-content-center gap-3">
+        <div className="d-flex justify-content-center gap-3 login-register-btns">
           <Link to="/register" className="btn btn-success btn-lg">Register</Link>
           <Link to="/login" className="btn btn-info btn-lg">Login</Link>
         </div>
       </section>
 
 
-      <section className="container py-5">
+      <section className="container py-5 browse-listings">
         <h3 className="text-center mb-4">Browse Listings</h3>
 
         {/* Search Bar */}
-        <div className="row mb-4">
-          <div className="col-md-6 mb-2">
+        <div className="row mb-4 landing-filter">
+          <div className="col-md-3 mb-2">
             <input
               type="text"
-              className="form-control"
+              className="form-control landing-form-control"
               placeholder="Search listings..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -124,7 +124,7 @@ function LandingPage() {
           </button> */}
           <div className="col-md-3 mb-2">
             <select
-              className="form-select"
+              className="form-select landing-form-select"
               value={filterCampus}
               onChange={(e) => setFilterCampus(e.target.value)}
             >
@@ -137,7 +137,7 @@ function LandingPage() {
           <div className="col-md-3 mb-2">
             <input
               type="number"
-              className="form-control"
+              className="form-control landing-form-control"
               placeholder="Max Price"
               value={filterPrice}
               onChange={(e) => setFilterPrice(e.target.value)}
@@ -152,9 +152,9 @@ function LandingPage() {
               <div key={listing.id} className="col-sm-6 col-md-4 mb-4">
                 <div className="card listing-card h-100">
                   <img src={`${API_URL}${listing.coverImage}`} alt={listing.title} />
-                  <div className="card-body">
-                    <h5 className="card-title">{listing.title}</h5>
-                    <p className="card-text">${listing.price}</p>
+                  <div className="card-body-landing">
+                    <h5 className="card-title-landing">{listing.title}</h5>
+                    <p className="card-text-landing">${listing.price}</p>
                     <button className="btn btn-primary btn-sm" onClick={() => handleViewDetails(listing.id)}>
                       View Details
                     </button>
@@ -169,16 +169,16 @@ function LandingPage() {
 
         {/* Pagination */}
         {applyFilters(searchResults).length > itemsPerPage && (
-          <div className="d-flex justify-content-center mt-3">
+          <div className="d-flex justify-content-center mt-3 pagination-controls-landing">
             <button
-              className="btn btn-outline-light me-2"
+              className="btn btn-outline-light me-2 prev-pagination-btn"
               onClick={() => handlePageChange("prev")}
               disabled={currentPage === 1}
             >
               Prev
             </button>
             <button
-              className="btn btn-outline-light"
+              className="btn btn-outline-light next-pagination-btn"
               onClick={() => handlePageChange("next")}
               disabled={currentPage === Math.ceil(applyFilters(searchResults).length / itemsPerPage)}
             >

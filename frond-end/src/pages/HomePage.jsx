@@ -131,7 +131,7 @@ function HomePage() {
             <div className="custom-grid">
               {paginatedListings().map((l) => (
                 <div key={l.id} className="listing-card-home" onClick={() => navigate(`/listing/${l.id}`, { state: { from: "/home" } })}>
-                  <img src={`${API_URL}${l.coverImage}`} alt={l.title} className="listing-img" />
+                  <img src={`${API_URL}${l.coverImage}`} alt={l.title} className="listing-img-home" />
                   <div className="listing-details">
                     <p className="listing-title">{l.title}</p>
                     <p className="listing-price">${l.price}</p>
