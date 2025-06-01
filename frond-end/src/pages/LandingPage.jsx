@@ -18,7 +18,7 @@ function LandingPage() {
   const handleViewDetails = (listingId) => {
     const token = localStorage.getItem("userToken");
     if (token) {
-      navigate(`/listings/${listingId}`);
+      navigate(`/listing/${listingId}`, { state: { from: "/home" } });
     } else {
       navigate("/login");
     }

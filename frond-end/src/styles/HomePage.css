@@ -337,6 +337,17 @@ body {
 
 /* Media Queries */
 
+@media (min-width: 1280px) {
+  .custom-filter-home {
+    margin-top: 30px;
+  }
+
+  .custom-home-header-container {
+    margin-top: 50px;
+  }
+}
+
+
 @media (max-width: 1280px) {
   .custom-home-header-container {
     flex-direction: row;

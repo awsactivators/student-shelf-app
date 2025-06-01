@@ -88,6 +88,16 @@
 
 /* Responsiveness */
 
+@media (min-width: 1280px) {
+  .favorite-item {
+    width: 100%;
+  }
+
+  .favorite-link {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 1280px) {
   .favorites-list {
     flex-direction: column;

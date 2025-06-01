@@ -111,7 +111,7 @@
 
 
 .sellerdet-go-back-btn {
-  background: var(--color-blue);
+  background: #333;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -233,7 +233,7 @@
   cursor: pointer;
 }
 
-.flag-btn-buyer {
+.flag-btn-buyer, .flag-btn-seller {
   border-radius: 5px;
   background-color: #dea7a7;
   border: none;
@@ -241,8 +241,21 @@
   font-size: 18px;
 }
 
-.flag-btn-buyer:disabled {
+.flag-btn-buyer:disabled, .flag-btn-seller:disabled {
   background-color: #ccc;
+}
+
+@media (min-width: 1280px) {
+  .sellerdet-listing-details-page {
+    margin-top: 150px;
+  }
+}
+
+
+@media (max-width: 1280px) {
+  .sellerdet-listing-details-page {
+    margin-top: 150px;
+  }
 }
 
 
@@ -251,7 +264,7 @@
   .sellerdet-listing-details-content {
     width: 100%;
     padding: 10px;
-    margin-top: 130px;
+    margin-top: 0px;
   }
 
   .sellerdet-images-section {
@@ -322,12 +335,23 @@
   }
 }
 
+@media (max-width: 760px) {
+  .sellerdet-listing-details-page {
+    margin-top: 0px;
+  }
+}
+
 
 
 /* For mobile devices (576px and below) */
 @media (max-width: 576px) {
   .sellerdet-listing-details-content {
     padding: 5px;
+    margin-top: 0;
+  }
+
+  .sellerdet-listing-details-page {
+    margin-top: 0;
   }
 
   .sellerdet-cover-image img {

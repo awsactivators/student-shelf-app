@@ -18,34 +18,69 @@ function SellerListingDetailsPage() {
   const [hasFlagged, setHasFlagged] = useState(false);
   const [flash, setFlash] = useState("");
 
+  // useEffect(() => {
+  //   const fetchListing = async () => {
+  //     try {
+  //       const response = await fetch(`${API_URL}/api/sellers/${sellerId}/listings/${listingId}`);
+  //       const data = await response.json();
+
+  //       const flagsRes = await fetch(`${API_URL}/api/flags?listingId=${id}`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       const flagsData = await flagsRes.json();
+  //       const alreadyFlagged = flagsData.some(flag => flag.userId === userData.id);
+  //       setHasFlagged(alreadyFlagged);
+
+  //       if (response.ok) {
+  //         setListing({
+  //           ...data,
+  //           images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || "[]"),
+  //         });
+  //       } else {
+  //         setError(data.message || "Listing not found");
+  //       }
+  //     } catch (error) {
+  //       setError("An error occurred while fetching listing details");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchListing();
+  // }, [sellerId, listingId, API_URL]);
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
+        const token = localStorage.getItem("userToken");
+        const userData = JSON.parse(localStorage.getItem("userData")); // assuming you stored it
+  
         const response = await fetch(`${API_URL}/api/sellers/${sellerId}/listings/${listingId}`);
         const data = await response.json();
-
-        const flagsRes = await fetch(`${API_URL}/api/flags?listingId=${id}`, {
+  
+        if (!response.ok) {
+          setError(data.message || "Listing not found");
+          return;
+        }
+  
+        const flagsRes = await fetch(`${API_URL}/api/flags?listingId=${listingId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const flagsData = await flagsRes.json();
-        const alreadyFlagged = flagsData.some(flag => flag.userId === userData.id);
+        const alreadyFlagged = flagsData.some(flag => flag.userId === userData?.id);
         setHasFlagged(alreadyFlagged);
-
-        if (response.ok) {
-          setListing({
-            ...data,
-            images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || "[]"),
-          });
-        } else {
-          setError(data.message || "Listing not found");
-        }
+  
+        setListing({
+          ...data,
+          images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || "[]"),
+        });
       } catch (error) {
         setError("An error occurred while fetching listing details");
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchListing();
   }, [sellerId, listingId, API_URL]);
 
@@ -135,11 +170,11 @@ function SellerListingDetailsPage() {
         <p className="sellerdet-listing-description"><strong>Description:</strong> {listing.description}</p>
         {/* <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button> */}
         {hasFlagged ? (
-          <button className="flag-btn disabled" disabled>
+          <button className="flag-btn-seller disabled" disabled>
             You’ve already flagged this listing
           </button>
         ) : (
-          <button className="flag-btn" onClick={() => setShowFlagModal(true)}>
+          <button className="flag-btn-seller" onClick={() => setShowFlagModal(true)}>
             Report / Flag Listing
           </button>
         )}

@@ -1,5 +1,6 @@
 .sellerlist-listings-page {
-  max-width: 1200px;
+  /* max-width: 1200px; */
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   margin-top: 60px;
@@ -63,7 +64,7 @@
 }
 
 .sellerlist-go-back-btn {
-  background: var(--color-blue);
+  background: #333;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -102,6 +103,19 @@
 }
 
 
+@media (min-width: 1280px) {
+  .sellerlist-listings-page {
+    margin-top: 150px;
+  }
+}
+
+
+@media (max-width: 1280px) {
+  .sellerlist-listings-page {
+    margin-top: 150px;
+  }
+}
+
 
 /* For tablets (768px and below) */
 @media (max-width: 768px) {
@@ -137,6 +151,12 @@
 
   .sellerlist-pagination-info {
     font-size: 0.9em;
+  }
+}
+
+@media (max-width: 760px) {
+  .sellerlist-listings-page {
+    margin-top: 0px;
   }
 }
 
