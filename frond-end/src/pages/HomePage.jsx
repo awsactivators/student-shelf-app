@@ -79,6 +79,9 @@ function HomePage() {
           />
         </Link>
       </div>
+      <div>
+        <Link to={"/favorites"} className="favorite-home-btn">My Favorites</Link>
+      </div>
 
       <div className="custom-listings">
         <h2>All Listings</h2>

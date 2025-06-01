@@ -52,6 +52,24 @@
   color: #1E90FF; 
 }
 
+.custom-footer-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-footer-links a {
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.custom-footer-links a:focus {
+  color: black; 
+  font-weight: bold;
+
+}
+
 
 
 /* Center footer content on small screens */

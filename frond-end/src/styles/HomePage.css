@@ -325,6 +325,15 @@ body {
   color: white;
 }
 
+.favorite-home-btn {
+  background-color: rgb(93, 52, 52);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
 
 
 
@@ -375,8 +384,9 @@ body {
 
   .custom-home-header-container {
     margin-top: 20px;
-    flex-direction: column
+    flex-direction: column;
     /* align-items: center; */
+    margin-bottom: 20px;
   }
 
   .listing-img {
@@ -412,5 +422,12 @@ body {
   .paignation-btn {
     width: 80px;
     font-size: 20px;
+  }
+
+  .favorite-home-btn {
+    width: 100px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin-top: 15px;
   }
 }

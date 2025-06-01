@@ -14,6 +14,15 @@ function Footer() {
         <p className="custom-footer-text">
           Copyright © 2024 studentshelf.com. All Rights Reserved.
         </p>
+
+        <div className="custom-footer-links">
+          <div>
+            <Link to="/agreement/privacy" className="custom-footer-link">Privacy Policy</Link>
+            <Link to="/agreement/terms" className="custom-footer-link">Terms of Service</Link>
+            <Link to="/support/faqs" className="custom-footer-link">FAQs</Link>
+            <Link to="/support/contact" className="custom-footer-link">Contact</Link>
+          </div>
+        </div>
       </div>
 
       {/* Footer Icons for Mobile Screens */}
