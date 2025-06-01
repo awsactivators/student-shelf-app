@@ -67,7 +67,7 @@ function HomePage() {
 
   return (
     <div className="custom-home container main-content-header">
-      <div className="custom-home-header d-flex justify-content-between align-items-center">
+      <div className="custom-home-header-container d-flex justify-content-between align-items-center">
         <h1>
           Welcome <span className="custom-user-name">{userData?.name || ""}</span>!
         </h1>
@@ -90,7 +90,7 @@ function HomePage() {
           <p>No listings yet. Add a listing to get started!</p>
         ) : (
           <>
-            <div className="custom-filter d-flex align-items-center mb-3">
+            <div className="custom-filter-home d-flex align-items-center mb-3">
               <span>Filter: </span>
               {/* <FontAwesomeIcon icon={faFilter} className="filter-icon" /> */}
 

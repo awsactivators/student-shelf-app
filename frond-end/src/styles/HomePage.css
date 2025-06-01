@@ -14,7 +14,7 @@ body {
 
 /* Welcome Section */
 
-.custom-home-header {
+.custom-home-header-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -27,6 +27,7 @@ body {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .custom-user-name {
@@ -90,7 +91,7 @@ body {
 }
 
 
-.custom-filter {
+.custom-filter-home {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -99,7 +100,7 @@ body {
   margin-bottom: 30px;
 }
 
-.custom-filter span {
+.custom-filter-home span {
   font-size: 24px;
 }
 
@@ -110,7 +111,7 @@ body {
   min-width: 140px;
 }
 
-.custom-filter svg.svg-inline--fa {
+.custom-filter-home svg.svg-inline--fa {
   color: black;
   margin-left: 5px;
   width: 20px;
@@ -330,12 +331,12 @@ body {
 /* Media Queries */
 
 @media (max-width: 1280px) {
-  .custom-home-header {
+  .custom-home-header-container {
     flex-direction: row;
     margin-top: 50px;
   }
 
-  .custom-filter {
+  .custom-filter-home {
     margin-top: 30px;
   }
 
@@ -344,20 +345,9 @@ body {
   }
 }
 
-@media (max-width: 992px) {
-  .custom-home-header {
-    flex-direction: row;
-    margin-top: 50px;
-  }
-
-  .custom-filter {
-    margin-top: 30px;
-  }
-}
-
 
 @media (max-width: 768px) {
-  .custom-home-header {
+  .custom-home-header-container {
     /* flex-direction: row; */
     margin-top: 150px;
   }
@@ -367,7 +357,7 @@ body {
     font-size: 0.95rem;
   }
 
-  .custom-filter {
+  .custom-filter-home {
     margin-top: 20px;
   }
 }
@@ -377,10 +367,10 @@ body {
     padding: 8px;
   }
 
-  .custom-home-header {
+  .custom-home-header-container {
     margin-top: 20px;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column
+    /* align-items: center; */
   }
 
   .listing-img {
@@ -389,13 +379,14 @@ body {
     max-width: 302px;
   }
 
-  .custom-filter {
+  .custom-filter-home {
     flex-direction: row;
     align-items: flex-start;
     margin-top: 30px;
+    margin-left: 0;
   }
 
-  .custom-filter span {
+  .custom-filter-home span {
     font-size: 22px;
   }
 
