@@ -8,9 +8,10 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   margin: 60px;
-  background-color: black;
+  /* background-color: black; */
+  background-color: #ccdbd9;
   border-radius: 8px;
   max-width: 1200px;
   margin-left: 100px;
@@ -24,7 +25,7 @@
 }
 
 .message-header-content h3 {
-  color: white;
+  color: black;
 }
 
 .message-header-content span {
@@ -88,7 +89,7 @@
 
 .message-bubble.received p{
   justify-content: flex-start;
-  background-color: #e4eef6; 
+  background-color: #cbd0d4; 
   padding: 15px;
   width: 350px;
   border-radius: 20px 20px 20px 0px;
@@ -112,7 +113,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
+  background-color: #444;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-attach-btn .fa-paperclip, .message-send-btn .fa-paper-plane {
+  color: #222;
 }
 
 .message-input {
@@ -120,6 +128,11 @@
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #ccc;
+}
+
+.message-image-preview img {
+  max-width: 100px;
+  margin-top: 20px;
 }
 
 .message-attach-btn,
@@ -162,7 +175,8 @@
 }
 
 .chat-user-item.active {
-  background: #444;
+  background: #cbd0d4;
+  color: black;
 }
 
 .message-input-img {
@@ -216,7 +230,15 @@
 
 
 /* DESKTOP (≥ 992px) */
-@media (min-width: 992px) {
+@media (max-width: 1280px) {
+  .message-header-container h3 {
+    font-size: 34px;
+  }
+
+  .message-header-container span {
+    font-size: 24px;
+  }
+
   .message-bubble.sent {
     align-self: flex-end;
     border-radius: 20px 0 20px 20px;
@@ -230,26 +252,43 @@
     text-align: left;
   }
 
-}
-
-
-@media (max-width: 991px) {
   .message-bubble.sent p,
   .message-bubble.received p {
     width: 100%;
-    /* font-size: 0.9rem; */
   }
+
+  .message-content-container {
+    margin: 20px;
+    margin-top: 50px;
+  }
+
+  .chat-user-list {
+    margin-top: 0px;
+  }
+
+  .chat-user-item span {
+    font-size: 24px;
+  }
+
+  .message-bubble.received p, .message-bubble.sent p {
+    font-size: 24px;
+  }
+
+  .message-input, .message-input-img {
+    margin-bottom: 0;
+  }
+
 }
+
 
 
 /* Media Query for max-width 768px */
 @media (max-width: 768px) {
   .message-content-container {
-    padding: 15px;
+    padding: 35px;
     margin: 20px;
-    max-width: 100%;
-    /* margin-left: 20p; */
-    /* margin-top: 180px; */
+    width: 100%;
+    margin-top: 150px;
   }
 
   .message-header-container {
@@ -276,7 +315,7 @@
   .message-bubble.sent p,
   .message-bubble.received p {
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 24px;
   }
 
   .message-product-image {
@@ -290,12 +329,10 @@
 
   .message-footer {
     gap: 5px;
-    /* flex-wrap: wrap; */
   }
 
   .message-input {
-    /* width: 50%; */
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
 
   .message-attach-btn,
@@ -310,6 +347,15 @@
 
   .message-input-img {
     width: 100%;
+  }
+
+  .chat-user-list {
+    margin-top: 130px;
+    width: 220px;
+  }
+
+  .chat-user-item span {
+    font-size: 18px;
   }
 }
 
@@ -345,7 +391,7 @@
   }
 
   .message-input {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
 
   .message-attach-btn,
@@ -366,6 +412,7 @@
     align-items: center;
     justify-content: center;
     margin: 0;
+    padding: 25px;
   }
 
   .message-content-container {
@@ -377,6 +424,7 @@
     display: flex;
     white-space: nowrap;
     padding: 10px 0;
+    margin-top: 0;
   }
 
   .chat-user-item {
@@ -385,7 +433,7 @@
     align-items: center;
     padding: 5px 10px;
     margin: 0 5px;
-    min-width: 60px; 
+    width: 80px; 
     border-radius: 8px;
   }
 
@@ -396,9 +444,10 @@
   }
 
   .chat-user-item span {
-    font-size: 0.7rem;
+    font-size: 16px;
     text-align: center;
     word-break: break-word;
+    white-space: normal
   }
 
   .chat-user-list::-webkit-scrollbar {
@@ -409,6 +458,10 @@
     -ms-overflow-style: none;  
     scrollbar-width: none;     
   }
+
+  .message-bubble.received p, .message-bubble.sent p {
+    font-size: 18px;
+  }
 }
 
 
@@ -418,4 +471,32 @@
   .message-content-container {
     width: 100%;
   }
+
+  .chat-user-img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+@media (max-width: 350px) {
+ .message-footer {
+  width: 100%;
+  align-items: center;
+ }
+
+ .message-attach-btn, .message-send-btn {
+  width: 30px;
+  height: 30px;
+ }
+
+ .message-attach-btn .fa-paperclip, .message-send-btn .fa-paper-plane {
+  width: 20px;
+  height: 20px;
+ }
+
+ .message-input, .message-input-img {
+  width: 160px;
+  margin-bottom: 0;
+ }
 }

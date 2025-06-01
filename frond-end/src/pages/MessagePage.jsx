@@ -309,6 +309,12 @@ function MessagePage() {
           <div ref={bottomRef}></div>
         </div>
 
+        {imagePreview && (
+          <div className="message-image-preview">
+            <img src={imagePreview} alt="preview" />
+          </div>
+        )}
+
         <footer className="message-footer">
           <label className="message-attach-btn">
             <FontAwesomeIcon icon={faPaperclip} />
@@ -316,7 +322,7 @@ function MessagePage() {
           </label>
 
           <div className="message-input-img">
-            {imagePreview && <img src={imagePreview} alt="preview" style={{ maxHeight: 100 }} />}
+            {/* {imagePreview && <img src={imagePreview} alt="preview" style={{ maxHeight: 100 }} />} */}
             <input
               type="text"
               className="message-input"
