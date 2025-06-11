@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./../styles/HomePage.css";
 import "./../styles/HeaderGlobal.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "../assets/images/default-logo.jpg";
 
 function HomePage() {
@@ -131,7 +131,7 @@ function HomePage() {
             <div className="custom-grid">
               {paginatedListings().map((l) => (
                 <div key={l.id} className="listing-card-home" onClick={() => navigate(`/listing/${l.id}`, { state: { from: "/home" } })}>
-                  <img src={`${API_URL}${l.coverImage}`} alt={l.title} className="listing-img-home" />
+                  <img src={l.coverImage} alt={l.title} className="listing-img-home" />
                   <div className="listing-details">
                     <p className="listing-title">{l.title}</p>
                     <p className="listing-price">${l.price}</p>

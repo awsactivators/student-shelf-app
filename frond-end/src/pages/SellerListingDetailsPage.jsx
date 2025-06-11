@@ -125,11 +125,11 @@ function SellerListingDetailsPage() {
 
         <div className="sellerdet-images-section">
           <div className="sellerdet-cover-image">
-            <img src={`${API_URL}${listing.coverImage}`} alt="Main Listing" onClick={() => openModal(0)} />
+           <img src={listing.coverImage} alt="Main Listing" onClick={() => openModal(0)} />
           </div>
           <div className="sellerdet-thumbnail-images">
             {listing.images.map((image, index) => (
-              <img key={index} src={`${API_URL}${image}`} alt={`Thumbnail ${index + 1}`} onClick={() => openModal(index)} />
+              <img key={index} src={image} alt={`Thumbnail ${index + 1}`} onClick={() => openModal(index)} />
             ))}
           </div>
         </div>

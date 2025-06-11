@@ -319,9 +319,8 @@ function AddListingPage({ existingData = null, isEditing = false }) {
               existingImages.map((image, index) => (
                 <div key={index} className="image-container">
                   <img
-                    src={`${API_URL}${image}`}
+                    src={image.startsWith("http") ? image : `${API_URL}${image}`}
                     alt={`Listing Image ${index + 1}`}
-                    className="uploaded-image"
                   />
                   <button
                     type="button"

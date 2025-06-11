@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User, Listing, Review } = require("../models");
 const asyncHandler = require("express-async-handler");
-// const { profileUpload } = require("../middleware/uploadMiddleware");
 
 
 // Register User
@@ -165,18 +164,21 @@ const uploadProfileImage = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  if (req.file) {
-    const API_URL = process.env.API_URL || "http://localhost:5500"; 
-    const imageUrl = `${API_URL}/uploads/profile/${req.file.filename}`;
-
-    user.profileImage = imageUrl;
-    await user.save();
-
-    res.json({ message: "Profile image uploaded successfully", imageUrl });
-  } else {
+  if (!req.file || !req.file.path) {
     res.status(400);
     throw new Error("No image uploaded");
   }
+
+  // Use Cloudinary URL directly
+  user.profileImage = req.file.path;
+
+  console.log("Uploaded File from Cloudinary:", req.file);
+  await user.save();
+
+  res.json({
+    message: "Profile image uploaded successfully",
+    imageUrl: req.file.path,
+  });
 });
 
 

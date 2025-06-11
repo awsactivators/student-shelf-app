@@ -92,7 +92,7 @@ function SellerListingsPage() {
           >
             <Link to={`/sellers/${sellerId}/listings/${listing.id}`}>
               <img
-                src={listing.coverImage ? `${API_URL}${listing.coverImage}` : ""}
+                src={listing.coverImage || ""}
                 alt={listing.title}
                 className="sellerlist-listing-image"
               />

@@ -31,5 +31,6 @@ export const userMenuItems = [
       { label: "Privacy Policy", path: "/agreement/privacy" }
     ],
   },
-  // { label: "Terms Policy", path: "/agreement/terms" }
+
+  { label: "Logout", path: "/logout"},
 ];

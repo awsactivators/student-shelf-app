@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const dbConfig = require("../config/config.json"); 
+// const dbConfig = require("../config/config.json"); 
 const UserModel = require("./user"); 
 const ListingModel = require("./listing"); 
 const ReviewModel = require("./review"); 
@@ -9,13 +9,19 @@ const MessageModel = require("./message");
 const FlagModel = require("./flag");
 const ActivityLogModel = require("./activitylog");
 const ContactModel = require("./contact");
+require("dotenv").config();
 
-const sequelize = new Sequelize(
-  dbConfig.development.database,
-  dbConfig.development.username,
-  dbConfig.development.password,
-  dbConfig.development
-);
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 5432,
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
+});
 
 const db = {};
 db.Sequelize = Sequelize;

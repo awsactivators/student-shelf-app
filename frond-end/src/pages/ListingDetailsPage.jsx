@@ -163,13 +163,13 @@ function ListingDetailsPage() {
 
         <div className="search-images-section">
           <div className="search-cover-image">
-            <img src={`${API_URL}${listing.coverImage}`} alt="Main Listing" onClick={() => openModal(0)} />
+            <img src={listing.coverImage} alt="Main Listing" onClick={() => openModal(0)} />
           </div>
           <div className="search-thumbnail-images">
             {listing.images.map((image, index) => (
               <img
                 key={index}
-                src={`${API_URL}${image}`}
+                src={image}
                 alt={`Thumbnail ${index + 1}`}
                 onClick={() => openModal(index)}
               />
@@ -184,7 +184,6 @@ function ListingDetailsPage() {
         <p className="search-listing-description">
           <strong>Description:</strong> {listing.description}
         </p>
-        {/* <button className="flag-btn" onClick={() => setShowFlagModal(true)}>Report / Flag Listing</button> */}
         {hasFlagged ? (
           <button className="flag-btn-buyer disabled" disabled>
             You’ve already flagged this listing

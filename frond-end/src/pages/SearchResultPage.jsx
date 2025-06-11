@@ -72,7 +72,7 @@ function SearchResultsPage() {
                     {results.map((listing) => (
                         <Link to={`/listing/${listing.id}`} key={listing.id} className="search-listing-card">
                             <img
-                                src={listing.coverImage ? `${API_URL}${listing.coverImage}` : "/default-image.png"}
+                                src={listing.coverImage || "/default-image.png"}
                                 alt={listing.title}
                                 className="search-listing-img"
                             />

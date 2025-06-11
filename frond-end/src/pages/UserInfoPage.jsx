@@ -162,12 +162,21 @@ const UserInfoPage = () => {
         {userData ? (
           <div className="row align-items-center row-container user-info-row">
             <div className="col-md-3 text-center profile-img">
-              <img
+              {/* <img
                 src={userData.profileImage || profileImagePlaceholder}
                 alt="User Profile"
                 className="img-fluid rounded-circle custom-profile-img"
+              /> */}
+              <img
+                src={
+                  userData.profileImage?.startsWith("http")
+                    ? userData.profileImage
+                    : `${API_URL}${userData.profileImage || profileImagePlaceholder}`
+                }
+                alt="User Profile"
+                className="img-fluid rounded-circle custom-profile-img"
               />
-              <div className="edit-button">
+                            <div className="edit-button">
                 <input type="file" accept="image/*" onChange={handleImageUpload} hidden id="profileImageInput" />
                 <label htmlFor="profileImageInput" className="edit-profile-btn mt-2">
                   <FontAwesomeIcon icon={faEdit} />

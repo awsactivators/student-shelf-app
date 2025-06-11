@@ -20,3 +20,9 @@ git commit -m "Stop tracking .env file"
 
 
 <!--  - on messsage when a user clicks on the user name on the header it should route to the users profile page -->
+
+<!-- 
+npx sequelize-cli db:migrate        
+npm install cloudinary multer-storage-cloudinary
+
+ -->

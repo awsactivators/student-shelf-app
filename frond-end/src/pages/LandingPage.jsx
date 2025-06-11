@@ -119,9 +119,6 @@ function LandingPage() {
               }}
             />
           </div>
-          {/* <button onClick={handleSearch} className="">
-            Search
-          </button> */}
           <div className="col-md-3 mb-2">
             <select
               className="form-select landing-form-select"
@@ -151,7 +148,7 @@ function LandingPage() {
             paginatedListings(applyFilters(searchResults)).map((listing) => (
               <div key={listing.id} className="col-sm-6 col-md-4 mb-4">
                 <div className="card listing-card h-100">
-                  <img src={`${API_URL}${listing.coverImage}`} alt={listing.title} />
+                  <img src={listing.coverImage} alt={listing.title} />
                   <div className="card-body-landing">
                     <h5 className="card-title-landing">{listing.title}</h5>
                     <p className="card-text-landing">${listing.price}</p>

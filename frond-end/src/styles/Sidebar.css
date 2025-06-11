@@ -76,7 +76,7 @@ li.sub-menu-item.active a {
 
 /* Collapse Button */
 .collapse-btn {
-  background: var(--color-blackish);
+  background: #222222;
   color: white;
   border: none;
   padding: 5px;
@@ -166,6 +166,7 @@ li.sub-menu-item.active a {
   .collapse-btn {
     top: 45px;
   }
+
 }
 
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { createListing, getListings, getListingById, deleteListing, updateListing, searchListings, getAllPublicListings, searchPublicListings } = require("../controllers/listingsController");
-const { listingUpload } = require("../middleware/uploadMiddleware");
+const { uploader } = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -13,22 +13,46 @@ router.get("/search", searchPublicListings);
 
 // Middleware to mark this as a listing upload before processing
 const setListingUpload = (req, res, next) => {
-  req.listingUpload = true; // Mark request as a listing upload
+  req.listingUpload = true; 
   next();
 };
 
 
-// Update a listing
-router.put("/:id", protect, listingUpload.fields([
-  { name: "images", maxCount: 3 }, 
-  { name: "coverImage", maxCount: 1 }
-]), updateListing);
+// // Update a listing
+// router.put("/:id", protect, listingUpload.fields([
+//   { name: "images", maxCount: 3 }, 
+//   { name: "coverImage", maxCount: 1 }
+// ]), updateListing);
+
+// // Create new listing
+// router.post("/", protect, setListingUpload, listingUpload.fields([
+//   { name: "images", maxCount: 3 }, 
+//   { name: "coverImage", maxCount: 1 }
+// ]), createListing);
 
 // Create new listing
-router.post("/", protect, setListingUpload, listingUpload.fields([
-  { name: "images", maxCount: 3 }, 
-  { name: "coverImage", maxCount: 1 }
-]), createListing);
+router.post(
+  "/",
+  protect,
+  setListingUpload,
+  uploader.fields([
+    { name: "images", maxCount: 3 },
+    { name: "coverImage", maxCount: 1 }
+  ]),
+  createListing
+);
+
+// Update a listing
+router.put(
+  "/:id",
+  protect,
+  setListingUpload,
+  uploader.fields([
+    { name: "images", maxCount: 3 },
+    { name: "coverImage", maxCount: 1 }
+  ]),
+  updateListing
+);
 
 
 
@@ -40,12 +64,6 @@ router.get("/:id", protect, getListingById);
 
 // Delete a listing
 router.delete("/:id", protect, deleteListing);
-
-// Update a listing
-router.put("/:id", protect, listingUpload.fields([
-  { name: "images", maxCount: 3 }, 
-  { name: "coverImage", maxCount: 1 }
-]), updateListing);
 
 // Search 
 router.get("/search", searchListings);

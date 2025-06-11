@@ -166,7 +166,7 @@ function SellerPage() {
               {seller.userListings.slice(0, 4).map((listing, index) => (
                 <Link to={`/seller/${sellerId}/listing/${listing.id}`} key={index}>
                   <img
-                    src={`${API_URL}${listing.coverImage}`}
+                    src={listing.coverImage}
                     alt={`Active Listing ${index + 1}`}
                     className="sellerinfo-listing-img"
                   />

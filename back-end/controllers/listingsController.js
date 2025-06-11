@@ -23,11 +23,13 @@ const createListing = asyncHandler(async (req, res) => {
     throw new Error("At least one image is required!");
   }
 
-  // Extract uploaded image paths
-  let imagePaths = req.files["images"].map((file) => `/uploads/listings/${file.filename}`);
+  const imagePaths = req.files["images"].map((file) => file.path);
+  const coverImagePath = req.files["coverImage"]
+    ? req.files["coverImage"][0].path
+    : imagePaths[0];
 
-  // Check for cover image separately
-  const coverImagePath = req.files["coverImage"] ? `/uploads/listings/${req.files["coverImage"][0].filename}` : imagePaths[0];
+
+  console.log("Create listing File from Cloudinary:", req.file);
 
   // Save listing to database
   const listing = await Listing.create({
@@ -142,29 +144,24 @@ const updateListing = asyncHandler(async (req, res) => {
     throw new Error("Not authorized to update this listing");
   }
 
-  let updatedImages = [];
+  
+  let updatedImages = existingImages ? JSON.parse(existingImages) : [];
 
-  // Preserve old images
-  if (existingImages) {
-    updatedImages = JSON.parse(existingImages);
-  }
-
-  // Add new images if uploaded
   if (req.files && req.files.images) {
     updatedImages = [
       ...updatedImages,
-      ...req.files.images.map((file) => `/uploads/listings/${file.filename}`),
+      ...req.files.images.map((file) => file.path),
     ];
   }
 
-  // Update cover image: Prioritize new upload, fallback to existing selection
-  let updatedCoverImage = listing.coverImage; // Default to old cover image
-  
+  let updatedCoverImage = listing.coverImage;
   if (req.files && req.files.coverImage) {
-    updatedCoverImage = `/uploads/listings/${req.files.coverImage[0].filename}`;
+    updatedCoverImage = req.files.coverImage[0].path;
   } else if (coverImage && typeof coverImage === "string") {
     updatedCoverImage = coverImage;
   }
+
+  console.log("Update listing File from Cloudinary:", req.file);
 
   // Update listing data
   await listing.update({
