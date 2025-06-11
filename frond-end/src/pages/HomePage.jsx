@@ -90,7 +90,7 @@ function HomePage() {
         </Link>
 
         {listings.length === 0 ? (
-          <p>No listings yet. Add a listing to get started!</p>
+          <p className="listing-none">No listings yet. Add a listing to get started!</p>
         ) : (
           <>
             <div className="custom-filter-home d-flex align-items-center mb-3">
