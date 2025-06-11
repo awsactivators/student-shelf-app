@@ -169,7 +169,7 @@ function RegisterPage() {
             <div className="custom-checkbox mb-3">
               <input type="checkbox" className="custom-checkbox-input" id="terms" required />
               <label className="custom-checkbox-label" htmlFor="terms">
-                Terms and Conditions <span className="agreement-link"><a href="https://drive.google.com/file/d/1PG9QrkkF5YpniopmHUlWzIZMkby-j-gH/view?usp=sharing">Agreement</a></span> Confirmation
+                Terms and Conditions <span className="agreement-link"><a href="https://drive.google.com/file/d/1PG9QrkkF5YpniopmHUlWzIZMkby-j-gH/view?usp=sharing" target="_blank">Agreement</a></span> Confirmation
               </label>
             </div>
 
