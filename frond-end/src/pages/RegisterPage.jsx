@@ -75,7 +75,11 @@ function RegisterPage() {
           navigate("/login"); // Redirect to login page after 3 seconds
         }, 3000);
       } else {
-        setSuccessMessage(`Error: ${data.message}`);
+        if (data.message.includes("Email already in use")) {
+          setEmailError("This student email is already registered.");
+        } else {
+          setSuccessMessage(`Error: ${data.message}`);
+        }
       }
     } catch (error) {
       console.error("Error during registration:", error);

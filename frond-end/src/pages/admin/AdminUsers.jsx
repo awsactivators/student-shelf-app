@@ -42,7 +42,7 @@ function AdminUsers() {
   };
 
   const deleteUser = async (id) => {
-    await fetch(`${API_URL}/api/admin/users/${id}/suspend`, {
+    await fetch(`${API_URL}/api/admin/users/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` }
     });
