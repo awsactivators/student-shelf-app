@@ -49,12 +49,12 @@ function AdminListings() {
           <tbody>
             {listings.map((listing) => (
               <tr key={listing.id}>
-                <td>{listing.title}</td>
-                <td>${listing.price}</td>
-                <td>{listing.category}</td>
-                <td>{listing.user?.name || "N/A"}</td>
-                <td>{listing.user?.email || "N/A"}</td>
-                <td>
+                <td data-label="Title">{listing.title}</td>
+                <td data-label="Price">${listing.price}</td>
+                <td data-label="Category">{listing.category}</td>
+                <td data-label="Owner">{listing.user?.name || "N/A"}</td>
+                <td data-label="Email">{listing.user?.email || "N/A"}</td>
+                <td data-label="Actions">
                   <button className="admin-btn danger" onClick={() => deleteListing(listing.id)}>
                     Delete
                   </button>

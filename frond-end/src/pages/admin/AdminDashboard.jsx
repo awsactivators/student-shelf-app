@@ -30,31 +30,31 @@ function AdminDashboard() {
       <div className="admin-dashboard">
         <h1>Admin Dashboard</h1>
 
-        <div className="admin-grid">
-          <Link to="/admin/users" className="admin-card">Manage Users</Link>
-          <Link to="/admin/listings" className="admin-card">Manage Listings</Link>
-          <Link to="/admin/flags" className="admin-card">Flagged Listings</Link>
-          <Link to="/admin/support" className="admin-card">Support Requests</Link>
-          <Link to="/admin/logs" className="admin-card">User Activity Log</Link>
+        <div className="admin-dashboard-link-grid">
+          <Link to="/admin/users" className="admin-dashboard-card-link">Manage Users</Link>
+          <Link to="/admin/listings" className="admin-dashboard-card-link">Manage Listings</Link>
+          <Link to="/admin/flags" className="admin-dashboard-card-link">Flagged Listings</Link>
+          <Link to="/admin/support" className="admin-dashboard-card-link">Support Requests</Link>
+          <Link to="/admin/logs" className="admin-dashboard-card-link">User Activity Log</Link>
         </div>
 
-        <div className="admin-dashboard-grid">
-          <div className="admin-card">
+        <div className="admin-dashboard-stats-grid">
+          <div className="admin-dashboard-card">
             <h2>Total Users</h2>
             <p>{stats.totalUsers}</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-dashboard-card">
             <h2>Total Listings</h2>
             <p>{stats.totalListings}</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-dashboard-card">
             <h2>Flagged Listings</h2>
             <p>{stats.flaggedListings}</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-dashboard-card">
             <h2>Support Issues</h2>
             <p>{stats.supportIssues}</p>
           </div>

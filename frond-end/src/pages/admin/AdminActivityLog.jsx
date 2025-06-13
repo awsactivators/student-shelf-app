@@ -42,10 +42,10 @@ function AdminActivityLog() {
             <tbody>
               {logs.map((log) => (
                 <tr key={log.id}>
-                  <td><Link to={`/seller/${log.user?.id}`}>{log.user?.name || "Unknown"}</Link></td>
-                  <td>{log.action}</td>
-                  <td>{log.description}</td>
-                  <td>{new Date(log.createdAt).toLocaleString()}</td>
+                  <td data-label="User"><Link to={`/seller/${log.user?.id}`}>{log.user?.name || "Unknown"}</Link></td>
+                  <td data-label="Log">{log.action}</td>
+                  <td data-label="Description">{log.description}</td>
+                  <td data-label="CreatedAt">{new Date(log.createdAt).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

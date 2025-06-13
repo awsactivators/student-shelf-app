@@ -69,11 +69,11 @@ function AdminUsers() {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.campus || "-"}</td>
-                <td>{user.isVerified ? "Active" : "Suspended"}</td>
-                <td>
+                <td data-label="Name">{user.name}</td>
+                <td data-label="Email">{user.email}</td>
+                <td data-label="Campus">{user.campus || "-"}</td>
+                <td data-label="Status">{user.isVerified ? "Active" : "Suspended"}</td>
+                <td data-label="Actions">
                 {user.isVerified ? (
                   <button onClick={() => suspendUser(user.id)} className="admin-btn warn">
                     Suspend

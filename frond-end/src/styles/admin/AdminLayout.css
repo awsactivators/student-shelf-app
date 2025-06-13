@@ -1,5 +1,28 @@
-.admin-layout {
+/* .admin-layout {
   width: 100%;
-  height: auto;
+  height: 100vh;
   padding: 15px;
+} */
+
+
+.admin-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.admin-content {
+  flex-grow: 1;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }

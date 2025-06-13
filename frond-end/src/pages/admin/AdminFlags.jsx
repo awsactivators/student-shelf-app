@@ -72,15 +72,15 @@ function AdminFlags() {
             <tbody>
               {flags.map((flag) => (
                 <tr key={flag.id}>
-                  <td>
+                  <td data-label="Listing">
                     <Link to={`/listing/${flag.listingId}`} className="admin-link">
                       {flag.listing?.title || "Untitled"}
                     </Link>
                   </td>
-                  <td>{flag.user?.name || "Anonymous"}</td>
-                  <td>{flag.reason}</td>
-                  <td>{flag.comment || "—"}</td>
-                  <td>
+                  <td data-label="Flagged By">{flag.user?.name || "Anonymous"}</td>
+                  <td data-label="Reason">{flag.reason}</td>
+                  <td data-label="Comment">{flag.comment || "—"}</td>
+                  <td data-label="Actions">
                     <button className="admin-btn danger" onClick={() => deleteListing(flag.listingId)}>
                       Delete Listing
                     </button>

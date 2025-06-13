@@ -1,7 +1,6 @@
-.admin-activity-log {
+/* .admin-activity-log {
   padding: 2rem;
   width: 100%;
-  height: 100vh;
 }
 
 .admin-activity-log h1 {
@@ -30,4 +29,62 @@
 
 .admin-activity-table tbody a:hover {
   color: #1E90FF;
+} */
+
+
+.admin-activity-log {
+  padding: 1rem;
+  width: 100%;
+}
+
+.admin-activity-log h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.admin-activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-activity-table th,
+.admin-activity-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .admin-activity-table thead {
+    display: none;
+  }
+
+  .admin-activity-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .admin-activity-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .admin-activity-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #555;
+  }
+
+  .admin-activity-table td:last-child {
+    border-bottom: none;
+  }
 }

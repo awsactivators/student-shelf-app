@@ -1,7 +1,6 @@
-.admin-support-page {
+/* .admin-support-page {
   padding: 2rem;
   width: 100%;
-  height: 100vh;
 }
 
 .admin-support-page h1 {
@@ -60,4 +59,121 @@
   margin-bottom: 10px;
   border: 1px solid #c3e6cb;
   border-radius: 4px;
+} */
+
+
+
+.admin-support-page {
+  padding: 2rem;
+  width: 100%;
+}
+
+.admin-support-page h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+.admin-support-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-support-table th,
+.admin-support-table td {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  font-size: 0.95rem;
+}
+
+.admin-support-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.admin-btn.resolve {
+  background-color: #198754;
+  color: #fff;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.status {
+  text-transform: capitalize;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.status.pending {
+  background: #ffc107;
+  color: #000;
+}
+
+.status.resolved {
+  background: #28a745;
+  color: #fff;
+}
+
+.resolved-note {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.flash-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+}
+
+/* Responsive table for smaller screens */
+@media (max-width: 768px) {
+  .admin-support-table thead {
+    display: none;
+  }
+
+  .admin-support-table,
+  .admin-support-table tbody,
+  .admin-support-table tr,
+  .admin-support-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-support-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    padding: 10px;
+  }
+
+  .admin-support-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border: none;
+    position: relative;
+  }
+
+  .admin-support-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+    color: #666;
+  }
+
+  .admin-btn.resolve {
+    display: inline-block;
+    margin-top: 6px;
+  }
 }
