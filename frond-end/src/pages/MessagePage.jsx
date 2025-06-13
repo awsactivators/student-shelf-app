@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import "./../styles/MessagePage.css";
 import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -272,7 +272,11 @@ function MessagePage() {
           <header className="message-header-container">
             <img src={selectedUser.image} alt="Seller" className="message-seller-img" />
             <div className="message-header-content">
-              <h3>{selectedUser.name}</h3>
+              <h3>
+                <Link to={`/seller/${selectedUser.id}`} className="seller-profile-link">
+                  {selectedUser.name}
+                </Link>
+              </h3>
               <span>
               {(() => {
                 const lastMessage = messages[messages.length - 1];
