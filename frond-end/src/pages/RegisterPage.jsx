@@ -174,10 +174,12 @@ function RegisterPage() {
             </div>
 
             {/* Register Button */}
-            <button type="submit" className="custom-btn">
-              {isLoading && <span className="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>}
-              Register
-            </button>
+            <div className="d-grid">
+              <button type="submit" className="custom-btn">
+                {isLoading && <span className="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>}
+                Register
+              </button>
+            </div>
 
             {/* Login Link */}
             <div className="text-center mt-3">
