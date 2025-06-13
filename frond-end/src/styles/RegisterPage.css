@@ -131,6 +131,10 @@ div.custom-form-group.mb-3 {
   100% { transform: rotate(360deg); }
 }
 
+.spinner-border {
+  margin-right: 10px;
+}
+
 
 /* Responsive Design */
 /* Tablet Screen size 768px */
