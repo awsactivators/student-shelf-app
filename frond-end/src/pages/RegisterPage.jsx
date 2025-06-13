@@ -175,7 +175,7 @@ function RegisterPage() {
 
             {/* Register Button */}
             <button type="submit" className="custom-btn">
-              {isLoading && <span className="spinner-border spinner-border-sm loading-spinner me-2" role="status" aria-hidden="true"></span>}
+              {isLoading && <span className="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>}
               Register
             </button>
 
