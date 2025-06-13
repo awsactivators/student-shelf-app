@@ -132,7 +132,15 @@ div.custom-form-group.mb-3 {
 }
 
 .spinner-border {
-  margin-right: 10px;
+  margin-right: 15px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
 

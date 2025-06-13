@@ -13,6 +13,7 @@ function RegisterPage() {
   const [passwordError, setPasswordError] = useState("");
   const [passwordStrengthError, setPasswordStrengthError] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState(""); 
   const [isLoading, setIsLoading] = useState(false);
   
   const API_URL = import.meta.env.VITE_API_URL;
@@ -71,14 +72,17 @@ function RegisterPage() {
   
       if (response.ok) {
         setSuccessMessage("Registration successful! Redirecting to login...");
-        setTimeout(() => {
-          navigate("/login"); // Redirect to login page after 3 seconds
-        }, 3000);
+        setErrorMessage("");
+        setEmailError("");
+        setTimeout(() => navigate("/login"), 3000);
       } else {
         if (data.message.includes("Email already in use")) {
           setEmailError("This student email is already registered.");
+          setErrorMessage(""); 
+          setSuccessMessage("");
         } else {
-          setSuccessMessage(`Error: ${data.message}`);
+          setErrorMessage(`Error: ${data.message}`);
+          setSuccessMessage("");
         }
       }
     } catch (error) {
@@ -97,6 +101,7 @@ function RegisterPage() {
 
           {/* Success message */}
           {successMessage && <div className="alert alert-success text-center">{successMessage}</div>}
+          {errorMessage && <div className="alert alert-danger text-center">{errorMessage}</div>}
 
           <form onSubmit={handleRegister}>
             {/* Name Input */}
