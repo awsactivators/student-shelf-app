@@ -26,6 +26,7 @@ function RegisterPage() {
     const emailRegex = /^[nN]\d{8}@humber\.ca$/;
     if (!emailRegex.test(email)) {
       setEmailError("Input your Humber student email!");
+      setIsLoading(false);
       return;
     } else {
       setEmailError("");
@@ -37,6 +38,7 @@ function RegisterPage() {
       setPasswordStrengthError(
         "Password must be at least 8 characters long and include a capital letter, a small letter, a number, and a special character."
       );
+      setIsLoading(false);
       return;
     } else {
       setPasswordStrengthError("");
@@ -45,6 +47,7 @@ function RegisterPage() {
     // Validate password match
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
+      setIsLoading(false);
       return;
     } else {
       setPasswordError("");
