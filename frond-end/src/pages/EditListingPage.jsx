@@ -24,7 +24,7 @@ function EditListingPage() {
           const errorData = await response.text(); // Read error response as text for debugging
           console.error("Error response:", errorData);
           // throw new Error(`Failed to fetch listing: ${response.status}`);
-          navigate("/home");
+          navigate("/listings");
           return;
         } 
     
@@ -39,12 +39,12 @@ function EditListingPage() {
         setListingData({
           ...data,
           images: parsedImages,
-          coverImage, // Make sure cover image is properly set
+          coverImage, 
         });
       } catch (error) {
         console.error("Error fetching listing data:", error);
         console.log("Failed to load listing data.");
-        navigate("/home");
+        navigate("/listings");
       }
     };
 
