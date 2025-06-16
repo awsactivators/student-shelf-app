@@ -39,7 +39,7 @@ function Sidebar({ menuItems = [], userData, onToggle, onLinkClick }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}` } onClick={(e) => e.stopPropagation()}>
       {/* Collapse Button */}
       <button className="collapse-btn" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={isCollapsed ? faChevronRight : faChevronLeft} />

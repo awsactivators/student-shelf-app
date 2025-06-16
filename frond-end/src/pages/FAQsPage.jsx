@@ -61,10 +61,7 @@ function FAQsPage() {
 
   return (
     <div className="faqs-page main-layout-sidebar main-content-header">
-      <div
-        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="FAQs" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
       {isSidebarOpen && window.innerWidth <= 576 && (

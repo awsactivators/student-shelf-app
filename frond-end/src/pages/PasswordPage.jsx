@@ -97,10 +97,7 @@ function PasswordPage() {
 
   return (
     <div className="password-page main-layout-sidebar main-content-header">
-      <div
-        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
       {isSidebarOpen && window.innerWidth <= 576 && (
