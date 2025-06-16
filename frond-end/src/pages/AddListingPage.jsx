@@ -177,7 +177,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       if (response.ok) {
         if (isEditing) {
           console.log("Listing updated:", data);
-          navigate("/home");
+          navigate("/listings");
         } else {
           console.log("Listing created:", data);
           navigate("/success", { state: { listingTitle: title } });
