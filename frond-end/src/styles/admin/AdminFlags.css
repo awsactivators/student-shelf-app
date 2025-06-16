@@ -73,7 +73,7 @@
 }
 
 .scrollable-table-wrapper {
-  max-height: 500px; 
+  max-height: 700px; 
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -82,7 +82,8 @@
 .admin-flagged-table thead th {
   position: sticky;
   top: 0;
-  background: #f8f9fa;
+  background-color: #222;
+  color: white;
   z-index: 1;
 }
 
