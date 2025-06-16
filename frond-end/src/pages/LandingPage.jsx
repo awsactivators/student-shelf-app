@@ -143,7 +143,7 @@ function LandingPage() {
         </div>
 
         {/* Listings */}
-        <div className="row">
+        <div className="listings-wrapper d-flex flex-wrap justify-content-center gap-4">
           {applyFilters(searchResults).length > 0 ? (
             paginatedListings(applyFilters(searchResults)).map((listing) => (
               <div key={listing.id} className="col-sm-6 col-md-4 mb-4">

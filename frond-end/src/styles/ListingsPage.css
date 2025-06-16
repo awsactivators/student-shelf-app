@@ -37,7 +37,7 @@
 .listings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, max-content));
-  gap: 25px;
+  gap: 40px;
   margin: 30px 0;
   padding-bottom: 20px;
 }
@@ -242,8 +242,14 @@ a.add-listing-link:hover {
     margin-top: 30px;
   }
 
-  .listings-grid {
+  /* .listings-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  } */
+
+  .listings-grid {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
   }
 
 }

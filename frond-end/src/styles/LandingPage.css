@@ -163,6 +163,20 @@ body {
   font-size: 19px;
 }
 
+.listings-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.listings-wrapper > div {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+}
+
 footer {
   background-color: #222;
   color: #ddd;
@@ -175,6 +189,13 @@ footer {
   border-radius: 6px;
   color: black;
   font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .listings-wrapper > div {
+    flex: 1 1 calc(50% - 30px);
+    max-width: 320px;
+  }
 }
 
 @media (max-width:1280px) {
