@@ -239,6 +239,7 @@
   border: none;
   padding: 5px 8px;
   font-size: 18px;
+  color: black;
 }
 
 .flag-btn-buyer:disabled, .flag-btn-seller:disabled {
