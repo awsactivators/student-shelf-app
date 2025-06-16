@@ -18,7 +18,12 @@ function PrivacyPolicyPage() {
 
   return (
     <div className="privacy-policy-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      </div>
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

@@ -194,7 +194,7 @@ li.sub-menu-item.active a {
   }
 
   .sidebar-overlay {
-    position: absolute;
+    position: fixed;
     top: var(--header-height, 0px);
     bottom: var(--footer-height, 0px);
     left: 0;

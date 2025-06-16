@@ -44,7 +44,12 @@ function FavoritesPage() {
 
   return (
     <div className="favorites-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      </div>
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

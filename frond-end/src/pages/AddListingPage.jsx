@@ -200,7 +200,12 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
   return (
     <div className="add-listing-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      </div>
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

@@ -18,7 +18,12 @@ function TermsPage() {
 
   return (
     <div className="terms-page-container main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
+      </div>
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
