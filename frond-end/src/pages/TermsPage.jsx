@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/TermsPage.css";
 import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
+import { useLocation } from "react-router-dom";
 
 function TermsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
 
   return (
     <div className="terms-page-container main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

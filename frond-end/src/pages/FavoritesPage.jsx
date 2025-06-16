@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/FavoritesPage.css";
 import "./../styles/HeaderGlobal.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { userMenuItems } from "../constants/menuItems";
+
 
 function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const location = useLocation();
   
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -34,9 +36,15 @@ function FavoritesPage() {
     fetchFavorites();
   }, [API_URL]);
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="favorites-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle}  />
+      <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

@@ -5,7 +5,7 @@ div.success-page {
   align-items: center;
   margin: auto;
   /* margin: 100px 30px 50px 30px; */
-  margin-top: 100px;
+  margin-top: 180px;
   padding: 20px;
   background-color: whitesmoke; 
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1); 
@@ -13,6 +13,7 @@ div.success-page {
   width: 100%; 
   height: auto;
   max-width: 800px; 
+  min-height: 100px;
 }
 
 .success-page h1 {
@@ -60,7 +61,7 @@ div.success-page {
 /* For tablets (768px and below) */
 @media (max-width: 768px) {
   .success-page {
-    margin-top: 120px;
+    margin-top: 50px;
     padding: 15px;
     box-shadow: none; 
     border-radius: 5px;
@@ -95,7 +96,7 @@ div.success-page {
 /* For mobile devices (576px and below) */
 @media (max-width: 576px) {
   .success-page {
-    margin-top: 100px;
+    /* margin-top: 100px; */
     padding: 10px;
   }
 

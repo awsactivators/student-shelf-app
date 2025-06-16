@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/ListingsPage.css";
 import "./../styles/HeaderGlobal.css";
@@ -21,6 +21,7 @@ function ListingsPage() {
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
   const [filteredListings, setFilteredListings] = useState([]);
   const [filters, setFilters] = useState({ category: "", date: "" });
+  const location = useLocation();
 
 
   useEffect(() => {
@@ -146,10 +147,16 @@ function ListingsPage() {
     );
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
 
   return (
     <div className="listings-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
       )}

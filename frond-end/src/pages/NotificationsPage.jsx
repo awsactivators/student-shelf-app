@@ -5,7 +5,7 @@ import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay, faUserPlus, faHeart, faGears, faBell } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function NotificationsPage() {
   const [notifications, setNotifications] = useState([]);
@@ -14,6 +14,7 @@ function NotificationsPage() {
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Fetch notifications from API
   useEffect(() => {
@@ -95,9 +96,15 @@ function NotificationsPage() {
     }
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="notifications-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Notifications" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Notifications" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

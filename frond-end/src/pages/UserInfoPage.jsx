@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/UserInfoPage.css";
 import "./../styles/HeaderGlobal.css";
@@ -14,6 +14,7 @@ const UserInfoPage = () => {
   const [updatedUserData, setUpdatedUserData] = useState({});
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const location = useLocation();
   
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -147,11 +148,18 @@ const UserInfoPage = () => {
   };
 
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
+
   
 
   return (
     <div className="user-info-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

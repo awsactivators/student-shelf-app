@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./../styles/FAQsPage.css";
 import "./../styles/HeaderGlobal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { userMenuItems } from "../constants/menuItems";
+import { useLocation } from "react-router-dom";
 
 function FAQsPage() {
 
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const location = useLocation();
 
   const faqs = [
     {
@@ -51,9 +53,15 @@ function FAQsPage() {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="faqs-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="FAQs" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="FAQs" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/ContactUsPage.css";
 import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
+import { useLocation } from "react-router-dom";
 
 function ContactUsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -10,6 +11,8 @@ function ContactUsPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
 
 
   const [formData, setFormData] = useState({
@@ -68,9 +71,15 @@ function ContactUsPage() {
     }
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="contact-us-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Contact" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Contact" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

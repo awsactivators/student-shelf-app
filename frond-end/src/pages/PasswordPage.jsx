@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/PasswordPage.css";
 import "./../styles/HeaderGlobal.css";
@@ -13,6 +14,8 @@ function PasswordPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
   const [isLoading, setIsLoading] = useState(false);
+
+  const location = useLocation();
 
 
   const validatePassword = () => {
@@ -86,9 +89,15 @@ function PasswordPage() {
     }
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="password-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

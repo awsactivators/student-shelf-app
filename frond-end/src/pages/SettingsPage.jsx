@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "./../styles/SettingsPage.css";
 import "./../styles/HeaderGlobal.css";
 import { userMenuItems } from "../constants/menuItems";
+import { useLocation } from "react-router-dom";
 
 function SettingsPage() {
   const [language, setLanguage] = useState(localStorage.getItem("language") || "English");
@@ -11,6 +12,7 @@ function SettingsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const handleSidebarToggle = (isOpen) => setIsSidebarOpen(isOpen);
+  const location = useLocation();
   
 
   const handleSaveSettings = (e) => {
@@ -37,9 +39,15 @@ function SettingsPage() {
     document.body.className = savedTheme.toLowerCase() + "-theme";
   }, []);
 
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
+
   return (
     <div className="settings-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"

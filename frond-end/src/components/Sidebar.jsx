@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 // import defaultProfileImage from "./../assets/images/avatar.png";
 
-function Sidebar({ menuItems = [], userData, onToggle }) {
+function Sidebar({ menuItems = [], userData, onToggle, onLinkClick }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
@@ -49,7 +49,17 @@ function Sidebar({ menuItems = [], userData, onToggle }) {
       <ul className="menu">
         {menuItems.map((menu, index) => (
           <li key={index} className={`menu-item ${isActive(menu.path) ? "active" : ""}`}>
-            <Link to={menu.path}>{menu.label}</Link>
+            {/* <Link to={menu.path}> */}
+            <Link
+              to={menu.path}
+              onClick={() => {
+                if (onLinkClick && window.innerWidth <= 576) {
+                  onLinkClick();
+                }
+              }}
+            >
+              {menu.label}
+            </Link>
             {menu.submenu && (
               <ul className="sub-menu">
                 {menu.submenu.map((subMenu, idx) => (
@@ -57,7 +67,17 @@ function Sidebar({ menuItems = [], userData, onToggle }) {
                     key={idx}
                     className={`sub-menu-item ${isActive(subMenu.path) ? "active" : ""}`}
                   >
-                    <Link to={subMenu.path}>{subMenu.label}</Link>
+                    {/* <Link to={subMenu.path}> */}
+                    <Link
+                      to={subMenu.path}
+                      onClick={() => {
+                        if (onLinkClick && window.innerWidth <= 576) {
+                          onLinkClick(); 
+                        }
+                      }}
+                    >
+                      {subMenu.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

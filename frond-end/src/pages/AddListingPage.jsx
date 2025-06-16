@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "./../styles/AddListingPage.css";
 import "./../styles/HeaderGlobal.css";
@@ -8,6 +8,8 @@ import { userMenuItems } from "../constants/menuItems";
 function AddListingPage({ existingData = null, isEditing = false }) {
   const API_URL = import.meta.env.VITE_API_URL;
   console.log("API_URL:", API_URL);
+
+  const location = useLocation();
 
   const [existingImages, setExistingImages] = useState([]);
   const [category, setCategory] = useState("");
@@ -188,11 +190,17 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       setError("Something went wrong. Please try again.");
     }
   };
+
+  useEffect(() => {
+    if (window.innerWidth <= 576) {
+      setIsSidebarOpen(false);
+    }
+  }, [location]);
   
 
   return (
     <div className="add-listing-page main-layout-sidebar main-content-header">
-      <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} />
+      <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
