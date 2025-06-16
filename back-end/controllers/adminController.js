@@ -74,10 +74,17 @@ const resolveContact = async (req, res) => {
   contact.status = "resolved";
   await contact.save();
 
+  let userId = contact.userId;
+
+  if (!userId && contact.email) {
+    const user = await User.findOne({ where: { email: contact.email } });
+    if (user) userId = user.id;
+  }
+
   // Send notification to the logged in user who submitted it
-  if (contact.userId) {
+  if (userId) {
     await Notification.create({
-      userId: contact.userId,
+      userId,
       title: "Support Request Resolved",
       message: `Issue raised (“${contact.subject}”) on ${resolvedDate} has been resolved.`,
       type: "support",
