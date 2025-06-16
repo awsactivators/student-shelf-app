@@ -47,6 +47,7 @@ function ContactUsPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
       });
   
       const data = await response.json();
