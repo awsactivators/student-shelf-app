@@ -396,7 +396,7 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
           {/* Submit Button */}
           <button type="submit" className="publish-btn">Publish</button>
-          <button type="button" className="listing-cancel-btn" onClick={() => navigate("/home")}>
+          <button type="button" className="listing-cancel-btn" onClick={() => navigate("/listings")}>
             Cancel
           </button>
         </form>
