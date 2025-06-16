@@ -194,7 +194,7 @@ li.sub-menu-item.active a {
   }
 
 
-  .sidebar-wrapper {
+  /* .sidebar-wrapper {
     position: fixed;
     top: var(--header-height, 0px);
     left: 0;
@@ -206,9 +206,9 @@ li.sub-menu-item.active a {
     transition: transform 0.3s ease;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
+  } */
 
-  .sidebar-wrapper.open {
+  /* .sidebar-wrapper.open {
     transform: translateX(0);
   }
 
@@ -220,7 +220,7 @@ li.sub-menu-item.active a {
     bottom: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 1000;
-  }
+  } */
 
 
   /* .sidebar-overlay {
