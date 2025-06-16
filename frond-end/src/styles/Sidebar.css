@@ -184,7 +184,7 @@ li.sub-menu-item.active a {
   }
 
   .sidebar {
-    position: relative;
+    position: absolute;
     top: var(--header-height, 0px); 
     bottom: var(--footer-height, 0px); 
     left: 0;
