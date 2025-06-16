@@ -56,41 +56,43 @@ function AdminUsers() {
       <div className="admin-users-page">
         <h1>Manage Users</h1>
         {flash && <div className="flash-message">{flash}</div>}
-        <table className="admin-users-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Campus</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td data-label="Name">{user.name}</td>
-                <td data-label="Email">{user.email}</td>
-                <td data-label="Campus">{user.campus || "-"}</td>
-                <td data-label="Status">{user.isVerified ? "Active" : "Suspended"}</td>
-                <td data-label="Actions">
-                {user.isVerified ? (
-                  <button onClick={() => suspendUser(user.id)} className="admin-btn warn">
-                    Suspend
-                  </button>
-                ) : (
-                  <button onClick={() => reactivateUser(user.id)} className="admin-btn success">
-                    Reactivate
-                  </button>
-                )}
-                  <button onClick={() => deleteUser(user.id)} className="admin-btn danger">
-                    Delete
-                  </button>
-                </td>
+        <div className="scrollable-table-wrapper">
+          <table className="admin-users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Campus</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td data-label="Name">{user.name}</td>
+                  <td data-label="Email">{user.email}</td>
+                  <td data-label="Campus">{user.campus || "-"}</td>
+                  <td data-label="Status">{user.isVerified ? "Active" : "Suspended"}</td>
+                  <td data-label="Actions">
+                  {user.isVerified ? (
+                    <button onClick={() => suspendUser(user.id)} className="admin-btn warn">
+                      Suspend
+                    </button>
+                  ) : (
+                    <button onClick={() => reactivateUser(user.id)} className="admin-btn success">
+                      Reactivate
+                    </button>
+                  )}
+                    <button onClick={() => deleteUser(user.id)} className="admin-btn danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AdminLayout>
   );

@@ -25,6 +25,21 @@
   color: black;
 }
 
+.scrollable-table-wrapper {
+  max-height: 500px; 
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.admin-activity-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  color: black;
+  z-index: 1;
+}
+
 
 @media (max-width: 768px) {
   .admin-activity-table thead {

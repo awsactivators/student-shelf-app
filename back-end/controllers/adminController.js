@@ -86,7 +86,7 @@ const resolveContact = async (req, res) => {
     await Notification.create({
       userId,
       title: "Support Request Resolved",
-      message: `Issue raised (“${contact.subject}”) on ${resolvedDate} has been resolved.`,
+      message: `Issue “${contact.subject}” raised on ${resolvedDate} has been resolved.`,
       type: "support",
       link: "/support/contact",
       isRead: false,

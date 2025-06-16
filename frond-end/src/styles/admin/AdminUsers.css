@@ -62,6 +62,19 @@
   border-radius: 4px;
 }
 
+.scrollable-table-wrapper {
+  max-height: 500px; 
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.admin-users-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 /* Responsive Styling */
 @media (max-width: 768px) {
   .admin-users-table thead {

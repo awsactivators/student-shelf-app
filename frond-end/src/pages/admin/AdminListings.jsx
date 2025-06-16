@@ -35,34 +35,36 @@ function AdminListings() {
       <div className="admin-listings-page">
         <h1>Manage Listings</h1>
         {flash && <div className="flash-message">{flash}</div>}
-        <table className="admin-listings-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Owner</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listings.map((listing) => (
-              <tr key={listing.id}>
-                <td data-label="Title">{listing.title}</td>
-                <td data-label="Price">${listing.price}</td>
-                <td data-label="Category">{listing.category}</td>
-                <td data-label="Owner">{listing.user?.name || "N/A"}</td>
-                <td data-label="Email">{listing.user?.email || "N/A"}</td>
-                <td data-label="Actions">
-                  <button className="admin-btn danger" onClick={() => deleteListing(listing.id)}>
-                    Delete
-                  </button>
-                </td>
+        <div className="scrollable-table-wrapper">
+          <table className="admin-listings-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Owner</th>
+                <th>Email</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {listings.map((listing) => (
+                <tr key={listing.id}>
+                  <td data-label="Title">{listing.title}</td>
+                  <td data-label="Price">${listing.price}</td>
+                  <td data-label="Category">{listing.category}</td>
+                  <td data-label="Owner">{listing.user?.name || "N/A"}</td>
+                  <td data-label="Email">{listing.user?.email || "N/A"}</td>
+                  <td data-label="Actions">
+                    <button className="admin-btn danger" onClick={() => deleteListing(listing.id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AdminLayout>
   );

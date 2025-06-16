@@ -40,38 +40,40 @@ function AdminSupport() {
         {requests.length === 0 ? (
           <p>No support requests yet.</p>
         ) : (
-          <table className="admin-support-table">
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Subject</th>
-                <th>Message</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((req) => (
-                <tr key={req.id}>
-                  <td data-label="Email">{req.email}</td>
-                  <td data-label="Subject">{req.subject}</td>
-                  <td data-label="Message">{req.message}</td>
-                  <td data-label="Status">
-                    <span className={`status ${req.status}`}>{req.status || "pending"}</span>
-                  </td>
-                  <td data-label="Actions">
-                    {req.status !== "resolved" ? (
-                      <button className="admin-btn resolve" onClick={() => resolveRequest(req.id)}>
-                        Mark Resolved
-                      </button>
-                    ) : (
-                      <span className="resolved-note">Resolved</span>
-                    )}
-                  </td>
+          <div className="scrollable-table-wrapper">
+            <table className="admin-support-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {requests.map((req) => (
+                  <tr key={req.id}>
+                    <td data-label="Email">{req.email}</td>
+                    <td data-label="Subject">{req.subject}</td>
+                    <td data-label="Message">{req.message}</td>
+                    <td data-label="Status">
+                      <span className={`status ${req.status}`}>{req.status || "pending"}</span>
+                    </td>
+                    <td data-label="Actions">
+                      {req.status !== "resolved" ? (
+                        <button className="admin-btn resolve" onClick={() => resolveRequest(req.id)}>
+                          Mark Resolved
+                        </button>
+                      ) : (
+                        <span className="resolved-note">Resolved</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </AdminLayout>

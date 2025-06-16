@@ -59,42 +59,44 @@ function AdminFlags() {
         {flags.length === 0 ? (
           <p>No flagged listings.</p>
         ) : (
-          <table className="admin-flagged-table">
-            <thead>
-              <tr>
-                <th>Listing</th>
-                <th>Flagged By</th>
-                <th>Reason</th>
-                <th>Comment</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {flags.map((flag) => (
-                <tr key={flag.id}>
-                  <td data-label="Listing">
-                    <Link to={`/listing/${flag.listingId}`} className="admin-link">
-                      {flag.listing?.title || "Untitled"}
-                    </Link>
-                  </td>
-                  <td data-label="Flagged By">{flag.user?.name || "Anonymous"}</td>
-                  <td data-label="Reason">{flag.reason}</td>
-                  <td data-label="Comment">{flag.comment || "—"}</td>
-                  <td data-label="Actions">
-                    <button className="admin-btn danger" onClick={() => deleteListing(flag.listingId)}>
-                      Delete Listing
-                    </button>
-                    <button className="admin-btn warning" onClick={() => suspendUser(flag.listing?.userId)}>
-                      Suspend User
-                    </button>
-                    <button className="admin-btn secondary" onClick={() => dismissFlag(flag.id)}>
-                      Dismiss
-                    </button>
-                  </td>
+          <div className="scrollable-table-wrapper">
+            <table className="admin-flagged-table">
+              <thead>
+                <tr>
+                  <th>Listing</th>
+                  <th>Flagged By</th>
+                  <th>Reason</th>
+                  <th>Comment</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {flags.map((flag) => (
+                  <tr key={flag.id}>
+                    <td data-label="Listing">
+                      <Link to={`/listing/${flag.listingId}`} className="admin-link">
+                        {flag.listing?.title || "Untitled"}
+                      </Link>
+                    </td>
+                    <td data-label="Flagged By">{flag.user?.name || "Anonymous"}</td>
+                    <td data-label="Reason">{flag.reason}</td>
+                    <td data-label="Comment">{flag.comment || "—"}</td>
+                    <td data-label="Actions">
+                      <button className="admin-btn danger" onClick={() => deleteListing(flag.listingId)}>
+                        Delete Listing
+                      </button>
+                      <button className="admin-btn warning" onClick={() => suspendUser(flag.listing?.userId)}>
+                        Suspend User
+                      </button>
+                      <button className="admin-btn secondary" onClick={() => dismissFlag(flag.id)}>
+                        Dismiss
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </AdminLayout>
