@@ -109,6 +109,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   min-width: 140px;
+  color: black;
 }
 
 .custom-filter-home svg.svg-inline--fa {

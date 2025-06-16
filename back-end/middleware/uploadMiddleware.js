@@ -18,7 +18,7 @@ const storage = new CloudinaryStorage({
       if (req.messageUpload) folder = "student-shelf/messages";
     return {
       folder,
-      allowed_formats: ["jpg", "jpeg", "png"],
+      allowed_formats: ["jpg", "jpeg", "png", "webp", "avif"],
       public_id: `${Date.now()}-${file.originalname}`,
     };
   },

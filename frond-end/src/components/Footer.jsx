@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 import "./../styles/Footer.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser, faShoppingCart, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faUser, faCommentDots, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
@@ -34,7 +34,7 @@ function Footer() {
           <FontAwesomeIcon icon={faUser} />
         </Link>
         <Link to="/add-listing" className={`footer-icon ${location.pathname === "/add-listing" ? "active" : ""}`}>
-          <FontAwesomeIcon icon={faShoppingCart} />
+          <FontAwesomeIcon icon={faPlusCircle} />
         </Link>
         <Link to="/message" className={`footer-icon ${location.pathname === "/message" ? "active" : ""}`}>
           <FontAwesomeIcon icon={faCommentDots} />
