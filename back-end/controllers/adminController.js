@@ -67,6 +67,10 @@ const resolveContact = async (req, res) => {
   const contact = await Contact.findByPk(req.params.id);
   if (!contact) return res.status(404).json({ message: "Issue not found" });
 
+  const resolvedDate = new Date(contact.createdAt).toLocaleDateString("en-US", {
+    year: "numeric", month: "long", day: "numeric"
+  });
+
   contact.status = "resolved";
   await contact.save();
 
@@ -75,9 +79,9 @@ const resolveContact = async (req, res) => {
     await Notification.create({
       userId: contact.userId,
       title: "Support Request Resolved",
-      message: `Your support request "${contact.subject}" has been marked as resolved.`,
+      message: `Issue raised (“${contact.subject}”) on ${resolvedDate} has been resolved.`,
       type: "support",
-      link: "/support/contact", 
+      link: "/support/contact",
       isRead: false,
     });
   }

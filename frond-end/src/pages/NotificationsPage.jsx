@@ -47,6 +47,8 @@ function NotificationsPage() {
         return faUserPlus;
       case "system":
         return faGears;
+      case "support":
+        return faGears;
       default:
         return faBell;
     }
