@@ -162,12 +162,12 @@ const UserInfoPage = () => {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <main className="user-info-content container mt-4">
         {userData ? (
           <div className="row align-items-center row-container user-info-row">

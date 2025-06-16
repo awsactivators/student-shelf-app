@@ -21,12 +21,12 @@ function TermsPage() {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Terms & Conditions" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <div className="terms-main-content">
         <h1 className="terms-title">Terms and Conditions</h1>
         <section className="terms-content">

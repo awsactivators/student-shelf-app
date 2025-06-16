@@ -50,12 +50,12 @@ function SettingsPage() {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <main className="settings-content">
         <h1 className="settings-title">Settings</h1>
         {successMessage && <div className="success-message">{successMessage}</div>}

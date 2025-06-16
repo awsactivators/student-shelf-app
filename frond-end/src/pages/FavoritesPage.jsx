@@ -47,12 +47,12 @@ function FavoritesPage() {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Favorites" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <div className="favorites-main-content">
         <h1>My Favorites</h1>
         {favorites.length > 0 ? (

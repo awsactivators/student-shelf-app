@@ -100,12 +100,12 @@ function PasswordPage() {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Password" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <main className="password-content">
         <h1>Password Settings</h1>
 

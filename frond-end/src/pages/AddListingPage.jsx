@@ -203,12 +203,12 @@ function AddListingPage({ existingData = null, isEditing = false }) {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`} >
         <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )} */}
       <main className="add-listing-content">
       <h1>{isEditing ? "Edit Listing" : "Add a Listing"}</h1>
         <form className="add-listing-form" onSubmit={handleSubmit}>

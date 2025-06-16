@@ -159,9 +159,9 @@ function ListingsPage() {
       <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {isSidebarOpen && window.innerWidth <= 576 && (
+      {/* {isSidebarOpen && window.innerWidth <= 576 && (
         <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
-      )}
+      )} */}
       <main className="listings-content">
         <h1>All Listings</h1>
         <a href="/add-listing" className="add-listing-link">Add a Listing</a>
