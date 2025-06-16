@@ -5,6 +5,7 @@
   background: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 0vh;
 }
 
 .review-page h1 {
@@ -84,10 +85,20 @@
   font-size: 24px;
 }
 
-@media (max-width: 1280px) {
+
+@media (min-width: 768px) {
   .review-page {
-    /* padding: px; */
-    /* margin: 20px auto; */
+    width: 50%; 
+    margin: 150px auto;
+  }
+
+  .review-star {
+    font-size: 30px; 
+  }
+}
+
+/* @media (max-width: 1280px) {
+  .review-page {
     width: 100%; 
     margin-top: 150px;
   }
@@ -95,7 +106,7 @@
   .review-star {
     font-size: 28px; 
   }
-}
+} */
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
@@ -121,6 +132,10 @@
   .review-btn-submit {
     font-size: 0.9em; 
     padding: 8px 15px;
+  }
+
+  .review-star {
+    font-size: 28px; 
   }
 }
 
