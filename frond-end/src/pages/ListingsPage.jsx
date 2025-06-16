@@ -156,12 +156,28 @@ function ListingsPage() {
 
   return (
     <div className="listings-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Listings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
       )} */}
+      
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <main className="listings-content">
         <h1>All Listings</h1>
         <a href="/add-listing" className="add-listing-link">Add a Listing</a>

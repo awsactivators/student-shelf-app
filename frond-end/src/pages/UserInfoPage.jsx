@@ -159,15 +159,31 @@ const UserInfoPage = () => {
 
   return (
     <div className="user-info-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="User Info" userData={userData} onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )} */}
+
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <main className="user-info-content container mt-4">
         {userData ? (
           <div className="row align-items-center row-container user-info-row">

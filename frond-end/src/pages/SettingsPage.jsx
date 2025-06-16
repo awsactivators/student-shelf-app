@@ -47,15 +47,31 @@ function SettingsPage() {
 
   return (
     <div className="settings-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Settings" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )} */}
+
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <main className="settings-content">
         <h1 className="settings-title">Settings</h1>
         {successMessage && <div className="success-message">{successMessage}</div>}

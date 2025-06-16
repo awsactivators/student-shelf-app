@@ -104,15 +104,31 @@ function NotificationsPage() {
 
   return (
     <div className="notifications-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Notifications" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )} */}
+
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <main className="notifications-content">
         <h1 className="notifications-title">Notifications</h1>
         {notifications.length > 0 ? (

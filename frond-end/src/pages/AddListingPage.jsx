@@ -200,15 +200,30 @@ function AddListingPage({ existingData = null, isEditing = false }) {
 
   return (
     <div className="add-listing-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`} >
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`} >
         <Sidebar menuItems={userMenuItems} activeMenu="Add Listing" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )} */}
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <main className="add-listing-content">
       <h1>{isEditing ? "Edit Listing" : "Add a Listing"}</h1>
         <form className="add-listing-form" onSubmit={handleSubmit}>

@@ -18,15 +18,31 @@ function PrivacyPolicyPage() {
 
   return (
     <div className="privacy-policy-page main-layout-sidebar main-content-header">
-      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+      {/* <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
         <Sidebar menuItems={userMenuItems} activeMenu="Privacy Policy" onToggle={handleSidebarToggle} onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
-      {/* {isSidebarOpen && window.innerWidth <= 576 && (
+      {isSidebarOpen && window.innerWidth <= 576 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )} */}
+
+      {isSidebarOpen && window.innerWidth <= 576 && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <div
+        className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <Sidebar
+          menuItems={userMenuItems}
+          activeMenu="Terms & Conditions"
+          onToggle={handleSidebarToggle}
+          onLinkClick={() => setIsSidebarOpen(false)}
+        />
+      </div>
       <div className="privacy-main-content">
         <h1 className="privacy-policy-title">Privacy Policy</h1>
         <section className="privacy-policy-content">
