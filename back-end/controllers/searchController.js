@@ -14,7 +14,7 @@ const searchListings = asyncHandler(async (req, res) => {
 
     const listings = await Listing.findAll({
         where: {
-            title: { [Op.like]: `%${query}%` }, // Partial match search
+            title: { [Op.ilike]: `%${query}%` }, // Partial match search
         },
         attributes: ["id", "title", "coverImage", "price"],
     });

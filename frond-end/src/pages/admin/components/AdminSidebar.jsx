@@ -7,8 +7,7 @@ function AdminSidebar() {
     <div className="admin-sidebar">
       <h2>Admin Panel</h2>
       <ul className="admin-sidebar-list">
-        <li>
-          <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink></li>
+        <li><NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink></li>
         <li><NavLink to="/admin/users" className={({ isActive }) => isActive ? "active-link" : ""}>Users</NavLink></li>
         <li><NavLink to="/admin/listings" className={({ isActive }) => isActive ? "active-link" : ""}>Listings</NavLink></li>
         <li><NavLink to="/admin/flags" className={({ isActive }) => isActive ? "active-link" : ""}>Flagged Listings</NavLink></li>
