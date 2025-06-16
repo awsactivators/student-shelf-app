@@ -68,7 +68,9 @@ function AdminUsers() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {[...users]
+                .sort((a, b) => a.isVerified ? 1 : -1)
+                .map((user) => (
                 <tr key={user.id}>
                   <td data-label="Name">{user.name}</td>
                   <td data-label="Email">{user.email}</td>

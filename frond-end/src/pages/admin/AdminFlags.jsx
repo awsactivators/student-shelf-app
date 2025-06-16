@@ -71,7 +71,13 @@ function AdminFlags() {
                 </tr>
               </thead>
               <tbody>
-                {flags.map((flag) => (
+                {[...flags]
+                  .sort((a, b) => {
+                    const aSuspended = a.listing?.user?.isVerified === false;
+                    const bSuspended = b.listing?.user?.isVerified === false;
+                    return bSuspended - aSuspended;
+                  })
+                  .map((flag) => (
                   <tr key={flag.id}>
                     <td data-label="Listing">
                       <Link to={`/listing/${flag.listingId}`} className="admin-link">

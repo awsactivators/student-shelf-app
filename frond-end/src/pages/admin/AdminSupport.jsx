@@ -52,7 +52,9 @@ function AdminSupport() {
                 </tr>
               </thead>
               <tbody>
-                {requests.map((req) => (
+                {[...requests]
+                  .sort((a, b) => a.status === "resolved" ? 1 : -1)
+                  .map((req) => (
                   <tr key={req.id}>
                     <td data-label="Email">{req.email}</td>
                     <td data-label="Subject">{req.subject}</td>
