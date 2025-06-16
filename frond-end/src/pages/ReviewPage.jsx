@@ -11,6 +11,7 @@ function ReviewPage() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null); 
+  const [sellerName, setSellerName] = useState("");
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
@@ -39,6 +40,25 @@ function ReviewPage() {
 
     fetchLoggedInUser();
   }, [API_URL]);
+
+
+  useEffect(() => {
+    const fetchSellerInfo = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/users/${sellerId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSellerName(data.name || "Seller"); // fallback to "Seller"
+        } else {
+          setSellerName("Seller");
+        }
+      } catch (error) {
+        setSellerName("Seller");
+      }
+    };
+
+    fetchSellerInfo();
+  }, [sellerId, API_URL]);
 
   const handleInputChange = (e) => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
@@ -91,7 +111,7 @@ function ReviewPage() {
 
   return (
     <div className="review-page main-content-header">
-      <h1>Submit a Review</h1>
+      <h1>Submit a Review for {sellerName}</h1>
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
       <form className="review-form" onSubmit={handleSubmit}>
