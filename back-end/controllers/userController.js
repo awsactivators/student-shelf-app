@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User, Listing, Review } = require("../models");
 const asyncHandler = require("express-async-handler");
+const sendEmail = require('../utils/sendEmail');
 
 
 // Register User
@@ -87,6 +88,50 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+
+// POST /api/users/forgot-password
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  const token = crypto.randomBytes(32).toString('hex');
+  const expireDate = Date.now() + 1000 * 60 * 30; // valid for 30 mins
+
+  user.resetToken = token;
+  user.resetTokenExpire = expireDate;
+  await user.save();
+
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+
+  await sendEmail(user.email, "Password Reset", `Reset your password: ${resetLink}`);
+  res.json({ message: "Password reset link sent to email." });
+});
+
+// POST /api/users/reset-password/:token
+const resetPassword = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+  const { token } = req.params;
+
+  const user = await User.findOne({
+    where: {
+      resetToken: token,
+      resetTokenExpire: { [Op.gt]: Date.now() }
+    }
+  });
+
+  if (!user) return res.status(400).json({ message: "Invalid or expired token" });
+
+  user.password = password; // hash via hook
+  user.resetToken = null;
+  user.resetTokenExpire = null;
+  await user.save();
+
+  res.json({ message: "Password has been reset successfully" });
+});
 
 
 // @desc    Get user profile
@@ -243,5 +288,7 @@ module.exports = {
   updateUserProfile,
   uploadProfileImage,
   updateUserPassword,
-  getUserById
+  getUserById,
+  forgotPassword,
+  resetPassword
 };

@@ -29,6 +29,8 @@ import ReviewPage from "./pages/ReviewPage";
 import EditListingPage from "./pages/EditListingPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import LogoutPage from "./pages/LogoutPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 // Admin pages
 // import AdminLayout from "./pages/admin/layouts/AdminLayout";
@@ -97,6 +99,8 @@ function App() {
               <Route path="/seller/:sellerId" element={ <ProtectedRoute> <SellerPage /> </ProtectedRoute>} />
               <Route path="/favorites" element={ <ProtectedRoute> <FavoritesPage /> </ProtectedRoute>} />
               <Route path="/logout" element={<LogoutPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
               
             </Routes>

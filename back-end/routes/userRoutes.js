@@ -1,5 +1,5 @@
 const express = require("express");
-const { registerUser, loginUser, getUserProfile, updateUserProfile, uploadProfileImage, updateUserPassword, getUserById } = require("../controllers/userController");
+const { registerUser, loginUser, getUserProfile, updateUserProfile, uploadProfileImage, updateUserPassword, getUserById, forgotPassword, resetPassword  } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 const { uploader } = require("../middleware/uploadMiddleware"); 
 
@@ -10,6 +10,10 @@ router.post("/register", registerUser);
 
 // Login route
 router.post("/login", loginUser);
+
+// Password reset routes
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password/:token', resetPassword);
 
 // Fetch user profile
 router.get("/me", protect, getUserProfile);
