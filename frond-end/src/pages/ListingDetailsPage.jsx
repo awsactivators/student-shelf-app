@@ -236,7 +236,7 @@ function ListingDetailsPage() {
             <div className="search-modal-content" onClick={(e) => e.stopPropagation()}>
               <button className="search-modal-close" onClick={closeModal}><FontAwesomeIcon icon={faTimes} /></button>
               <button className="search-prev-image" onClick={prevImage}><FontAwesomeIcon icon={faChevronLeft} /></button>
-              <img src={`${API_URL}${listing.images[currentImageIndex]}`} alt="Expanded" className="search-modal-image" />
+              <img src={listing.images[currentImageIndex]} alt="Expanded" className="search-modal-image" />
               <button className="search-next-image" onClick={nextImage}><FontAwesomeIcon icon={faChevronRight} /></button>
             </div>
           </div>
