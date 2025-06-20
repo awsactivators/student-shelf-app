@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const { User, Listing, Review } = require("../models");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
+const { Op } = require("sequelize");
 
 
 // Register User
