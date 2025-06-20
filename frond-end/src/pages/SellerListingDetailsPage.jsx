@@ -183,7 +183,7 @@ function SellerListingDetailsPage() {
             <div className="sellerdet-modal-content" onClick={(e) => e.stopPropagation()}>
               <button className="sellerdet-modal-close" onClick={closeModal}><FontAwesomeIcon icon={faTimes} /></button>
               <button className="sellerdet-prev-image" onClick={prevImage}><FontAwesomeIcon icon={faChevronLeft} /></button>
-              <img src={`${API_URL}${listing.images[currentImageIndex]}`} alt="Expanded" className="sellerdet-modal-image" />
+              <img src={listing.images[currentImageIndex]} alt="Expanded" className="sellerdet-modal-image" />
               <button className="sellerdet-next-image" onClick={nextImage}><FontAwesomeIcon icon={faChevronRight} /></button>
             </div>
           </div>
