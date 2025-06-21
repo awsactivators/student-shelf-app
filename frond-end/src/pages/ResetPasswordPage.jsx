@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/ResetPasswordPage.css";
 
 function ResetPasswordPage() {
   const API_URL = import.meta.env.VITE_API_URL;
