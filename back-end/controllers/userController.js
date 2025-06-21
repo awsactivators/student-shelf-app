@@ -110,12 +110,20 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
   await sendEmail(
-  user.email,
-  "Password Reset",
+    user.email,
+    "Password Reset",
     `
-      <p>You requested a password reset.</p>
-      <p><a href="${resetLink}" target="_blank">Click here to reset your password</a></p>
-      <p>This link will expire in 30 minutes.</p>
+      <div style="font-family:Arial,sans-serif; line-height:1.5">
+        <h2>Password Reset Request</h2>
+        <p>You requested a password reset for your Student Shelf account.</p>
+        <p>
+          <a href="${resetLink}" target="_blank" style="background-color:#1e90ff;color:#fff;padding:10px 15px;text-decoration:none;border-radius:5px;">
+            Click here to reset your password
+          </a>
+        </p>
+        <p>This link will expire in 30 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+      </div>
     `
   );
   res.json({ message: "Password reset link sent to email." });

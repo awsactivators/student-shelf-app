@@ -10,10 +10,10 @@ const sendEmail = async (to, subject, text) => {
   });
 
   await transporter.sendMail({
-    from: '"Student Shelf" <support@studentshelf.com>',
+    from: `"Student Shelf" <${process.env.MAIL_USER}>`,
     to,
     subject,
-    text
+    html: htmlContent,
   });
 };
 
