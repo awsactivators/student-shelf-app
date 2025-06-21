@@ -43,7 +43,15 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-    }
+    },
+    resetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetTokenExpire: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'User',
